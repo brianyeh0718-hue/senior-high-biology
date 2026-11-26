@@ -1,0 +1,1159 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>選修生物 III 第二章 循環與消化</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06142b; --panel:#0b2147; --panel2:#0f2c5c; --line:rgba(120,190,255,.18);
+  --ink:#e8f1ff; --mute:#9fb6d9; --cyan:#36e0ff; --yellow:#ffd84d; --pink:#ff7aa8;
+  --orange:#ff9f43; --green:#3ee08f; --red:#ff5a5a; --radius:16px;
+  --tools-w:250px; --rail-w:60px; --side:var(--tools-w);
+}
+body.tools-min{--side:var(--rail-w)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(80,150,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(80,150,255,.07) 1px,transparent 1px);
+  background-size:32px 32px;
+  font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif; line-height:1.6;
+  padding-left:var(--side); transition:padding-left .2s;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+
+/* ---------- Hero & nav ---------- */
+.hero{position:relative;min-height:340px;display:flex;align-items:flex-end;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:url(assets/slides/slide01.jpg) center 85%/cover;opacity:.45;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 75%);mask-image:linear-gradient(180deg,#000 45%,transparent 75%)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,20,43,.1),rgba(6,20,43,.95))}
+.hero-in{position:relative;z-index:1;padding:40px 24px 28px;max-width:1200px;width:100%;margin:0 auto}
+.kicker{color:var(--cyan);font-weight:700;letter-spacing:.12em;font-size:14px}
+.hero h1{margin:6px 0 4px;font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:.04em;text-shadow:0 0 24px rgba(54,224,255,.35)}
+.hero p{margin:0;color:var(--mute);font-size:17px}
+nav.top{position:sticky;top:0;z-index:50;background:rgba(6,20,43,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .in{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;gap:8px;flex-wrap:wrap}
+nav.top a{color:var(--ink);text-decoration:none;padding:6px 14px;border-radius:999px;border:1px solid var(--line);font-size:15px;background:var(--panel)}
+nav.top a:hover,nav.top a.on{border-color:var(--cyan);color:var(--cyan)}
+nav.top a b{color:var(--yellow);margin-right:6px}
+@media(max-width:700px){nav.top .in{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:8px 16px}nav.top .in::-webkit-scrollbar{display:none}nav.top a{white-space:nowrap}main{padding:8px 16px 80px}}
+
+main{max-width:1200px;margin:0 auto;padding:8px 24px 80px}
+
+/* ---------- Units ---------- */
+.unit{scroll-margin-top:64px;padding:36px 0 12px;border-bottom:1px dashed var(--line)}
+.unit-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.tag{flex:none;font-weight:900;font-size:22px;color:#06142b;background:var(--yellow);border-radius:12px;padding:6px 12px;box-shadow:0 0 18px rgba(255,216,77,.35)}
+.unit-head h2{margin:0;font-size:clamp(24px,3vw,32px);line-height:1.25}
+.unit-head ul{margin:6px 0 0;padding-left:20px;color:var(--mute)}
+.unit-head li{margin:2px 0}
+.grid-a{display:grid;grid-template-columns:3fr 1fr;gap:18px;align-items:start}
+.grid-b{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;margin-top:18px;align-items:start}
+@media(max-width:900px){.grid-a,.grid-b{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card h3{margin:0 0 10px;font-size:16px;color:var(--cyan);display:flex;align-items:center;gap:8px;letter-spacing:.05em}
+.card h3 .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--cyan);color:#06142b;font-size:13px;font-weight:900}
+
+/* ---------- Carousel ---------- */
+.carousel{outline:none}
+.car-stage{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;touch-action:pan-y}
+.car-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s;user-select:none;-webkit-user-drag:none}
+.car-stage img.on{opacity:1}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border:none;border-radius:10px;background:rgba(6,20,43,.6);font-size:34px;line-height:1;opacity:.75}
+.car-btn:hover{opacity:1;background:rgba(54,224,255,.35)}
+.car-btn.prev{left:8px}.car-btn.next{right:8px}
+.car-fs{position:absolute;top:8px;right:8px;border:none;border-radius:8px;background:rgba(6,20,43,.6);padding:4px 10px;font-size:18px}
+.car-stage:fullscreen{border-radius:0}
+.car-bar{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;border:none;background:rgba(159,182,217,.35);padding:0}
+.dot.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.count{color:var(--mute);font-size:14px}
+
+/* ---------- Infographic crop ---------- */
+.info-crop{width:100%;border-radius:12px;background-repeat:no-repeat;cursor:zoom-in;border:1px solid var(--line);background-color:#f6f3ec;transition:transform .2s}
+.info-crop:hover{transform:scale(1.02)}
+.cap{color:var(--mute);font-size:13px;margin-top:6px;text-align:center}
+
+/* ---------- Interactive ---------- */
+.viz svg{width:100%;height:auto;display:block;background:rgba(3,12,28,.55);border-radius:12px;border:1px solid var(--line);touch-action:none}
+.viz .lbl{fill:var(--ink);font-size:15px;font-weight:700;paint-order:stroke;stroke:#06142b;stroke-width:4px}
+.viz .sm{font-size:13px;font-weight:500}
+sup.ex{font-size:.72em;line-height:0;position:relative;top:-.05em;margin-left:.04em;font-weight:inherit}
+.handle{cursor:grab;fill:#fff;stroke:var(--cyan);stroke-width:3}
+.handle:hover{fill:var(--cyan)}
+.readout{margin-top:10px;background:rgba(3,12,28,.55);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:16px}
+.readout .big{font-size:20px;font-weight:700}
+.y{color:var(--yellow)}.c{color:var(--cyan)}.p{color:var(--pink)}.o{color:var(--orange)}.g{color:var(--green)}.r{color:var(--red)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.seg button,.btn{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 14px;font-size:14px}
+.seg button.on,.btn.pri{background:var(--cyan);color:#06142b;border-color:var(--cyan);font-weight:700}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:10px;font-size:15px}
+.ctrl input[type=range]{accent-color:var(--cyan);width:150px;vertical-align:middle}
+.hint{color:var(--mute);font-size:13px;margin:6px 0 0}
+
+/* ---------- Quiz ---------- */
+.q{padding:10px 0;border-bottom:1px dashed var(--line)}
+.qt{margin:0 0 8px;font-size:16px}
+.qt b{color:var(--yellow);margin-right:4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:rgba(3,12,28,.5);border-radius:10px;padding:7px 10px;font-size:15px;display:flex;gap:8px;align-items:center}
+.opt span{display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:var(--panel2);font-size:12px;font-weight:700}
+.opt:hover{border-color:var(--cyan)}
+.answered .opt{cursor:default}
+.opt.right{border-color:var(--green);background:rgba(62,224,143,.18)}
+.opt.wrong{border-color:var(--red);background:rgba(255,90,90,.18)}
+.exp{margin:6px 0 0;font-size:14px;display:none}
+.exp.ok{display:block;color:var(--green)}.exp.no{display:block;color:#ffb3b3}
+.q-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px}
+.score{font-weight:700;color:var(--yellow)}
+
+/* ---------- YouTube ---------- */
+.yt-player{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.yt-player iframe{width:100%;height:100%;border:0;display:block}
+.yt-bar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.yt-bar a{color:var(--cyan);font-size:14px}
+
+/* ---------- Review ---------- */
+.review-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:start}
+@media(max-width:900px){.review-grid{grid-template-columns:1fr}}
+.full-info{width:100%;border-radius:12px;cursor:zoom-in;display:block}
+video{width:100%;border-radius:12px;background:#000;display:block}
+
+/* ---------- Lightbox / big overlay ---------- */
+.overlay{position:fixed;inset:0;z-index:2000;background:rgba(2,8,20,.88);display:none;place-items:center;padding:20px}
+.overlay.on{display:grid}
+.overlay img{max-width:96vw;max-height:94vh;border-radius:10px}
+#bigShow .bignum{font-size:min(38vw,60vh);font-weight:900;line-height:1;color:var(--yellow);text-shadow:0 0 60px rgba(255,216,77,.5);font-variant-numeric:tabular-nums}
+#bigShow .bigsub{text-align:center;color:var(--mute);font-size:22px;margin-top:10px}
+#bigShow.alarm .bignum{color:var(--red);animation:blink .5s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- Tools panel ---------- */
+/* 左側直式工具列：固定在左邊、整個高度；頁面內容用 body 的 padding-left 讓位，所以不會被遮住。
+   收合時變成 60px 寬的圖示列（body.tools-min）。 */
+.tools{position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:1000;background:rgba(11,33,71,.98);border-right:1px solid rgba(54,224,255,.45);box-shadow:4px 0 24px rgba(0,0,0,.35);display:flex;flex-direction:column;transition:width .2s}
+.tools-head{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:12px;background:linear-gradient(180deg,#123a78,#0e2d5f);user-select:none;font-weight:700;white-space:nowrap}
+.tools-head button{border:none;background:rgba(255,255,255,.14);border-radius:8px;width:34px;height:30px;font-size:16px;flex:none}
+.tools-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 14px 16px}
+.tool-tabs{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:12px}
+.tool-tabs button{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 10px;font-size:15px;display:flex;align-items:center;gap:8px;text-align:left;white-space:nowrap}
+.tool-tabs i{font-style:normal;font-size:20px;line-height:1}
+.tool-tabs button.on{background:var(--cyan);color:#06142b;font-weight:700;border-color:var(--cyan)}
+.tools.min .tools-head{justify-content:center;padding:12px 0}
+.tools.min .tools-head .lbl,.tools.min .tool-tabs span,.tools.min .tool-pane{display:none!important}
+.tools.min .tools-body{padding:10px 8px}
+.tools.min .tool-tabs button{justify-content:center;padding:10px 0}
+.tool-pane{display:none}.tool-pane.on{display:block}
+.trow{display:flex;gap:6px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.trow input[type=number]{width:70px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:#06142b;color:var(--ink)}
+.tbtn{flex:1;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 4px;font-size:14px}
+.tbtn.on{border-color:var(--cyan);color:var(--cyan)}
+.tbig{width:100%;border:none;border-radius:12px;padding:10px;font-size:17px;font-weight:900;background:linear-gradient(90deg,var(--yellow),#ffb84d);color:#06142b;margin:6px 0}
+.tbig.stop{background:linear-gradient(90deg,var(--pink),var(--red));color:#fff}
+.lot-num{text-align:center;font-size:72px;font-weight:900;color:var(--yellow);line-height:1.1;font-variant-numeric:tabular-nums;min-height:80px}
+.lot-hist{display:flex;flex-wrap:wrap;gap:4px;min-height:24px;font-size:13px}
+.lot-hist span{background:var(--panel2);border-radius:6px;padding:1px 7px}
+.lot-info{font-size:13px;color:var(--mute)}
+.chk{font-size:14px;display:flex;gap:6px;align-items:center}
+.timer-disp{text-align:center;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--cyan);line-height:1.15}
+.timer-disp.alarm{color:var(--red);animation:blink .5s steps(2) infinite}
+.swatches{display:flex;gap:8px;margin:8px 0}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid transparent;padding:0}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--cyan)}
+#ink{position:fixed;inset:0;z-index:900;pointer-events:none}
+#ink.active{pointer-events:auto;cursor:crosshair}
+body.inking .tools{box-shadow:inset 0 0 0 3px var(--pink),4px 0 24px rgba(0,0,0,.35)}
+@media(max-width:700px){:root{--tools-w:210px;--rail-w:52px}}
+.info-strip{margin-bottom:18px}
+.stack{display:grid;gap:18px;align-content:start}
+.info-strip .info-crop{max-width:1100px;margin:0 auto}
+/* ---------- Mind map ---------- */
+.mm-root{text-align:center;margin:0 auto 16px;max-width:420px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,#36e0ff,#7aa8ff);color:#06142b;font-weight:900;font-size:22px;box-shadow:0 0 24px rgba(54,224,255,.35)}
+.mm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.mm-br{border:1px solid var(--line);border-top:4px solid var(--bc);border-radius:14px;background:rgba(3,12,28,.5);padding:10px 12px}
+.mm-br h4{margin:0 0 8px;color:var(--bc);font-size:17px}
+.mm-br details{margin:6px 0;border-left:2px solid var(--bc);padding-left:10px}
+.mm-br summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}
+.mm-br summary::-webkit-details-marker{display:none}
+.mm-br summary::before{content:'▸ ';color:var(--bc)}
+.mm-br details[open]>summary::before{content:'▾ '}
+.mm-leaf{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.mm-leaf span{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:14px}
+/* ---------- Flashcards ---------- */
+.fc-wrap{max-width:760px;margin:0 auto}
+.fc{perspective:1200px;cursor:pointer;height:280px;outline:none}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:grid;place-items:center;padding:24px 28px;text-align:center;font-size:clamp(18px,2.6vw,26px);font-weight:700;line-height:1.5;overflow:auto}
+.fc-front{background:linear-gradient(160deg,#123a78,#0b2147);border:2px solid var(--cyan)}
+.fc-back{background:linear-gradient(160deg,#1b4d3a,#0b2a24);border:2px solid var(--green);transform:rotateY(180deg);font-weight:500}
+.fc-tag{position:absolute;top:10px;left:14px;font-size:13px;color:var(--mute);font-weight:500}
+.fc-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:12px}
+.fc-stat{color:var(--mute);font-size:14px;text-align:center;margin-top:8px}
+@media(max-width:700px){.fc{height:320px}}
+.viz text.y{fill:var(--yellow)}.viz text.c{fill:var(--cyan)}.viz text.p{fill:var(--pink)}.viz text.o{fill:var(--orange)}.viz text.g{fill:var(--green)}
+.seg button:disabled{opacity:.4}
+.ctrl input[type=range]:disabled{opacity:.35}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="kicker">高中選修生物 III（龍騰版）· 第二章</div>
+    <h1>循環與消化</h1>
+    <p>2-1 循環系統的類型與心臟 ｜ 2-2 血管與血壓 ｜ 2-3 血液與淋巴系統 ｜ 2-4 消化系統與消化作用 ｜ 2-5 養分的吸收與消化的調節</p>
+  </div>
+</header>
+
+<nav class="top"><div class="in">
+  <a href="../" title="回到選修生物 III 目錄"><b>⌂</b>選修生物 III</a>
+  <a href="#s1"><b>2-1</b>心臟</a>
+  <a href="#s2"><b>2-2</b>血管與血壓</a>
+  <a href="#s3"><b>2-3</b>血液與淋巴</a>
+  <a href="#s4"><b>2-4</b>消化作用</a>
+  <a href="#s5"><b>2-5</b>吸收與調節</a>
+  <a href="#mind"><b>🧠</b>心智圖</a>
+  <a href="#cards"><b>🃏</b>學習卡</a>
+  <a href="#review"><b>★</b>總複習</a>
+</div></nav>
+
+<main>
+
+<!-- ================= 2-1 ================= -->
+<section class="unit" id="s1">
+  <div class="unit-head"><span class="tag">2-1</span><div>
+    <h2>循環系統的類型與心臟</h2>
+    <ul><li>體循環：左心室 → 主動脈 → 全身 → 上下腔靜脈 → 右心房；肺循環：右心室 → 肺動脈 → 肺 → 肺靜脈 → 左心房</li><li>心動週期 0.8 s（心房收縮 0.1、心室收縮 0.3、全心舒張 0.4）；心輸出量 = 心跳速率 × 每搏輸出量</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s1" role="img" aria-label="資訊圖表：心臟"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：心動週期與心電圖</h3>
+      <svg id="v1" viewBox="0 0 520 330"></svg>
+      <div class="ctrl">
+        <label>心跳 <b id="v1hrv"></b> 次／分 <input type="range" id="v1hr" min="50" max="180" value="75"></label>
+        <label>每搏輸出量 <b id="v1svv"></b> mL <input type="range" id="v1sv" min="40" max="120" value="70"></label>
+      </div>
+      <div class="ctrl">
+        <button class="btn pri" id="v1play">⏸ 暫停</button>
+        <div class="seg" id="v1spd" style="margin:0"><button class="on" data-sp="0.25">慢動作 ×¼</button><button data-sp="1">真實速度</button></div>
+        <label>時間 <input type="range" id="v1t" min="0" max="2.4" step="0.005" value="0"></label>
+      </div>
+      <div class="seg" id="v1pre" style="margin-top:10px"><button data-v="75,70">安靜（例題 2-1-1）</button><button data-v="150,100">劇烈運動（例題 2-1-1）</button><button data-v="80,75">評量第 4 題</button><button data-v="100,70">R–R 15 小格（評量第 3 題）</button></div>
+      <div class="readout" id="v1out"></div>
+      <p class="hint">示意圖：心臟以「面對病人」的方向繪製，所以右心在畫面左邊。拉高心跳，觀察哪一個時期縮短最多。</p>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="2,3,4,5,6"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s1"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2-2 ================= -->
+<section class="unit" id="s2">
+  <div class="unit-head"><span class="tag">2-2</span><div>
+    <h2>血管與血壓</h2>
+    <ul><li>血壓沿血流方向下降，小動脈降最多、大靜脈與右心房最低；微血管總截面積最大，所以流速最慢</li><li>微血管：血壓把液體推出、膠體滲透壓把液體吸回（動脈端 35 − 25 = +10 濾出，靜脈端 15 − 25 = −10 回收）</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s2" role="img" aria-label="資訊圖表：血壓"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：微血管物質交換與水腫</h3>
+      <div class="seg" id="v2tabs"><button class="on" data-m="cap">微血管物質交換</button><button data-m="flow">血壓、截面積與流速</button></div>
+      <div id="v2cap">
+        <svg id="v2" viewBox="0 0 520 300"></svg>
+        <div class="ctrl">
+          <label>動脈端血壓 <b id="v2av"></b> mmHg <input type="range" id="v2a" min="20" max="50" value="35"></label>
+          <label>靜脈端血壓 <b id="v2vv"></b> mmHg <input type="range" id="v2v" min="5" max="35" value="15"></label>
+          <label>膠體滲透壓 <b id="v2pv"></b> mmHg <input type="range" id="v2p" min="10" max="35" value="25"></label>
+          <label class="chk"><input type="checkbox" id="v2lym"> 淋巴管阻塞</label>
+        </div>
+        <div class="seg" id="v2pre" style="margin-top:10px"><button data-v="35,15,25,0">正常（數值約定）</button><button data-v="35,15,15,0">肝病：血漿蛋白減少（例題 2-2-2）</button><button data-v="35,25,25,0">心臟衰竭：靜脈壓升高</button><button data-v="35,15,25,1">淋巴管阻塞（象皮病）</button><button data-v="25,10,25,0">大量失血後</button></div>
+      </div>
+      <div id="v2flow" hidden>
+        <svg id="v2b" viewBox="0 0 520 330"></svg>
+        <p class="hint">點一種血管看約略數值（示意，數值為成人安靜時的約略值）。</p>
+      </div>
+      <div class="readout" id="v2out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="7,8,9,10"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s2"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2-3 ================= -->
+<section class="unit" id="s3">
+  <div class="unit-head"><span class="tag">2-3</span><div>
+    <h2>血液與淋巴系統</h2>
+    <ul><li>血漿 55%＋血球 45%；凝血：凝血酶原 →（Ca²⁺）凝血酶，纖維蛋白原 → 纖維蛋白</li><li>ABO 血型看紅血球上的抗原，抗體在血漿；Rh⁻ 接觸 Rh⁺ 後才產生抗體；輸血以同型為原則</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s3" role="img" aria-label="資訊圖表：血液"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：血型鑑定與輸血</h3>
+      <div class="seg" id="v3tabs"><button class="on" data-m="type">血型鑑定玻片</button><button data-m="tx">輸血配對</button></div>
+      <div id="v3type">
+        <div class="seg" id="v3abo"><span class="hint" style="margin:4px 6px 0 0">血型：</span><button class="on" data-t="A">A</button><button data-t="B">B</button><button data-t="AB">AB</button><button data-t="O">O</button></div>
+        <div class="seg" id="v3rh"><span class="hint" style="margin:4px 6px 0 0">Rh：</span><button class="on" data-r="+">Rh⁺</button><button data-r="-">Rh⁻</button><button id="v3mys" class="btn" style="margin-left:8px">🎲 神秘血液</button><button id="v3reveal" class="btn" hidden>揭曉答案</button></div>
+      </div>
+      <div id="v3tx" hidden>
+        <div class="seg" id="v3don"><span class="hint" style="margin:4px 6px 0 0">捐血者：</span><button data-dn="A+">A⁺</button><button data-dn="B+">B⁺</button><button data-dn="AB+">AB⁺</button><button class="on" data-dn="O+">O⁺</button><button data-dn="A-">A⁻</button><button data-dn="O-">O⁻</button></div>
+        <div class="seg" id="v3rec"><span class="hint" style="margin:4px 6px 0 0">受血者：</span><button class="on" data-c="A+">A⁺</button><button data-c="B+">B⁺</button><button data-c="AB+">AB⁺</button><button data-c="O+">O⁺</button><button data-c="A-">A⁻</button><button data-c="O-">O⁻</button></div>
+        <label class="chk" style="margin-bottom:8px"><input type="checkbox" id="v3sens"> 受血者（Rh⁻）曾接觸 Rh⁺ 血液，已產生抗 Rh 抗體</label>
+      </div>
+      <svg id="v3" viewBox="0 0 520 300"></svg>
+      <div class="seg" id="v3pre" style="margin-top:10px"><button data-v="A+">例題 2-3-1</button><button data-v="B+">評量第 7 題</button><button data-v="O-">O 型 Rh⁻</button></div>
+      <div class="readout" id="v3out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="11,12,13,14"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s3"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2-4 ================= -->
+<section class="unit" id="s4">
+  <div class="unit-head"><span class="tag">2-4</span><div>
+    <h2>消化系統與消化作用</h2>
+    <ul><li>口腔：唾液澱粉酶（澱粉 → 麥芽糖）；胃：鹽酸活化胃蛋白酶（蛋白質 → 多肽）</li><li>小腸：膽汁乳化脂肪（不含酶）、胰液含 NaHCO₃ 與胰澱粉酶、胰蛋白酶、胰脂肪酶；刷狀緣酶完成最後分解</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s4" role="img" aria-label="資訊圖表：消化"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：消化酶實驗室</h3>
+      <div class="seg" id="v4tabs"><button class="on" data-m="lab">酶的試管實驗</button><button data-m="trip">一片奶油吐司的旅行</button></div>
+      <div id="v4lab">
+        <div class="seg" id="v4enz"><span class="hint" style="margin:4px 6px 0 0">酶：</span><button class="on" data-e="amy">唾液澱粉酶</button><button data-e="pep">胃蛋白酶</button><button data-e="lip">胰脂肪酶</button></div>
+        <svg id="v4" viewBox="0 0 520 290"></svg>
+        <div class="ctrl">
+          <label>溫度 <b id="v4tv"></b> °C <input type="range" id="v4t" min="0" max="100" value="37"></label>
+          <label>pH <b id="v4pv"></b> <input type="range" id="v4p" min="1" max="11" step="0.5" value="7"></label>
+          <label class="chk"><input type="checkbox" id="v4boil"> 酶先煮沸過</label>
+          <label class="chk" id="v4bileL" hidden><input type="checkbox" id="v4bile" checked> 加入膽汁</label>
+        </div>
+        <div class="seg" id="v4pre" style="margin-top:10px"><button data-v="amy,37,7,0">例題 2-4-1 甲</button><button data-v="amy,37,7,1">乙（煮沸）</button><button data-v="amy,0,7,0">丙（0 °C）</button><button data-v="amy,37,2,0">丁（加鹽酸）</button><button data-v="pep,37,8,0">胃蛋白酶到小腸</button></div>
+      </div>
+      <div id="v4trip" hidden>
+        <div class="seg" id="v4st"></div>
+        <svg id="v4b" viewBox="0 0 520 290"></svg>
+        <div class="ctrl"><button class="btn" id="v4prev">‹ 上一站</button><button class="btn pri" id="v4next">下一站 ›</button></div>
+      </div>
+      <div class="readout" id="v4out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="15,16,17,18"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s4"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2-5 ================= -->
+<section class="unit" id="s5">
+  <div class="unit-head"><span class="tag">2-5</span><div>
+    <h2>養分的吸收與消化的調節</h2>
+    <ul><li>單醣、胺基酸 → 絨毛微血管 → 肝門靜脈 → 肝臟；脂肪酸、甘油單酯 → 乳糜微粒 → 乳糜管 → 淋巴 → 胸管 → 鎖骨下靜脈</li><li>胃泌素促進胃液分泌；胰泌素促進胰臟分泌 NaHCO₃；膽囊收縮素促進膽汁排出與胰臟分泌消化酶</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s5" role="img" aria-label="資訊圖表：吸收"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：養分去哪裡？激素怎麼調節？</h3>
+      <div class="seg" id="v5tabs"><button class="on" data-m="path">吸收路徑</button><button data-m="horm">消化激素</button></div>
+      <div id="v5path">
+        <div class="seg" id="v5nut"><button class="on" data-n="glu">葡萄糖</button><button data-n="aa">胺基酸</button><button data-n="fat">脂肪酸、甘油單酯</button><button data-n="vit">維生素 A（脂溶性）</button><button data-n="water">水</button></div>
+      </div>
+      <div id="v5horm" hidden>
+        <div class="seg" id="v5ev"><button class="on" data-h="nerve">看到、聞到食物</button><button data-h="gas">蛋白質食物進入胃</button><button data-h="sec">酸性食糜進入十二指腸</button><button data-h="cck">脂肪分解產物進入十二指腸</button></div>
+      </div>
+      <svg id="v5" viewBox="0 0 520 310"></svg>
+      <div class="ctrl"><button class="btn pri" id="v5play">▶ 播放路徑</button></div>
+      <div class="readout" id="v5out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="19,20,21,22"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s5"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Mind map ================= -->
+<section class="unit" id="mind">
+  <div class="unit-head"><span class="tag">🧠</span><div>
+    <h2>本章心智圖</h2>
+    <ul><li>NotebookLM 產生的概念架構（中文版）：點小標題可展開或收合</li><li>上課可先全部收合，請學生猜每個分支下面有什麼，再逐一打開</li></ul>
+  </div></div>
+  <div class="card">
+    <div class="fc-bar" style="justify-content:flex-start;margin:0 0 12px"><button class="btn pri" id="mmOpen">全部展開</button><button class="btn" id="mmClose">全部收合</button></div>
+    <div id="mindmap"></div>
+  </div>
+</section>
+
+<!-- ================= Flashcards ================= -->
+<section class="unit" id="cards">
+  <div class="unit-head"><span class="tag">🃏</span><div>
+    <h2>學習卡</h2>
+    <ul><li>點卡片（或按空白鍵）翻面看答案；← → 切換上一張、下一張</li><li>標記「我會了／再複習」，可以只練還不熟的卡片；標記只存在這台電腦的瀏覽器</li></ul>
+  </div></div>
+  <div class="card"><div class="fc-wrap">
+    <div class="seg" id="fcFilter"><button class="on" data-f="all">全部</button><button data-f="todo">只練「再複習」與未標記</button></div>
+    <div class="fc" id="fc" tabindex="0" role="button" aria-label="學習卡，點一下翻面"><div class="fc-in">
+      <div class="fc-face fc-front"><span class="fc-tag" id="fcTagF"></span><div id="fcFront"></div></div>
+      <div class="fc-face fc-back"><span class="fc-tag" id="fcTagB"></span><div id="fcBack"></div></div>
+    </div></div>
+    <div class="fc-bar">
+      <button class="btn" id="fcPrev">‹ 上一張</button><button class="btn pri" id="fcFlip">翻面</button><button class="btn" id="fcNext">下一張 ›</button>
+      <button class="btn" id="fcShuffle">🔀 洗牌</button>
+    </div>
+    <div class="fc-bar">
+      <button class="btn" id="fcKnow" style="border-color:var(--green)">✔ 我會了</button><button class="btn" id="fcAgain" style="border-color:var(--orange)">↻ 再複習</button><button class="btn" id="fcReset">清除標記</button>
+    </div>
+    <div class="fc-stat" id="fcStat"></div>
+  </div></div>
+</section>
+
+<!-- ================= Review ================= -->
+<section class="unit" id="review">
+  <div class="unit-head"><span class="tag">★</span><div>
+    <h2>總複習</h2>
+    <ul><li>本章核心重點、形成性評量 10 題（附答案）、完整資訊圖表與教學影片</li></ul>
+  </div></div>
+  <div class="review-grid">
+    <div>
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報：核心重點與形成性評量</h3><div class="carousel" data-slides="1,23,24,25"></div></div>
+      <div class="card" style="margin-top:18px"><h3><span class="n">▶</span>NotebookLM 教學影片</h3>
+        <div class="yt-player" id="mainVideo"><iframe src="https://www.youtube.com/embed/A3qJ54zBAcU?rel=0&amp;playsinline=1" title="選修生物 III 第二章 循環與消化 教學影片" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="yt-bar"><span class="hint" style="margin:0">若無法播放，請改在 YouTube 觀看</span><a href="https://www.youtube.com/watch?v=A3qJ54zBAcU" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a></div>
+      </div>
+    </div>
+    <div class="card"><h3><span class="n">4</span>完整資訊圖表</h3><img class="full-info" src="assets/infographic.jpg" alt="循環與消化完整資訊圖表"><div class="cap">點一下放大</div></div>
+  </div>
+</section>
+</main>
+
+<!-- ================= Tools ================= -->
+<aside class="tools" id="tools">
+  <div class="tools-head" id="toolsHead"><span class="lbl">🧰 教學工具</span><button id="toolsMin" title="收合成工具列">«</button></div>
+  <div class="tools-body">
+    <div class="tool-tabs">
+      <button class="on" data-t="lot" title="抽籤"><i>🎲</i><span>抽籤</span></button><button data-t="timer" title="計時器"><i>⏱</i><span>計時</span></button><button data-t="pen" title="畫筆"><i>✏️</i><span>畫筆</span></button>
+    </div>
+
+    <div class="tool-pane on" data-p="lot">
+      <div class="trow">座號 <input type="number" id="lotFrom" value="1" min="1"> 到 <input type="number" id="lotTo" value="30" min="1"></div>
+      <label class="chk"><input type="checkbox" id="lotNoRep" checked> 抽過的不重複</label>
+      <div class="lot-num" id="lotNum">?</div>
+      <button class="tbig" id="lotGo">🎲 開始抽籤</button>
+      <div class="lot-info" id="lotInfo">已抽：</div>
+      <div class="lot-hist" id="lotHist"></div>
+      <div class="trow"><button class="tbtn" id="lotReset">清除紀錄</button><label class="chk" style="flex:1"><input type="checkbox" id="lotBig" checked> 放大顯示</label></div>
+    </div>
+
+    <div class="tool-pane" data-p="timer">
+      <div class="timer-disp" id="tDisp">03:00</div>
+      <div class="trow">
+        <button class="tbtn" data-s="30">30秒</button><button class="tbtn" data-s="60">1分</button><button class="tbtn" data-s="180">3分</button><button class="tbtn" data-s="300">5分</button><button class="tbtn" data-s="600">10分</button>
+      </div>
+      <div class="trow">
+        <button class="tbtn" data-d="-60">−1分</button><button class="tbtn" data-d="-10">−10秒</button><button class="tbtn" data-d="10">+10秒</button><button class="tbtn" data-d="60">+1分</button>
+      </div>
+      <button class="tbig" id="tStart">▶ 開始</button>
+      <div class="trow"><button class="tbtn" id="tReset">↺ 重設</button><button class="tbtn" id="tBig">⛶ 放大</button><label class="chk"><input type="checkbox" id="tSound" checked> 鈴聲</label></div>
+    </div>
+
+    <div class="tool-pane" data-p="pen">
+      <button class="tbig" id="penToggle">✏️ 開始畫筆</button>
+      <div class="swatches" id="penColors"></div>
+      <div class="trow">粗細 <input type="range" id="penSize" min="2" max="24" value="5" style="flex:1;accent-color:var(--cyan)"></div>
+      <div class="trow" id="penModes"><button class="tbtn on" data-m="pen">畫筆</button><button class="tbtn" data-m="hl">螢光筆</button><button class="tbtn" data-m="er">橡皮擦</button></div>
+      <div class="trow"><button class="tbtn" id="penUndo">↶ 復原</button><button class="tbtn" id="penClear">🗑 全部清除</button></div>
+      <p class="hint">畫的內容會跟著頁面捲動。按 Esc 結束畫筆。</p>
+    </div>
+  </div>
+</aside>
+
+<canvas id="ink"></canvas>
+<div class="overlay" id="lightbox"><img alt="放大圖"></div>
+<div class="overlay" id="bigShow"><div><div class="bignum" id="bigNum"></div><div class="bigsub" id="bigSub">點任意處關閉</div></div></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(g,x,y,s,cls='lbl',anchor='middle'){const t=el('text',{x,y,class:cls,'text-anchor':anchor,'dominant-baseline':'middle'},g);t.textContent=s;return t;}
+const D=Math.PI/180;
+function norm(d){while(d<=-Math.PI)d+=2*Math.PI;while(d>Math.PI)d-=2*Math.PI;return d;}
+function arcD(P,Q,R,r,sector){const a1=Math.atan2(Q.y-P.y,Q.x-P.x);const d=norm(Math.atan2(R.y-P.y,R.x-P.x)-a1);const a2=a1+d;
+  const x1=P.x+r*Math.cos(a1),y1=P.y+r*Math.sin(a1),x2=P.x+r*Math.cos(a2),y2=P.y+r*Math.sin(a2);
+  const s=`A${r},${r} 0 0 ${d>0?1:0} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+  return sector?`M${P.x},${P.y} L${x1.toFixed(1)},${y1.toFixed(1)} ${s} Z`:`M${x1.toFixed(1)},${y1.toFixed(1)} ${s}`;}
+function midDir(P,Q,R){const a1=Math.atan2(Q.y-P.y,Q.x-P.x);return a1+norm(Math.atan2(R.y-P.y,R.x-P.x)-a1)/2;}
+function ang(P,Q,R){return Math.abs(norm(Math.atan2(Q.y-P.y,Q.x-P.x)-Math.atan2(R.y-P.y,R.x-P.x)))/D;}
+function dist(P,Q){return Math.hypot(P.x-Q.x,P.y-Q.y);}
+function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse());}
+function drag(svg,h,onMove){h.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();h.setPointerCapture(e.pointerId);
+  const mv=ev=>onMove(svgPt(svg,ev));const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
+  h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);});}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const f0=v=>Math.round(v), f1=v=>(Math.round(v*10)/10).toString();
+
+/* ================= Carousel ================= */
+function buildCarousel(root){
+  const ids=root.dataset.slides.split(',').map(Number);
+  root.innerHTML=`<div class="car-stage">${ids.map((n,i)=>`<img src="assets/slides/slide${String(n).padStart(2,'0')}.jpg" alt="簡報第 ${n} 頁" class="${i?'':'on'}" draggable="false">`).join('')}
+    <button class="car-btn prev" aria-label="上一張">‹</button><button class="car-btn next" aria-label="下一張">›</button>
+    <button class="car-fs" title="全螢幕播放">⛶</button></div>
+    <div class="car-bar"><div class="dots">${ids.map((n,i)=>`<button class="dot ${i?'':'on'}" aria-label="第 ${i+1} 張"></button>`).join('')}</div><span class="count">1 / ${ids.length}</span></div>`;
+  let i=0;const st=$('.car-stage',root),imgs=$$('img',root),dots=$$('.dot',root),cnt=$('.count',root);
+  const go=k=>{i=(k+ids.length)%ids.length;imgs.forEach((im,j)=>im.classList.toggle('on',j===i));dots.forEach((d,j)=>d.classList.toggle('on',j===i));cnt.textContent=`${i+1} / ${ids.length}`;};
+  $('.prev',root).onclick=()=>go(i-1);$('.next',root).onclick=()=>go(i+1);
+  dots.forEach((d,j)=>d.onclick=()=>go(j));
+  root.tabIndex=0;
+  const key=e=>{if(e.key==='ArrowLeft'){go(i-1);e.preventDefault();}if(e.key==='ArrowRight'){go(i+1);e.preventDefault();}};
+  root.addEventListener('keydown',key);
+  document.addEventListener('keydown',e=>{if(document.fullscreenElement===st)key(e);});
+  $('.car-fs',root).onclick=()=>{document.fullscreenElement?document.exitFullscreen():st.requestFullscreen&&st.requestFullscreen();};
+  let sx=null;st.addEventListener('pointerdown',e=>{if(!e.target.closest('button'))sx=e.clientX;});
+  st.addEventListener('pointerup',e=>{if(sx!==null&&Math.abs(e.clientX-sx)>50)go(i+(e.clientX<sx?1:-1));sx=null;});
+}
+$$('.carousel').forEach(buildCarousel);
+
+/* ================= Infographic crops ================= */
+const IW=1536,IH=2752;
+const CROPS={s1:[60,305,1430,580],s2:[60,900,1430,395],s3:[60,1322,1430,410],s4:[60,1742,1430,325],s5:[60,2080,1430,380]};
+const lb=$('#lightbox');
+function openLB(src){$('img',lb).src=src;lb.classList.add('on');}
+lb.onclick=()=>lb.classList.remove('on');
+$$('.info-crop').forEach(r=>{const[x,y,w,h]=CROPS[r.dataset.crop];
+  r.style.aspectRatio=`${w}/${h}`;r.style.backgroundImage='url(assets/infographic.jpg)';
+  r.style.backgroundSize=`${IW/w*100}% auto`;r.style.backgroundPosition=`${x/(IW-w)*100}% ${y/(IH-h)*100}%`;
+  r.onclick=()=>openLB('assets/infographic.jpg');});
+$('.full-info').onclick=()=>openLB('assets/infographic.jpg');
+
+function segTabs(root,cb){$$('button',root).forEach(b=>b.addEventListener('click',()=>{$$('button',root).forEach(x=>x.classList.toggle('on',x===b));cb(b);}));}
+/* ================= Quiz ================= */
+const QUIZ={
+ s1:[
+  {q:'下列哪一類動物的心臟是「二心房一心室」？',o:['魚類','兩生類','鳥類','哺乳類'],a:1,e:'魚類一心房一心室；兩生類二心房一心室（心室內血液部分混合）；鳥類與哺乳類二心房二心室。'},
+  {q:'心室把血液射入動脈時，房室瓣與半月瓣的狀態為？',o:['房室瓣開、半月瓣關','房室瓣關、半月瓣開','兩者都開','兩者都關'],a:1,e:'心室收縮時房室瓣關閉（第一心音），防止血液逆流回心房；半月瓣打開讓血液進入動脈。'},
+  {q:'某人心跳 60 次／分、每搏輸出量 80 mL，心輸出量為？',o:['4.8 L／分','1.33 L／分','140 mL／分','48 L／分'],a:0,e:'心輸出量 = 心跳速率 × 每搏輸出量 = 60 × 80 = 4800 mL／分 = 4.8 L／分。'},
+  {q:'心電圖中的 QRS 波群代表什麼？',o:['心房去極化','心室去極化','心室再極化','房室結延遲'],a:1,e:'P 波是心房去極化、QRS 波群是心室去極化、T 波是心室再極化；心電圖記錄的是電位變化，不是收縮力量。'}],
+ s2:[
+  {q:'血液流經哪一種血管時，血壓下降的幅度最大？',o:['主動脈','小動脈','微血管','大靜脈'],a:1,e:'小動脈管徑小、阻力大，血壓在這裡下降最多；血壓最低則在大靜脈與右心房。'},
+  {q:'微血管中血流速度最慢，主要原因是？',o:['微血管最細','微血管的總截面積最大','微血管離心臟最遠','微血管沒有平滑肌'],a:1,e:'血流速度與血管「總截面積」成反比。單一條微血管雖細，但數量極多，總截面積最大，所以流速最慢。'},
+  {q:'依數值約定，微血管動脈端血壓 35 mmHg、血漿膠體滲透壓 25 mmHg，動脈端的淨壓為？',o:['+10 mmHg，液體濾出','−10 mmHg，液體回收','+60 mmHg，液體濾出','0 mmHg，不移動'],a:0,e:'淨壓 = 血壓 − 膠體滲透壓 = 35 − 25 = +10 mmHg，液體被推出微血管成為組織液。'},
+  {q:'蹲久了突然站起來，頭部血壓下降時，身體立即的反應是？',o:['交感神經作用增強，心跳加快','迷走神經作用增強，心跳變慢','全身小動脈擴張','腎上腺素分泌減少'],a:0,e:'壓力感受器偵測血壓下降 → 延腦增加交感神經、減少迷走神經作用 → 心跳加快、小動脈收縮，血壓回升（負回饋）。'}],
+ s3:[
+  {q:'血清與血漿的差別是？',o:['血清不含水','血清缺少纖維蛋白原等凝血因子','血清含有血球','兩者完全相同'],a:1,e:'血清是血液凝固後析出的液體 = 血漿 − 纖維蛋白原等凝血因子。'},
+  {q:'捐血袋中加入檸檬酸鈉可以防止凝血，原因是？',o:['破壞血小板','除去 Ca²⁺','分解纖維蛋白','殺死細菌'],a:1,e:'檸檬酸鈉與 Ca²⁺ 結合，凝血酶原無法轉變為凝血酶；再加入足量 Ca²⁺ 就能恢復凝血。'},
+  {q:'AB 型血液的血漿中含有哪些 ABO 抗體？',o:['抗 A','抗 B','抗 A 與抗 B','都沒有'],a:3,e:'AB 型紅血球上有 A 與 B 抗原，血漿中沒有抗 A、抗 B 抗體。'},
+  {q:'淋巴最後經胸管注入哪一條血管，回到血液循環？',o:['肝門靜脈','肺靜脈','鎖骨下靜脈','主動脈'],a:2,e:'淋巴經胸管（及右淋巴總管）注入鎖骨下靜脈，回到血液循環。'}],
+ s4:[
+  {q:'關於膽汁，下列敘述何者正確？',o:['含有脂肪酶','由膽囊製造','把脂肪乳化成小油滴','把脂肪分解成脂肪酸'],a:2,e:'膽汁由肝臟製造、膽囊儲存，不含消化酶；膽鹽把脂肪乳化，真正分解脂肪的是胰脂肪酶。'},
+  {q:'胃蛋白酶的最適 pH 大約是？',o:['2','7','8','11'],a:0,e:'胃液 pH 約 1.5～2，胃蛋白酶在強酸中活性最高；到了被 NaHCO₃ 中和的小腸就失去活性。'},
+  {q:'在十二指腸把胰蛋白酶原活化成胰蛋白酶的是？',o:['鹽酸','膽鹽','腸激酶','胃蛋白酶'],a:2,e:'胰蛋白酶原由腸激酶活化；胃蛋白酶原才是由鹽酸活化。酶原到了作用部位才活化，避免分解胰臟自己。'},
+  {q:'澱粉在人體內最後被分解成葡萄糖，依序需要哪些酶？',o:['胃蛋白酶 → 麥芽糖酶','澱粉酶 → 麥芽糖酶','脂肪酶 → 蔗糖酶','澱粉酶 → 胜肽酶'],a:1,e:'唾液澱粉酶或胰澱粉酶把澱粉分解為麥芽糖，小腸刷狀緣的麥芽糖酶再把麥芽糖分解為葡萄糖。'}],
+ s5:[
+  {q:'脂肪酸與甘油單酯被小腸吸收後，主要先進入哪裡？',o:['絨毛微血管','乳糜管','肝門靜脈','大腸'],a:1,e:'在上皮細胞內重新合成三酸甘油酯、包成乳糜微粒，進入乳糜管，經淋巴系統才進入血液。'},
+  {q:'葡萄糖被吸收後，最先送到哪一個器官處理？',o:['心臟','肺','肝臟','腎臟'],a:2,e:'葡萄糖 → 絨毛微血管 → 肝門靜脈 → 肝臟（多餘的葡萄糖可合成肝醣），再經肝靜脈、下腔靜脈回到心臟。'},
+  {q:'酸性食糜進入十二指腸，會刺激哪一種激素分泌？作用為何？',o:['胃泌素，促進胃液分泌','胰泌素，促進胰臟分泌 NaHCO₃','膽囊收縮素，促進膽囊收縮','胰島素，降低血糖'],a:1,e:'十二指腸黏膜受酸刺激分泌胰泌素，經血液到胰臟，促進分泌富含 NaHCO₃ 的胰液來中和胃酸。'},
+  {q:'促進膽囊收縮、排出膽汁的激素是？',o:['胃泌素','胰泌素','膽囊收縮素','腎上腺素'],a:2,e:'脂肪、蛋白質的分解產物進入十二指腸 → 分泌膽囊收縮素（CCK）→ 膽囊收縮、胰臟分泌消化酶。'}]
+};
+function buildQuiz(root){
+  const qs=QUIZ[root.dataset.quiz];let score=0,done=0;
+  root.innerHTML=qs.map((it,k)=>`<div class="q" data-k="${k}"><p class="qt"><b>Q${k+1}</b>${it.q}</p><div class="opts">${it.o.map((o,j)=>`<button class="opt" data-j="${j}"><span>${'ABCD'[j]}</span>${o}</button>`).join('')}</div><p class="exp"></p></div>`).join('')
+    +`<div class="q-foot"><span class="score">得分 0 / ${qs.length}</span><button class="btn" data-reset>重新作答</button></div>`;
+  $$('.q',root).forEach(qd=>{const it=qs[qd.dataset.k];
+    $$('.opt',qd).forEach(b=>b.onclick=()=>{if(qd.classList.contains('answered'))return;qd.classList.add('answered');
+      const ok=+b.dataset.j===it.a;b.classList.add(ok?'right':'wrong');$$('.opt',qd)[it.a].classList.add('right');
+      const ex=$('.exp',qd);ex.textContent=(ok?'✔ 答對了！':'✘ 正解是 '+'ABCD'[it.a]+'。')+' '+it.e;ex.classList.add(ok?'ok':'no');
+      if(ok)score++;done++;$('.score',root).textContent=`得分 ${score} / ${qs.length}`+(done===qs.length&&score===qs.length?'  🎉 全對！':'');});});
+  $('[data-reset]',root).onclick=()=>buildQuiz(root);
+}
+$$('.quiz').forEach(buildQuiz);
+
+/* ================= shared bio helpers ================= */
+const COL={cyan:'#36e0ff',yellow:'#ffd84d',pink:'#ff7aa8',orange:'#ff9f43',green:'#3ee08f',red:'#ff5a5a',mute:'#9fb6d9',ink:'#e8f1ff',blue:'#5a8cff',dark:'#06142b',vein:'#4a78d8',art:'#e0475a'};
+const fx=(v,d=2)=>(Math.round(v*10**d)/10**d).toFixed(d).replace('-','−');
+const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
+function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+function segT(box,attr,cb){$$('button[data-'+attr+']',box).forEach(b=>b.onclick=()=>{$$('button[data-'+attr+']',box).forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset[attr],b);});}
+function setSeg(box,attr,val){$$('button[data-'+attr+']',box).forEach(x=>x.classList.toggle('on',x.dataset[attr]===val));}
+function arrow(g,x1,y1,x2,y2,color,w=3){el('line',{x1,y1,x2,y2,stroke:color,'stroke-width':w,'stroke-linecap':'round'},g);
+  const a=Math.atan2(y2-y1,x2-x1),s=7+w;el('path',{d:`M${x2},${y2} L${x2-s*Math.cos(a-0.45)},${y2-s*Math.sin(a-0.45)} L${x2-s*Math.cos(a+0.45)},${y2-s*Math.sin(a+0.45)} Z`,fill:color},g);}
+function box(g,x,y,w,h,label,opt={}){el('rect',{x,y,width:w,height:h,rx:opt.rx??8,fill:opt.fill||'rgba(15,44,92,.9)',stroke:opt.stroke||'rgba(120,190,255,.35)','stroke-width':opt.sw||1.5},g);
+  if(label!==undefined){const lines=String(label).split('\n');lines.forEach((s,i)=>txt(g,x+w/2,y+h/2+(i-(lines.length-1)/2)*15,s,opt.cls||'lbl sm'));}}
+
+/* ================= V1: cardiac cycle & ECG ================= */
+(function(){
+  const svg=$('#v1'),hr=$('#v1hr'),sv=$('#v1sv'),tS=$('#v1t'),WIN=2.4;
+  let g=0,playing=true,speed=0.25,lastTs=0;
+  /* 心跳加快時，舒張期縮短最多：T ≥ 0.8 s 時固定 0.1 / 0.3；更快時心房、心室收縮只稍微縮短 */
+  function durs(T){if(T>=0.8)return{a:0.1,v:0.3};const k=Math.min(1,(0.8-T)/0.45);return{a:0.1-0.03*k,v:0.3-0.1*k};}
+  function ecg(t,T){const{a,v}=durs(T);const G=(c,w,A)=>A*Math.exp(-(((t-c)/w)**2));
+    return G(0.04,0.02,0.15)+G(a+0.004,0.006,-0.12)+G(a+0.02,0.008,1)+G(a+0.038,0.008,-0.25)+G(a+v-0.075,0.035,0.3);}
+  function draw(){
+    const H=+hr.value,SV=+sv.value,T=60/H,{a,v}=durs(T),dia=T-a-v,t=g%T;
+    const ph=t<a?'a':t<a+v?'v':'d';
+    $('#v1hrv').textContent=H;$('#v1svv').textContent=SV;tS.value=g%WIN;
+    clear(svg);
+    /* ---- heart schematic ---- */
+    const L=el('g',{},svg);
+    txt(L,125,16,'心臟示意圖（右心在左）','lbl sm');
+    const inA=ph==='a'?7:0,inV=ph==='v'?12:0;
+    const chamber=(x,y,w,h,ins,fill,name,sw)=>{el('rect',{x:x+ins,y:y+ins,width:w-2*ins,height:h-2*ins,rx:12,fill,stroke:'#e8f1ff','stroke-width':sw,opacity:.95},L);txt(L,x+w/2,y+h/2,name,'lbl sm');};
+    // vessels
+    el('rect',{x:14,y:34,width:20,height:156,rx:6,fill:COL.vein,opacity:.75},L);txt(L,24,28,'肺動脈','lbl sm');
+    el('rect',{x:216,y:34,width:20,height:156,rx:6,fill:COL.art,opacity:.8},L);txt(L,226,28,'主動脈','lbl sm');
+    chamber(42,48,82,62,inA,'#3b66c4','右心房',2);
+    chamber(126,48,82,62,inA,'#c43b52','左心房',2);
+    chamber(42,128,82,118,inV,'#2f57ad','右心室',2.5);
+    chamber(126,128,82,128,inV,'#ad2f45','左心室',5);
+    // inflow labels
+    txt(L,83,38,'腔靜脈 ↓','lbl sm');txt(L,167,38,'肺靜脈 ↓','lbl sm');
+    // AV valves (between atria & ventricles, y=119)
+    const avOpen=ph!=='v',slOpen=ph==='v';
+    const av=(x1,x2,color)=>{const y=119;if(avOpen){el('line',{x1,y1:y,x2:x1+16,y2:y+14,stroke:color,'stroke-width':4,'stroke-linecap':'round'},L);el('line',{x1:x2,y1:y,x2:x2-16,y2:y+14,stroke:color,'stroke-width':4,'stroke-linecap':'round'},L);}
+      else el('line',{x1,y1:y,x2,y2:y,stroke:color,'stroke-width':5,'stroke-linecap':'round'},L);};
+    av(54,112,COL.yellow);av(138,196,COL.yellow);
+    txt(L,83,262,'三尖瓣','lbl sm');txt(L,167,272,'二尖瓣','lbl sm');
+    // outflow ducts from ventricles to arteries with semilunar valves
+    el('rect',{x:30,y:170,width:14,height:22,fill:'#2f57ad'},L);el('rect',{x:206,y:170,width:14,height:22,fill:'#ad2f45'},L);
+    const sl=(x)=>{if(slOpen){el('line',{x1:x,y1:170,x2:x-6,y2:176,stroke:COL.green,'stroke-width':4},L);el('line',{x1:x,y1:192,x2:x-6,y2:186,stroke:COL.green,'stroke-width':4},L);}
+      else el('line',{x1:x,y1:168,x2:x,y2:194,stroke:COL.green,'stroke-width':5,'stroke-linecap':'round'},L);};
+    sl(38);sl(214);
+    txt(L,24,206,'半月瓣','lbl sm');txt(L,226,206,'半月瓣','lbl sm');
+    // flow arrows
+    if(ph==='a'){arrow(L,83,96,83,150,'#fff',2.5);arrow(L,167,96,167,150,'#fff',2.5);}
+    else if(ph==='v'){arrow(L,60,182,26,140,'#fff',2.5);arrow(L,190,182,228,140,'#fff',2.5);}
+    else{arrow(L,83,40,83,78,'#fff',2.5);arrow(L,167,40,167,78,'#fff',2.5);arrow(L,83,104,83,146,'rgba(255,255,255,.6)',2);arrow(L,167,104,167,146,'rgba(255,255,255,.6)',2);}
+    // valve legend
+    const vs=el('g',{},svg);
+    box(vs,14,284,226,38,undefined,{rx:10});
+    txt(vs,127,296,`房室瓣：${avOpen?'開':'關'}　半月瓣：${slOpen?'開':'關'}`,'lbl sm');
+    txt(vs,127,313,ph==='a'?'心房收縮：把最後的血擠入心室':ph==='v'?'心室收縮：血液射入動脈':'全心舒張：血液流回心房、心室','lbl sm');
+    /* ---- phase bar (one cycle) ---- */
+    const R=el('g',{},svg),X0=258,BW=248;
+    txt(R,X0,16,`一次心動週期 T = 60 ÷ ${H} = ${fx(T)} s`,'lbl sm','start');
+    const seg=[[0,a,'#ff9f43','心房收縮'],[a,a+v,'#ff5a5a','心室收縮'],[a+v,T,'#3a8dde','全心舒張']];
+    seg.forEach(([s,e,c,n])=>{const x=X0+s/T*BW,w=(e-s)/T*BW;el('rect',{x,y:28,width:Math.max(0,w),height:22,fill:c,opacity:.85},R);
+      if(w>46)txt(R,x+w/2,39,n,'lbl sm');});
+    seg.forEach(([s,e,c])=>{const x=X0+(s+e)/2/T*BW;txt(R,x,62,fx(e-s)+' s','lbl sm');});
+    const cx=X0+t/T*BW;el('line',{x1:cx,y1:24,x2:cx,y2:54,stroke:'#fff','stroke-width':3},R);
+    // heart sounds
+    const s1=X0+a/T*BW,s2=X0+(a+v)/T*BW;
+    txt(R,s1,80,'♪ 咚（S1）','lbl sm '+(Math.abs(t-a)<0.04?'y':''));txt(R,Math.min(s2,X0+BW-30),96,'♪ 噠（S2）','lbl sm '+(Math.abs(t-a-v)<0.04?'y':''));
+    el('line',{x1:s1,y1:50,x2:s1,y2:72,stroke:COL.yellow,'stroke-dasharray':'3 3'},R);el('line',{x1:s2,y1:50,x2:s2,y2:88,stroke:COL.yellow,'stroke-dasharray':'3 3'},R);
+    /* ---- ECG strip (fixed 2.4 s window) ---- */
+    const EY0=118,EH=150,base=EY0+100,sc=80,PX=BW/WIN;
+    el('rect',{x:X0,y:EY0,width:BW,height:EH,fill:'rgba(255,90,90,.06)',stroke:'rgba(255,120,120,.35)'},R);
+    for(let s=0;s<=WIN+1e-9;s+=0.2){const x=X0+s*PX;el('line',{x1:x,y1:EY0,x2:x,y2:EY0+EH,stroke:'rgba(255,120,120,.25)'},R);}
+    txt(R,X0,EY0-8,'心電圖（直線間隔 0.2 s = 1 大格 = 5 小格）','lbl sm','start');
+    let d='';for(let s=0;s<=WIN;s+=0.004){const y=base-ecg(s%T,T)*sc;d+=(s?'L':'M')+(X0+s*PX).toFixed(1)+','+y.toFixed(1);}
+    el('path',{d,fill:'none',stroke:COL.green,'stroke-width':2.2},R);
+    // labels P QRS T on first beat
+    txt(R,X0+0.04*PX,base-30,'P','lbl sm y');txt(R,X0+(a+0.02)*PX,EY0+10,'QRS','lbl sm y');txt(R,X0+(a+v-0.075)*PX,base-42,'T','lbl sm y');
+    // R-R bracket
+    const r1=X0+(a+0.02)*PX,r2=X0+(T+a+0.02)*PX;
+    if(r2<X0+BW){el('line',{x1:r1,y1:base+30,x2:r2,y2:base+30,stroke:COL.cyan,'stroke-width':2},R);el('line',{x1:r1,y1:base+24,x2:r1,y2:base+36,stroke:COL.cyan,'stroke-width':2},R);el('line',{x1:r2,y1:base+24,x2:r2,y2:base+36,stroke:COL.cyan,'stroke-width':2},R);
+      txt(R,(r1+r2)/2,base+44,`R–R = ${fx(T)} s = ${Math.round(T/0.04)} 小格`,'lbl sm c');}
+    const gx=X0+(g%WIN)*PX;el('line',{x1:gx,y1:EY0,x2:gx,y2:EY0+EH,stroke:'#fff','stroke-width':1.5,opacity:.8},R);
+    // CO bar
+    const CO=H*SV;
+    txt(R,X0,300,`心輸出量 ≈ ${fx(CO/1000)} L／分`,'lbl sm o','start');
+    el('rect',{x:X0,y:308,width:BW,height:10,rx:5,fill:'rgba(159,182,217,.2)'},R);
+    el('rect',{x:X0,y:308,width:Math.min(BW,CO/20000*BW),height:10,rx:5,fill:COL.orange},R);
+    txt(R,X0+BW,324,'20 L／分','lbl sm','end');
+    const phName={a:'心房收縮期',v:'心室收縮期',d:'全心舒張期'}[ph];
+    $('#v1out').innerHTML=`<span class="big">${phName}</span>　房室瓣 <b class="${avOpen?'g':'r'}">${avOpen?'開':'關'}</b>、半月瓣 <b class="${slOpen?'g':'r'}">${slOpen?'開':'關'}</b><br>`+
+      `週期 ${fx(T)} s ＝ 心房收縮 <span class="o">${fx(a)}</span> ＋ 心室收縮 <span class="r">${fx(v)}</span> ＋ 全心舒張 <span class="c">${fx(dia)}</span> s`+
+      (H>75?`　<span class="y">（和 75 次／分相比，舒張期少了 ${fx(0.4-dia)} s，縮短最多）</span>`:'')+
+      `<br>心輸出量 = ${H} 次／分 × ${SV} mL = <b class="o">${CO} mL／分 ≈ ${fx(CO/1000)} L／分</b>`;
+  }
+  function loop(ts){if(playing){const dt=lastTs?Math.min(0.05,(ts-lastTs)/1000):0;g=(g+dt*speed)%WIN;draw();}lastTs=ts;requestAnimationFrame(loop);}
+  hr.oninput=draw;sv.oninput=draw;
+  tS.oninput=()=>{g=+tS.value;playing=false;$('#v1play').textContent='▶ 播放';draw();};
+  $('#v1play').onclick=()=>{playing=!playing;$('#v1play').textContent=playing?'⏸ 暫停':'▶ 播放';};
+  segT($('#v1spd'),'sp',v=>{speed=+v;});
+  $$('#v1pre button').forEach(b=>b.onclick=()=>{const[h,s]=b.dataset.v.split(',');hr.value=h;sv.value=s;draw();});
+  draw();requestAnimationFrame(loop);
+})();
+
+/* ================= V2: capillary exchange & vessel profile ================= */
+(function(){
+  const svg=$('#v2'),A=$('#v2a'),V=$('#v2v'),P=$('#v2p'),LY=$('#v2lym');
+  function drawCap(){
+    const pa=+A.value,pv=+V.value,pi=+P.value,blocked=LY.checked;
+    $('#v2av').textContent=pa;$('#v2vv').textContent=pv;$('#v2pv').textContent=pi;
+    clear(svg);
+    const X0=60,X1=460,W=X1-X0;
+    // tissue
+    el('rect',{x:20,y:16,width:480,height:150,rx:14,fill:'rgba(255,159,67,.06)',stroke:'rgba(255,159,67,.3)'},svg);
+    txt(svg,30,30,'組織液','lbl sm','start');
+    const grad=el('linearGradient',{id:'v2g'},el('defs',{},svg));el('stop',{offset:'0%','stop-color':COL.art},grad);el('stop',{offset:'100%','stop-color':COL.vein},grad);
+    el('rect',{x:X0,y:84,width:W,height:34,rx:17,fill:'url(#v2g)'},svg);
+    txt(svg,X0-8,101,'動脈端','lbl sm','end');txt(svg,X1+8,101,'靜脈端','lbl sm','start');
+    arrow(svg,X0+20,101,X0+70,101,'rgba(255,255,255,.8)',2);
+    // net arrows along capillary
+    let filt=0,reab=0;const N=200;
+    for(let k=0;k<N;k++){const f=(k+0.5)/N,net=pa+(pv-pa)*f-pi;if(net>0)filt+=net/N;else reab+=-net/N;}
+    for(let k=0;k<9;k++){const f=k/8,x=X0+f*W,net=pa+(pv-pa)*f-pi,len=Math.min(60,Math.abs(net)*3);
+      if(Math.abs(net)<0.5){txt(svg,x,70,'0','lbl sm');continue;}
+      if(net>0)arrow(svg,x,82,x,82-len,COL.orange,3);else arrow(svg,x,82-len,x,80,COL.cyan,3);}
+    // lymph capillary
+    el('path',{d:`M${X1-60},40 q30,-20 60,0`,fill:'none',stroke:COL.green,'stroke-width':6,'stroke-linecap':'round',opacity:blocked?.3:1},svg);
+    txt(svg,X1-30,52,blocked?'微淋巴管（阻塞）':'微淋巴管','lbl sm '+(blocked?'r':'g'));
+    // pressure graph
+    const GY0=186,GH=100,Ymax=50,Y=v=>GY0+GH-v/Ymax*GH,Xf=f=>X0+f*W;
+    el('line',{x1:X0,y1:GY0+GH,x2:X1,y2:GY0+GH,stroke:COL.mute},svg);el('line',{x1:X0,y1:GY0,x2:X0,y2:GY0+GH,stroke:COL.mute},svg);
+    [0,25,50].forEach(v=>txt(svg,X0-6,Y(v),String(v),'lbl sm','end'));
+    txt(svg,X0+4,GY0-6,'mmHg','lbl sm','start');
+    // shaded areas
+    let up='',dn='';for(let k=0;k<=N;k++){const f=k/N,bp=pa+(pv-pa)*f;up+=`${Xf(f)},${Y(Math.max(bp,pi))} `;dn+=`${Xf(f)},${Y(Math.min(bp,pi))} `;}
+    el('polygon',{points:up+`${Xf(1)},${Y(pi)} ${Xf(0)},${Y(pi)}`,fill:'rgba(255,159,67,.35)'},svg);
+    el('polygon',{points:dn+`${Xf(1)},${Y(pi)} ${Xf(0)},${Y(pi)}`,fill:'rgba(54,224,255,.3)'},svg);
+    el('line',{x1:Xf(0),y1:Y(pa),x2:Xf(1),y2:Y(pv),stroke:COL.red,'stroke-width':3},svg);
+    el('line',{x1:Xf(0),y1:Y(pi),x2:Xf(1),y2:Y(pi),stroke:COL.yellow,'stroke-width':2.5,'stroke-dasharray':'6 4'},svg);
+    txt(svg,Xf(1),Math.min(Y(pv),Y(pi))-10,`靜脈端血壓 ${pv}`,'lbl sm r','end');txt(svg,Xf(0)+6,Y(pa)-10,`動脈端血壓 ${pa}`,'lbl sm r','start');
+    txt(svg,Xf(0.5),Math.max(Y(pi),Y(pv))+14,`膠體滲透壓 ${pi}`,'lbl sm y');
+    const na=pa-pi,nv=pv-pi,net=filt-reab;
+    let status;
+    if(net<-1)status='<b class="c">回收大於濾出：組織液被吸回血管，有助於補充血量</b>（失血後的代償）';
+    else if(net<=1)status=blocked?'<b class="r">平常多出的少量組織液要靠淋巴回收；淋巴管阻塞時無法排除，會逐漸水腫</b>（例：絲蟲病造成的象皮病）':'<b class="g">濾出 ≈ 回收：多出的少量組織液由微淋巴管收集，不會水腫</b>';
+    else if(net<=3&&!blocked)status='<b class="y">組織液稍微增加，淋巴管還能應付</b>';
+    else status='<b class="r">濾出遠大於回收：組織液累積超過淋巴回收能力 → 水腫</b>';
+    $('#v2out').innerHTML=`動脈端淨壓 = ${pa} − ${pi} = <b class="${na>0?'o':'c'}">${sgn(na)} mmHg</b>（${na>0?'濾出':na<0?'回收':'不移動'}）　`+
+      `靜脈端淨壓 = ${pv} − ${pi} = <b class="${nv>0?'o':'c'}">${sgn(nv)} mmHg</b>（${nv>0?'濾出':nv<0?'回收':'不移動'}）<br>`+
+      `整條微血管：濾出 <span class="o">${fx(filt,1)}</span>、回收 <span class="c">${fx(reab,1)}</span>（橘色、藍色面積，相對量）<br>`+status;
+  }
+  /* vessel profile (approximate textbook values, adult at rest) */
+  const VES=[['主動脈',100,3,28],['動脈',95,20,4.2],['小動脈',60,400,0.21],['微血管',25,4500,0.019],['小靜脈',12,4000,0.021],['靜脈',8,40,2.1],['大靜脈',2,18,4.6]];
+  let pick=3;
+  function drawFlow(){
+    const s=$('#v2b');clear(s);
+    const X0=90,CW=58,rows=[['平均血壓（mmHg）',1,100,COL.red],['總截面積（cm²）',2,4500,COL.green],['血流速度（cm/s）',3,28,COL.cyan]];
+    rows.forEach(([name,idx,max,c],r)=>{const y0=14+r*102,h=70;
+      txt(s,8,y0+8,name,'lbl sm','start');
+      VES.forEach((v,i)=>{const x=X0+i*CW,bh=Math.max(1.5,v[idx]/max*h);
+        el('rect',{x:x+8,y:y0+16+h-bh,width:CW-16,height:bh,rx:3,fill:c,opacity:i===pick?1:.45},s);
+        if(i===pick)txt(s,x+CW/2,y0+12+h-bh,String(v[idx]),'lbl sm');});
+      el('line',{x1:X0,y1:y0+16+h,x2:X0+7*CW,y2:y0+16+h,stroke:COL.mute},s);});
+    VES.forEach((v,i)=>{const x=X0+i*CW;const t=txt(s,x+CW/2,318,v[0],'lbl sm'+(i===pick?' y':''));
+      const hit=el('rect',{x,y:0,width:CW,height:330,fill:'transparent',style:'cursor:pointer'},s);hit.onclick=()=>{pick=i;drawFlow();};});
+    const v=VES[pick];
+    $('#v2out').innerHTML=`<span class="big">${v[0]}</span>　平均血壓約 <b class="r">${v[1]} mmHg</b>、總截面積約 <b class="g">${v[2]} cm²</b>、流速約 <b class="c">${v[3]} cm/s</b><br>`+
+      (pick===3?'微血管：<b class="c">流速最慢</b>（總截面積最大），但血壓<b>不是最低</b>——最低在大靜脈與右心房。':
+       pick===6?'大靜脈：<b class="r">血壓最低</b>（接近 0）；匯集後總截面積變小，流速又變快（主動脈 > 大靜脈 > 微血管）。':
+       pick===2?'小動脈：管徑小、阻力大，<b class="r">血壓下降最多</b>；平滑肌收縮或舒張可調節流到器官的血量。':
+       '流速 × 總截面積 ≈ 心輸出量（約 83 cm³/s），所以總截面積越大，流速越慢。');
+  }
+  let mode='cap';
+  segT($('#v2tabs'),'m',m=>{mode=m;$('#v2cap').hidden=m!=='cap';$('#v2flow').hidden=m!=='flow';m==='cap'?drawCap():drawFlow();});
+  [A,V,P].forEach(i=>i.oninput=drawCap);LY.onchange=drawCap;
+  $$('#v2pre button').forEach(b=>b.onclick=()=>{const[a,v,p,l]=b.dataset.v.split(',');A.value=a;V.value=v;P.value=p;LY.checked=l==='1';drawCap();});
+  drawCap();
+})();
+
+/* ================= V3: blood typing & transfusion ================= */
+(function(){
+  const svg=$('#v3');let abo='A',rh='+',mode='type',mystery=false,donor='O+',rec='A+';
+  const ANT={A:['A'],B:['B'],AB:['A','B'],O:[]};
+  const ABS={A:['抗 B'],B:['抗 A'],AB:[],O:['抗 A','抗 B']};
+  const sup=r=>r==='+'?'⁺':'⁻';
+  function cell(g,cx,cy,ants,hasRh,scale=1){
+    el('ellipse',{cx,cy,rx:46*scale,ry:40*scale,fill:'#d8324a',stroke:'#ffb3b3','stroke-width':2},g);
+    el('ellipse',{cx,cy,rx:22*scale,ry:18*scale,fill:'#b0213a'},g);
+    const pts=[];for(let k=0;k<10;k++){const a=k/10*2*Math.PI;pts.push([cx+50*scale*Math.cos(a),cy+44*scale*Math.sin(a)]);}
+    pts.forEach(([x,y],k)=>{const kind=ants.length===2?ants[k%2]:ants[0];
+      if(kind==='A')el('path',{d:`M${x},${y-6} L${x+6},${y+5} L${x-6},${y+5} Z`,fill:COL.yellow},g);
+      else if(kind==='B')el('rect',{x:x-5,y:y-5,width:10,height:10,fill:COL.cyan},g);});
+    if(hasRh)[[-18,-12],[16,14],[-6,22],[24,-16]].forEach(([dx,dy])=>el('circle',{cx:cx+dx*scale,cy:cy+dy*scale,r:4,fill:COL.green},g));
+  }
+  function well(g,x,y,label,agg,seed){
+    el('circle',{cx:x,cy:y,r:42,fill:'rgba(255,255,255,.08)',stroke:'rgba(255,255,255,.4)','stroke-width':2},g);
+    let s=seed;const rnd=()=>{s=(s*9301+49297)%233280;return s/233280;};
+    if(agg){[[-14,-10],[12,8],[-6,16],[16,-14]].forEach(([dx,dy])=>{for(let k=0;k<9;k++){const a=rnd()*6.28,r=rnd()*7;el('circle',{cx:x+dx+r*Math.cos(a),cy:y+dy+r*Math.sin(a),r:3.2,fill:'#d8324a'},g);}});}
+    else{for(let k=0;k<34;k++){const a=rnd()*6.28,r=Math.sqrt(rnd())*34;el('circle',{cx:x+r*Math.cos(a),cy:y+r*Math.sin(a),r:2.6,fill:'#e0475a',opacity:.8},g);}}
+    txt(g,x,y+58,label,'lbl sm');txt(g,x,y+76,agg?'凝集':'不凝集','lbl sm '+(agg?'r':'g'));
+  }
+  function legend(g,y){el('path',{d:`M20,${y-6} L26,${y+5} L14,${y+5} Z`,fill:COL.yellow},g);txt(g,32,y,'A 抗原','lbl sm','start');
+    el('rect',{x:90,y:y-5,width:10,height:10,fill:COL.cyan},g);txt(g,106,y,'B 抗原','lbl sm','start');
+    el('circle',{cx:170,cy:y,r:4,fill:COL.green},g);txt(g,180,y,'Rh 抗原','lbl sm','start');}
+  function drawType(){
+    clear(svg);const ants=ANT[abo],hasRh=rh==='+';
+    txt(svg,90,16,mystery?'神秘血液的紅血球':'紅血球表面','lbl sm');
+    if(mystery){el('ellipse',{cx:90,cy:100,rx:46,ry:40,fill:'#555',stroke:'#999','stroke-width':2},svg);txt(svg,90,100,'？','lbl');}
+    else cell(svg,90,100,ants,hasRh);
+    txt(svg,90,170,'血漿中的抗體','lbl sm');
+    txt(svg,90,192,mystery?'？':(ABS[abo].length?ABS[abo].join('、'):'沒有抗 A、抗 B'),'lbl sm o');
+    if(!mystery)txt(svg,90,212,rh==='-'?'（Rh⁻：接觸 Rh⁺ 後才會有抗 Rh）':'','lbl sm');
+    legend(svg,250);
+    el('rect',{x:190,y:30,width:320,height:200,rx:16,fill:'rgba(200,220,255,.06)',stroke:'rgba(200,220,255,.3)'},svg);
+    txt(svg,350,46,'玻片：每格先滴血清，再滴待測血液','lbl sm');
+    const r={A:ants.includes('A'),B:ants.includes('B'),Rh:hasRh};
+    well(svg,250,112,'抗 A 血清',r.A,11);well(svg,350,112,'抗 B 血清',r.B,23);well(svg,450,112,'抗 Rh 血清',r.Rh,37);
+    const res=`抗 A ${r.A?'凝集':'不凝集'}、抗 B ${r.B?'凝集':'不凝集'}、抗 Rh ${r.Rh?'凝集':'不凝集'}`;
+    $('#v3out').innerHTML=mystery?`結果：${res}<br><b class="y">請判斷：這是什麼血型？血漿中有哪些抗體？</b>（按「揭曉答案」核對）`:
+      `結果：${res}<br>凝集代表紅血球上有該抗原 → <span class="big">${abo} 型、Rh${sup(rh)}</span>；${ABS[abo].length?`血漿中含 <b class="o">${ABS[abo].join('、')} 抗體</b>`:'血漿中<b class="o">沒有 ABO 抗體</b>'}`;
+  }
+  function parse(s){return{abo:s.slice(0,-1),rh:s.slice(-1)};}
+  function drawTx(){
+    clear(svg);const d=parse(donor),c=parse(rec),sens=$('#v3sens').checked&&c.rh==='-';
+    txt(svg,110,16,`捐血者 ${d.abo} 型 Rh${sup(d.rh)} 的紅血球`,'lbl sm');cell(svg,110,100,ANT[d.abo],d.rh==='+');
+    const abs=[...ABS[c.abo]];if(sens)abs.push('抗 Rh');
+    txt(svg,390,16,`受血者 ${c.abo} 型 Rh${sup(c.rh)} 的血漿抗體`,'lbl sm');
+    el('rect',{x:290,y:36,width:200,height:130,rx:14,fill:'rgba(255,216,77,.08)',stroke:'rgba(255,216,77,.4)'},svg);
+    if(!abs.length)txt(svg,390,100,'（沒有會凝集的抗體）','lbl sm');
+    const hits=[];
+    abs.forEach((ab,i)=>{const y=62+i*32,target=ab==='抗 A'?'A':ab==='抗 B'?'B':'Rh';const hit=target==='Rh'?d.rh==='+':ANT[d.abo].includes(target);if(hit)hits.push(ab);
+      el('path',{d:`M310,${y-10} L320,${y} L330,${y-10} M320,${y} L320,${y+12}`,fill:'none',stroke:hit?COL.red:COL.mute,'stroke-width':3},svg);
+      txt(svg,342,y,ab+(hit?' → 凝集紅血球':' → 對不上'),'lbl sm '+(hit?'r':''),'start');});
+    arrow(svg,176,100,282,100,hits.length?COL.red:COL.green,4);
+    legend(svg,250);
+    const same=donor===rec;
+    txt(svg,260,212,hits.length?'✘ 不可輸血：會發生凝集':same?'✔ 同型輸血（最安全的原則）':'△ 紅血球不會被凝集，但醫療上仍以同型為原則','lbl '+(hits.length?'r':same?'g':'y'));
+    $('#v3out').innerHTML=`判斷重點：<b>捐血者的紅血球</b>會不會被<b>受血者血漿中的抗體</b>凝集？<br>`+
+      (hits.length?`受血者的 <b class="r">${hits.join('、')}</b> 會凝集捐血者的紅血球 → <b class="r">不可輸</b>`:
+       `捐血者紅血球不會被凝集。${same?'':'<span class="y">注意：異型輸血時，捐血者血漿中的抗體也可能和受血者的紅血球反應（例如 O 型血漿含抗 A、抗 B），所以醫療上以同型輸血為原則，並做交叉配血。</span>'}`)+
+      (c.rh==='-'&&d.rh==='+'&&!sens?'<br><span class="y">Rh⁻ 受血者第一次接受 Rh⁺ 血液不會立即凝集，但之後會產生抗 Rh 抗體（勾選上方選項看看第二次會怎樣）。</span>':'');
+  }
+  function draw(){mode==='type'?drawType():drawTx();}
+  segT($('#v3tabs'),'m',m=>{mode=m;$('#v3type').hidden=m!=='type';$('#v3tx').hidden=m!=='tx';$('#v3pre').hidden=m!=='type';draw();});
+  segT($('#v3abo'),'t',v=>{abo=v;mystery=false;$('#v3reveal').hidden=true;draw();});
+  segT($('#v3rh'),'r',v=>{rh=v;mystery=false;$('#v3reveal').hidden=true;draw();});
+  $('#v3mys').onclick=()=>{abo=['A','B','AB','O'][Math.floor(Math.random()*4)];rh=Math.random()<0.75?'+':'-';mystery=true;$('#v3reveal').hidden=false;
+    $$('#v3abo button,#v3rh button[data-r]').forEach(b=>b.classList.remove('on'));draw();};
+  $('#v3reveal').onclick=()=>{mystery=false;$('#v3reveal').hidden=true;setSeg($('#v3abo'),'t',abo);setSeg($('#v3rh'),'r',rh);draw();};
+  segT($('#v3don'),'dn',v=>{donor=v;draw();});segT($('#v3rec'),'c',v=>{rec=v;draw();});$('#v3sens').onchange=draw;
+  $$('#v3pre button').forEach(b=>b.onclick=()=>{const p=parse(b.dataset.v);abo=p.abo;rh=p.rh;mystery=false;$('#v3reveal').hidden=true;setSeg($('#v3abo'),'t',abo);setSeg($('#v3rh'),'r',rh);draw();});
+  draw();
+})();
+
+/* ================= V4: enzyme lab & digestion trip ================= */
+(function(){
+  const svg=$('#v4'),Tm=$('#v4t'),PH=$('#v4p'),BO=$('#v4boil'),BI=$('#v4bile');let enz='amy';
+  const ENZ={amy:{name:'唾液澱粉酶',opt:7,sub:'澱粉',prod:'麥芽糖',test:'滴碘液'},pep:{name:'胃蛋白酶',opt:2,sub:'蛋白質（煮熟蛋白塊）',prod:'多肽',test:'觀察蛋白塊'},lip:{name:'胰脂肪酶',opt:8,sub:'脂肪（油）',prod:'脂肪酸＋甘油單酯',test:'觀察油層'}};
+  /* 示意模型：37 °C 最適；低溫活性低但不變性；超過約 50 °C 迅速變性 */
+  const fT=t=>t<=37?Math.exp(-(((t-37)/16)**2)):Math.exp(-(((t-37)/10)**2));
+  const fP=(p,o)=>Math.exp(-(((p-o)/1.6)**2));
+  function act(t,p){const e=ENZ[enz];if(BO.checked)return 0;let a=fT(t)*fP(p,e.opt);if(enz==='lip'&&!BI.checked)a*=0.35;return a;}
+  function curve(x0,y0,w,h,f,xmin,xmax,cur,label,ticks){
+    el('rect',{x:x0,y:y0,width:w,height:h,fill:'rgba(3,12,28,.4)',stroke:'rgba(120,190,255,.2)'},svg);
+    let d='';for(let k=0;k<=100;k++){const xv=xmin+(xmax-xmin)*k/100;d+=(k?'L':'M')+(x0+k/100*w).toFixed(1)+','+(y0+h-f(xv)*h*0.9).toFixed(1);}
+    el('path',{d,fill:'none',stroke:COL.cyan,'stroke-width':2.5},svg);
+    const cx=x0+(cur-xmin)/(xmax-xmin)*w,cy=y0+h-f(cur)*h*0.9;el('circle',{cx,cy,r:7,fill:COL.yellow,stroke:'#06142b','stroke-width':2},svg);
+    ticks.forEach(v=>txt(svg,x0+(v-xmin)/(xmax-xmin)*w,y0+h+12,String(v),'lbl sm'));txt(svg,x0,y0-8,label,'lbl sm','start');
+  }
+  function drawLab(){
+    const t=+Tm.value,p=+PH.value,e=ENZ[enz],a=act(t,p),remain=Math.exp(-3.2*a);
+    $('#v4tv').textContent=t;$('#v4pv').textContent=p;$('#v4bileL').hidden=enz!=='lip';
+    clear(svg);
+    const boiled=BO.checked,bileF=(enz==='lip'&&!BI.checked)?0.35:1;
+    curve(20,26,250,90,x=>boiled?0:fT(x)*fP(p,e.opt)*bileF,0,100,t,`活性 vs 溫度（pH ${p}）`,[0,37,60,100]);
+    curve(20,170,250,90,x=>boiled?0:fT(t)*fP(x,e.opt)*bileF,1,11,p,`活性 vs pH（${t} °C）`,[1,2,4,7,8,11]);
+    // tube
+    const tx=350,ty=30;
+    el('path',{d:`M${tx},${ty} L${tx},${ty+150} a40,40 0 0 0 80,0 L${tx+80},${ty}`,fill:'rgba(255,255,255,.06)',stroke:'#cfe3ff','stroke-width':3},svg);
+    if(enz==='amy'){const c=`rgba(${Math.round(40+180*(1-remain))},${Math.round(40+150*(1-remain))},${Math.round(120+60*(1-remain))},.9)`;
+      el('path',{d:`M${tx+2},${ty+60} L${tx+2},${ty+150} a38,38 0 0 0 76,0 L${tx+78},${ty+60} Z`,fill:remain>0.35?`rgba(30,30,${90+Math.round(60*(1-remain))},${0.5+0.45*remain})`:'rgba(214,170,90,.55)'},svg);
+      txt(svg,tx+40,ty+218,remain>0.35?'藍黑色：澱粉還在':'黃褐色：澱粉已分解','lbl sm '+(remain>0.35?'c':'y'));}
+    else if(enz==='pep'){el('path',{d:`M${tx+2},${ty+60} L${tx+2},${ty+150} a38,38 0 0 0 76,0 L${tx+78},${ty+60} Z`,fill:'rgba(255,240,200,.25)'},svg);
+      const s=10+26*remain;el('rect',{x:tx+40-s/2,y:ty+165-s,width:s,height:s,rx:4,fill:'#f4f0e6',opacity:.4+0.6*remain},svg);
+      txt(svg,tx+40,ty+218,remain>0.35?'蛋白塊仍在（混濁）':'蛋白塊分解、變透明','lbl sm '+(remain>0.35?'c':'y'));}
+    else{el('path',{d:`M${tx+2},${ty+80} L${tx+2},${ty+150} a38,38 0 0 0 76,0 L${tx+78},${ty+80} Z`,fill:'rgba(120,200,255,.25)'},svg);
+      const th=6+44*remain;el('rect',{x:tx+2,y:ty+80-th,width:76,height:th,fill:'rgba(255,216,77,.75)'},svg);
+      if(enz==='lip'&&BI.checked&&!boiled)for(let k=0;k<10;k++)el('circle',{cx:tx+12+k*6.5,cy:ty+100+(k%3)*12,r:3,fill:'rgba(255,216,77,.8)'},svg);
+      txt(svg,tx+40,ty+218,remain>0.35?'油層還很厚':'油層變薄：脂肪被分解','lbl sm '+(remain>0.35?'c':'y'));}
+    txt(svg,tx+40,ty-12,`${e.sub}＋${e.name}`,'lbl sm');txt(svg,tx+40,ty+238,`10 分鐘後${e.test}`,'lbl sm');
+    const why=boiled?'酶先煮沸過已<b class="r">變性</b>，即使回到適溫也不會恢復':t<15?'<b class="c">低溫</b>使活性很低（但沒有變性，回溫後可恢復）':t>50?'<b class="r">高溫使酶變性</b>':Math.abs(p-e.opt)>2.5?`pH 離最適值（約 ${e.opt}）太遠，<b class="r">活性很低</b>`:(enz==='lip'&&!BI.checked)?'溫度、pH 適合，但<b class="y">沒有膽汁乳化，分解較慢</b>':'條件接近最適，<b class="g">活性高</b>';
+    $('#v4out').innerHTML=`${e.name}：${e.sub} → ${e.prod}；最適約 37 °C、pH ${e.opt}<br>目前活性 <span class="big ${a>0.5?'g':a>0.15?'y':'r'}">${Math.round(a*100)}%</span>，剩下的受質約 ${Math.round(remain*100)}%　${why}`+
+      (enz==='lip'?`<br>${BI.checked?'膽汁把脂肪乳化成小油滴，<b class="g">增加脂肪酶作用的表面積</b>（膽汁本身不含酶）':'沒有膽汁：脂肪成大油滴，表面積小，分解慢'}`:'');
+  }
+  segT($('#v4enz'),'e',v=>{enz=v;PH.value=ENZ[v].opt;drawLab();});
+  [Tm,PH].forEach(i=>i.oninput=drawLab);BO.onchange=drawLab;BI.onchange=drawLab;
+  $$('#v4pre button').forEach(b=>b.onclick=()=>{const[e,t,p,bo]=b.dataset.v.split(',');enz=e;setSeg($('#v4enz'),'e',e);Tm.value=t;PH.value=p;BO.checked=bo==='1';drawLab();});
+
+  /* ---- trip ---- */
+  const ST=[
+    {n:'口腔',env:'pH 約 7',who:'唾液澱粉酶；牙齒咀嚼',s:[0.7,0.3,0],p:[1,0,0],f:[1,0,0],note:'只有澱粉開始被分解成麥芽糖，所以吐司嚼久了會變甜。蛋白質、脂肪在口腔不被化學消化。'},
+    {n:'胃',env:'pH 1.5～2',who:'鹽酸活化胃蛋白酶；胃壁蠕動攪拌',s:[0.7,0.3,0],p:[0.6,0.4,0],f:[1,0,0],note:'唾液澱粉酶在強酸中失去活性；胃蛋白酶把部分蛋白質分解為多肽。'},
+    {n:'十二指腸',env:'NaHCO₃ 中和成弱鹼性',who:'膽汁（乳化）、胰澱粉酶、胰蛋白酶、胰脂肪酶',s:[0.1,0.9,0],p:[0.1,0.8,0.1],f:[0.1,0.4,0.5],note:'膽汁把大油滴乳化成小油滴；胰液的酶分解三大養分。胃蛋白酶在這裡失去活性。'},
+    {n:'小腸刷狀緣',env:'弱鹼性',who:'麥芽糖酶、蔗糖酶、乳糖酶、胜肽酶',s:[0,0,1],p:[0,0.05,0.95],f:[0,0,1],note:'雙醣 → 單醣、多肽 → 胺基酸；三大養分都分解成可吸收的小分子（下一節：吸收）。'}];
+  let st=0;
+  $('#v4st').innerHTML=ST.map((s,i)=>`<button data-i="${i}" class="${i?'':'on'}">${i+1}. ${s.n}</button>`).join('');
+  segT($('#v4st'),'i',v=>{st=+v;drawTrip();});
+  function drawTrip(){
+    setSeg($('#v4st'),'i',String(st));
+    const s=$('#v4b');clear(s);const S=ST[st];
+    const rows=[['澱粉',S.s,['澱粉','麥芽糖','葡萄糖'],['#5a8cff','#36e0ff','#3ee08f']],['蛋白質',S.p,['蛋白質','多肽','胺基酸'],['#ff7aa8','#ff9f43','#ffd84d']],['脂肪',S.f,['大油滴','乳化小油滴','脂肪酸＋甘油單酯'],['#c9a227','#ffd84d','#fff3a0']]];
+    txt(s,10,16,`第 ${st+1} 站：${S.n}（${S.env}）`,'lbl','start');
+    rows.forEach(([nm,v,lbls,cs],r)=>{const y=48+r*76;txt(s,10,y+16,nm,'lbl sm','start');let x=70;const W=430;
+      v.forEach((f,k)=>{const w=f*W;if(w>0.5){el('rect',{x,y,width:w,height:32,fill:cs[k]},s);if(w>60)txt(s,x+w/2,y+16,`${lbls[k]} ${Math.round(f*100)}%`,'sm','middle').setAttribute('fill','#06142b');}x+=w;});
+      el('rect',{x:70,y,width:W,height:32,fill:'none',stroke:'rgba(255,255,255,.4)'},s);
+      lbls.forEach((l,k)=>{const lx=70+k*130;el('rect',{x:lx,y:y+40,width:11,height:11,fill:cs[k]},s);txt(s,lx+16,y+46,l,'lbl sm','start');});});
+    txt(s,10,280,'作用者：'+S.who,'lbl sm y','start');
+    $('#v4out').innerHTML=`<span class="big">${S.n}</span>　${S.note}`;
+  }
+  $('#v4prev').onclick=()=>{st=Math.max(0,st-1);drawTrip();};$('#v4next').onclick=()=>{st=Math.min(ST.length-1,st+1);drawTrip();};
+  segT($('#v4tabs'),'m',m=>{$('#v4lab').hidden=m!=='lab';$('#v4trip').hidden=m!=='trip';m==='lab'?drawLab():drawTrip();});
+  drawLab();
+})();
+
+/* ================= V5: absorption routes & digestive hormones ================= */
+(function(){
+  const svg=$('#v5');let mode='path',nut='glu',hor='nerve',anim=null;
+  const NODES={lumen:[14,140,70,40,'小腸腔'],epi:[100,140,80,40,'絨毛\n上皮細胞'],
+    cap:[200,60,80,36,'絨毛微血管'],portal:[300,60,80,36,'肝門靜脈'],liver:[400,60,80,36,'肝臟'],hv:[400,14,80,36,'肝靜脈'],ivc:[300,14,80,36,'下腔靜脈'],
+    chylo:[200,200,80,40,'乳糜微粒\n（重組三酸甘油酯）'],lac:[300,200,80,36,'乳糜管'],lym:[400,200,80,36,'淋巴管'],thor:[400,250,80,36,'胸管'],sub:[300,250,80,36,'鎖骨下靜脈'],svc:[200,250,80,36,'上腔靜脈'],
+    ra:[100,250,80,40,'右心房']};
+  const ROUTE={glu:['lumen','epi','cap','portal','liver','hv','ivc','ra'],aa:['lumen','epi','cap','portal','liver','hv','ivc','ra'],water:['lumen','epi','cap','portal','liver','hv','ivc','ra'],
+    fat:['lumen','epi','chylo','lac','lym','thor','sub','svc','ra'],vit:['lumen','epi','chylo','lac','lym','thor','sub','svc','ra']};
+  const INFO={glu:'葡萄糖與 Na⁺ 共同運輸（主動運輸）進入上皮細胞 → 絨毛微血管 → 肝門靜脈 → 肝臟（多餘的合成肝醣）→ 肝靜脈 → 下腔靜脈 → 右心房',
+    aa:'胺基酸以主動運輸吸收 → 絨毛微血管 → 肝門靜脈 → 肝臟（脫胺產生的氨轉成尿素）→ 肝靜脈 → 下腔靜脈 → 右心房',
+    fat:'脂肪酸、甘油單酯擴散進入上皮細胞，重新合成三酸甘油酯並包成乳糜微粒 → 乳糜管 → 淋巴管 → 胸管 → 鎖骨下靜脈 → 上腔靜脈 → 右心房（<b class="y">不經肝門靜脈</b>）',
+    vit:'脂溶性維生素（A、D、E、K）隨脂質包在乳糜微粒中，走乳糜管與淋巴系統',
+    water:'水以滲透作用吸收，大部分在小腸、其餘在大腸；進入微血管後經肝門靜脈'};
+  function center(k){const[x,y,w,h]=NODES[k];return[x+w/2,y+h/2];}
+  function drawPath(prog){
+    clear(svg);const r=ROUTE[nut],lit=prog===undefined?r.length:prog;
+    const edges=[['lumen','epi'],['epi','cap'],['cap','portal'],['portal','liver'],['liver','hv'],['hv','ivc'],['ivc','ra'],['epi','chylo'],['chylo','lac'],['lac','lym'],['lym','thor'],['thor','sub'],['sub','svc'],['svc','ra']];
+    edges.forEach(([a,b])=>{const on=r.includes(a)&&r.includes(b)&&r.indexOf(b)===r.indexOf(a)+1&&r.indexOf(b)<lit;
+      const[x1,y1]=center(a),[x2,y2]=center(b),st={fill:'none',stroke:on?COL.yellow:'rgba(159,182,217,.3)','stroke-width':on?5:2};
+      if(a==='ivc')el('path',{d:'M300,32 L6,32 L6,270 L100,270',...st},svg);else el('line',{x1,y1,x2,y2,...st},svg);});
+    Object.keys(NODES).forEach(k=>{const[x,y,w,h,l]=NODES[k],i=r.indexOf(k),on=i>=0&&i<lit;
+      const blood=['cap','portal','liver','hv','ivc','ra','sub','svc'].includes(k),lymph=['chylo','lac','lym','thor'].includes(k);
+      box(svg,x,y,w,h,l,{fill:on?(lymph?'rgba(62,224,143,.35)':blood?'rgba(224,71,90,.4)':'rgba(54,224,255,.3)'):'rgba(15,44,92,.9)',stroke:on?COL.yellow:'rgba(120,190,255,.35)',sw:on?2.5:1.5});});
+    txt(svg,240,120,'血液（微血管 → 肝門靜脈）','lbl sm r');txt(svg,340,186,'淋巴系統','lbl sm g');
+    txt(svg,500,300,'示意圖','lbl sm','end');
+    $('#v5out').innerHTML=INFO[nut];
+  }
+  const ORG={brain:[20,20,110,46,'腦（延腦）'],stom:[20,130,110,56,'胃'],duo:[200,130,120,56,'十二指腸'],panc:[390,130,110,46,'胰臟'],gall:[390,220,110,46,'膽囊'],liver:[390,20,110,46,'肝臟']};
+  const HOR={nerve:{src:'brain',to:['stom'],h:'迷走神經（神經調節）',eff:'促進唾液與胃液分泌',inh:[],info:'看到、聞到、想到食物 → 經<b>迷走神經</b>促進唾液與胃液分泌（不需要激素）。'},
+    gas:{src:'stom',to:['stom'],h:'胃泌素',eff:'促進胃液（鹽酸、胃蛋白酶原）分泌與胃蠕動',inh:[],info:'蛋白質食物進入胃、胃壁被撐開 → 胃幽門部黏膜分泌<b class="y">胃泌素</b> → 經血液回到胃 → 促進胃液分泌與蠕動。'},
+    sec:{src:'duo',to:['panc'],h:'胰泌素',eff:'促進胰臟分泌富含 NaHCO₃ 的胰液',inh:['stom'],info:'酸性食糜進入十二指腸 → 十二指腸黏膜分泌<b class="y">胰泌素</b> → 經血液到胰臟 → 分泌 <b>NaHCO₃</b> 中和胃酸；同時抑制胃的活動。（1902 年貝利斯與史達林發現的第一個激素）'},
+    cck:{src:'duo',to:['gall','panc'],h:'膽囊收縮素（CCK）',eff:'膽囊收縮排出膽汁、胰臟分泌消化酶',inh:['stom'],info:'脂肪、蛋白質的分解產物進入十二指腸 → 分泌<b class="y">膽囊收縮素</b> → 膽囊收縮排出膽汁、胰臟分泌<b>消化酶</b>；同時抑制胃排空。'}};
+  function drawHorm(prog=1){
+    clear(svg);const H=HOR[hor];
+    el('rect',{x:150,y:88,width:220,height:22,rx:11,fill:'rgba(224,71,90,.25)',stroke:'rgba(224,71,90,.6)'},svg);txt(svg,260,99,hor==='nerve'?'神經':'血液循環','lbl sm r');
+    Object.keys(ORG).forEach(k=>{const[x,y,w,h,l]=ORG[k],src=k===H.src,tgt=H.to.includes(k),inh=H.inh.includes(k);
+      box(svg,x,y,w,h,l,{fill:src?'rgba(255,216,77,.35)':tgt?'rgba(62,224,143,.3)':inh?'rgba(255,90,90,.2)':'rgba(15,44,92,.9)',stroke:src?COL.yellow:tgt?COL.green:inh?COL.red:'rgba(120,190,255,.35)',sw:src||tgt?2.5:1.5,cls:'lbl'});});
+    const c=k=>{const[x,y,w,h]=ORG[k];return[x+w/2,y+h/2];};
+    const[sx,sy]=c(H.src);
+    H.to.forEach(k=>{const[tx,ty]=c(k);const mx=260,my=99;
+      if(k===H.src){el('path',{d:`M${sx+55},${sy-10} C${sx+130},${sy-60} ${sx+130},${sy+50} ${sx+55},${sy+16}`,fill:'none',stroke:COL.green,'stroke-width':3,'stroke-dasharray':'6 4'},svg);arrow(svg,sx+70,sy+22,sx+56,sy+16,COL.green,3);}
+      else{el('path',{d:`M${sx},${sy} Q${mx},${my} ${tx},${ty}`,fill:'none',stroke:COL.green,'stroke-width':3,'stroke-dasharray':'6 4'},svg);}
+      const p=Math.min(1,prog);const qx=(1-p)**2*sx+2*(1-p)*p*mx+p*p*tx,qy=(1-p)**2*sy+2*(1-p)*p*my+p*p*ty;
+      if(k!==H.src&&prog<1)el('circle',{cx:qx,cy:qy,r:8,fill:COL.yellow,stroke:'#06142b','stroke-width':2},svg);});
+    H.inh.forEach(k=>{const[tx,ty]=c(k);el('line',{x1:sx-60,y1:sy+20,x2:tx+56,y2:ty+20,stroke:COL.red,'stroke-width':3},svg);el('line',{x1:tx+56,y1:ty+8,x2:tx+56,y2:ty+32,stroke:COL.red,'stroke-width':4},svg);txt(svg,(sx+tx)/2,sy+36,hor==='cck'?'抑制胃排空':'抑制胃的活動','lbl sm r');});
+    txt(svg,260,290,`${H.h}：${H.eff}`,'lbl sm y');
+    $('#v5out').innerHTML=H.info;
+  }
+  function draw(){if(anim){cancelAnimationFrame(anim);anim=null;}mode==='path'?drawPath():drawHorm();}
+  segT($('#v5tabs'),'m',m=>{mode=m;$('#v5path').hidden=m!=='path';$('#v5horm').hidden=m!=='horm';$('#v5play').textContent=m==='path'?'▶ 播放路徑':'▶ 播放激素運送';draw();});
+  segT($('#v5nut'),'n',v=>{nut=v;draw();});segT($('#v5ev'),'h',v=>{hor=v;draw();});
+  $('#v5play').onclick=()=>{if(anim)cancelAnimationFrame(anim);const t0=performance.now();
+    const step=ts=>{const e=(ts-t0)/1000;if(mode==='path'){const n=ROUTE[nut].length;drawPath(Math.min(n,Math.floor(e/0.55)+1));if(e<n*0.55)anim=requestAnimationFrame(step);else anim=null;}
+      else{drawHorm(Math.min(1,e/2));if(e<2)anim=requestAnimationFrame(step);else anim=null;}};
+    anim=requestAnimationFrame(step);};
+  draw();
+})();
+
+/* ================= Mind map ================= */
+const MINDMAP={"name":"第二章 循環與消化","children":[{"name":"2-1 循環系統的類型與心臟","children":[{"name":"循環類型","children":[{"name":"無循環系統：靠擴散（海綿、水螅、渦蟲）"},{"name":"開放式：血淋巴流入血竇（節肢動物、多數軟體動物）"},{"name":"閉鎖式：經微血管交換（環節動物、頭足類、脊椎動物）"}]},{"name":"脊椎動物心臟的演化","children":[{"name":"魚類：一心房一心室，單循環，只有缺氧血"},{"name":"兩生類：二心房一心室，雙循環，部分混合"},{"name":"爬蟲類：心室不完全分隔，少量混合"},{"name":"鳥類、哺乳類：二心房二心室，完全雙循環"}]},{"name":"人類心臟構造與路徑","children":[{"name":"四腔室：左心室壁最厚"},{"name":"房室瓣：右三尖瓣、左二尖瓣（僧帽瓣）"},{"name":"半月瓣：肺動脈瓣、主動脈瓣"},{"name":"體循環：左心室 → 主動脈 → 全身 → 上下腔靜脈 → 右心房"},{"name":"肺循環：右心室 → 肺動脈 → 肺 → 肺靜脈 → 左心房"},{"name":"冠狀動脈：供應心肌"}]},{"name":"心動週期與心音","children":[{"name":"週期 0.8 秒（75 次／分）"},{"name":"心房收縮 0.1 s"},{"name":"心室收縮 0.3 s：第一心音（房室瓣關）"},{"name":"全心舒張 0.4 s：第二心音（半月瓣關）"}]},{"name":"傳導系統與心電圖","children":[{"name":"竇房結（節律點）→ 房室結（延遲約 0.1 s）→ 房室束 → 浦金埃氏纖維"},{"name":"P 波：心房去極化"},{"name":"QRS 波群：心室去極化"},{"name":"T 波：心室再極化"}]},{"name":"心輸出量","children":[{"name":"心跳速率 × 每搏輸出量"},{"name":"安靜時約 5.25 L／分"}]}]},{"name":"2-2 血管與血壓","children":[{"name":"三種血管比較","children":[{"name":"動脈：壁厚、有彈性、血壓高、有脈搏"},{"name":"微血管：單層內皮細胞，交換物質"},{"name":"靜脈：壁較薄、有瓣膜、血壓低"}]},{"name":"血壓與血流速度","children":[{"name":"收縮壓 120 mmHg、舒張壓 80 mmHg"},{"name":"平均動脈壓 ≈ 舒張壓 + (收縮壓 − 舒張壓) ÷ 3"},{"name":"血壓：主動脈最高、小動脈降最多、大靜脈最低"},{"name":"流速：微血管最慢（總截面積最大）"}]},{"name":"微血管的物質交換","children":[{"name":"動脈端：血壓 \u003e 膠體滲透壓 → 濾出"},{"name":"靜脈端：血壓 \u003c 膠體滲透壓 → 回收"},{"name":"水腫：血漿蛋白減少、靜脈壓升高、淋巴管阻塞"}]},{"name":"調節","children":[{"name":"延腦心血管中樞"},{"name":"壓力感受器：主動脈弓、頸動脈竇"},{"name":"交感神經（心跳加快、血壓升）、迷走神經（心跳變慢）"},{"name":"腎上腺素：心跳加快、心輸出量增加"}]}]},{"name":"2-3 血液與淋巴系統","children":[{"name":"血液組成","children":[{"name":"血漿 55%：水、血漿蛋白（白蛋白、球蛋白、纖維蛋白原）、溶質"},{"name":"紅血球（血球比容 45%）：雙凹、無核、運 O₂、壽命 120 天"},{"name":"白血球：有核，防禦"},{"name":"血小板：細胞碎片，參與凝血"}]},{"name":"血液凝固","children":[{"name":"形成血小板栓塞"},{"name":"釋出凝血致活素"},{"name":"凝血酶原 → 凝血酶（需 Ca²⁺；凝血因子合成需維生素 K）"},{"name":"纖維蛋白原 → 纖維蛋白網"},{"name":"抗凝：檸檬酸鈉、肝素"}]},{"name":"血型與輸血","children":[{"name":"ABO：紅血球上有抗原，血漿中有抗體"},{"name":"Rh：Rh⁻ 接觸 Rh⁺ 後才產生抗體"},{"name":"新生兒溶血症：Rh⁻ 母親、第二胎 Rh⁺"},{"name":"輸血原則：捐血者紅血球不可被受血者血漿凝集，以同型為原則"}]},{"name":"淋巴系統","children":[{"name":"構造：盲端微淋巴管、有瓣膜的淋巴管、淋巴結"},{"name":"回流：胸管 → 鎖骨下靜脈"},{"name":"功能：回收組織液、吸收脂質（乳糜管）、防禦"}]}]},{"name":"2-4 消化系統與消化作用","children":[{"name":"動物的消化方式","children":[{"name":"細胞內消化（原生動物、海綿）"},{"name":"消化循環腔：只有一個開口（水螅、渦蟲）"},{"name":"完全消化道：有口與肛門（蚯蚓、脊椎動物）"},{"name":"特化：嗉囊、砂囊、反芻胃（四室）"}]},{"name":"人類各段的消化","children":[{"name":"口腔：唾液澱粉酶（澱粉 → 麥芽糖，pH 約 7）"},{"name":"胃：壁細胞分泌鹽酸，主細胞分泌胃蛋白酶原 → 胃蛋白酶（pH 1.5～2）"},{"name":"小腸：主要的消化與吸收場所"},{"name":"膽汁：肝臟製造、膽囊儲存，乳化脂肪（不含酶）"},{"name":"胰液：NaHCO₃、胰澱粉酶、胰蛋白酶原、胰脂肪酶、核酸酶"},{"name":"刷狀緣酶：麥芽糖酶、蔗糖酶、乳糖酶、胜肽酶"}]}]},{"name":"2-5 養分的吸收與消化的調節","children":[{"name":"小腸的吸收構造","children":[{"name":"環狀皺褶"},{"name":"絨毛（含微血管與乳糜管）"},{"name":"微絨毛（刷狀緣）"}]},{"name":"吸收路徑","children":[{"name":"水溶性：葡萄糖、胺基酸 → 微血管 → 肝門靜脈 → 肝臟"},{"name":"脂溶性：脂肪酸、甘油單酯 → 乳糜微粒 → 乳糜管 → 淋巴"}]},{"name":"大腸與肝臟","children":[{"name":"大腸：吸收水分與無機鹽，腸道菌合成維生素 K、B 群"},{"name":"肝臟：製造膽汁、儲存肝醣、合成尿素與血漿蛋白、解毒"}]},{"name":"消化的調節","children":[{"name":"神經：迷走神經促進唾液與胃液分泌"},{"name":"胃泌素：胃黏膜 → 促進胃液分泌與蠕動"},{"name":"胰泌素：十二指腸黏膜 → 促進胰臟分泌 NaHCO₃"},{"name":"膽囊收縮素：十二指腸黏膜 → 膽囊收縮、胰臟分泌消化酶"}]}]}]};
+(function(){
+  const box=$('#mindmap');if(!MINDMAP){box.textContent='（心智圖資料尚未載入）';return;}
+  const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML;};
+  const COLORS=['#ffd84d','#36e0ff','#ff9f43','#3ee08f','#ff7aa8','#b48cff'];
+  const node=n=>n.children&&n.children.length?`<details open><summary>${esc(n.name)}</summary>${
+      n.children.every(c=>!c.children||!c.children.length)?`<div class="mm-leaf">${n.children.map(c=>`<span>${esc(c.name)}</span>`).join('')}</div>`:n.children.map(node).join('')}</details>`
+    :`<div class="mm-leaf"><span>${esc(n.name)}</span></div>`;
+  box.innerHTML=`<div class="mm-root">${esc(MINDMAP.name)}</div><div class="mm-grid">${(MINDMAP.children||[]).map((b,i)=>
+    `<div class="mm-br" style="--bc:${COLORS[i%COLORS.length]}"><h4>${esc(b.name)}</h4>${(b.children||[]).map(node).join('')}</div>`).join('')}</div>`;
+  $('#mmOpen').onclick=()=>$$('#mindmap details').forEach(d=>d.open=true);
+  $('#mmClose').onclick=()=>$$('#mindmap details').forEach(d=>d.open=false);
+})();
+
+/* ================= Flashcards ================= */
+const CARDS_RAW=[{"f":"開放式循環系統與閉鎖式循環系統的主要差異為何？","b":"開放式循環的血淋巴會打入血竇並直接浸潤組織細胞；閉鎖式循環的血液始終在血管內流動，經微血管與組織交換物質。"},{"f":"昆蟲等節肢動物的開放式循環系統，其血淋巴主要運送哪些物質？","b":"主要運送養分與代謝廢物（氣體交換主要依靠氣管系統）。"},{"f":"魚類心臟由哪些腔室組成？心臟內流動的是充氧血還是缺氧血？","b":"魚類心臟為一心房一心室（單循環），心臟內只有缺氧血。"},{"f":"兩生類與爬蟲類（鱷魚除外）的心臟構造有何差異？心室內的血液是否會混合？","b":"兩生類為二心房一心室（心室內血液部分混合）；爬蟲類為二心房且心室有不完全隔膜（充氧血與缺氧血少量混合）。"},{"f":"鳥類與哺乳類擁有「二心房二心室」完全雙循環構造，在演化上有何重大意義？","b":"使充氧血與缺氧血完全分開不混合，送到全身的血液含氧量與血壓較高，能支持恆溫動物較高的代謝速率。"},{"f":"人類心臟四個腔室中，哪一個腔室的心肌壁最厚？原因為何？","b":"左心室壁最厚。因為左心室需要產生足夠高的壓力，才能將血液打入體循環送達全身。"},{"f":"人類心臟的房室瓣與半月瓣分別位於何處？","b":"房室瓣位於心房與心室之間（右三尖瓣、左二尖瓣）；半月瓣位於心室與大動脈出口之間（肺動脈瓣與主動脈瓣）。"},{"f":"請依序寫出體循環中血液流經的腔室與主要血管。","b":"左心室 → 主動脈 → 全身動脈 → 微血管 → 全身靜脈 → 上、下腔靜脈 → 右心房。"},{"f":"請依序寫出肺循環中血液流經的腔室與主要血管。","b":"右心室 → 肺動脈 → 肺部微血管 → 肺靜脈 → 左心房。"},{"f":"定義解剖學上的「動脈」與「靜脈」依據是什麼？","b":"依據血液流動方向（離開或回到心臟），而非血管內血液的含氧量。"},{"f":"在心動週期（安靜時 0.8 秒）中，心房收縮、心室收縮與全心舒張的時間分別是多少？","b":"心房收縮 0.1 秒、心室收縮 0.3 秒、全心舒張 0.4 秒。"},{"f":"第一心音與第二心音分別是由哪種瓣膜關閉所產生的聲音？","b":"第一心音（低沉「咚」）由心室收縮開始時房室瓣關閉產生；第二心音（清脆「噠」）由心室舒張開始時半月瓣關閉產生。"},{"f":"當運動導致心跳加快時，心動週期中縮短最明顯的是哪一個時期？","b":"舒張期（全心舒張時期）。"},{"f":"人體心臟的節律點位於何處？心肌興奮傳導的完整路徑為何？","b":"節律點為竇房結（位於右心房上腔靜脈開口附近）。傳導路徑：竇房結 → 心房收縮 → 房室結 → 房室束 → 左右束支 → 浦金埃氏纖維 → 心室收縮。"},{"f":"心電圖（ECG）中的 P 波、QRS 波群與 T 波分別代表心肌的何種電位變化？","b":"P 波代表心房去極化；QRS 波群代表心室去極化；T 波代表心室再極化。"},{"f":"心輸出量（Cardiac Output）的計算公式為何？","b":"心輸出量 = 心跳速率 × 每搏輸出量。"},{"f":"某人安靜時心跳 75 次／分、每搏輸出量 70 mL；劇烈運動時心跳 150 次／分、每搏輸出量 100 mL。求兩種狀態的心輸出量及運動時為安靜時的幾倍？","b":"安靜：5.25 L／分（75 × 70 mL）；運動：15 L／分（150 × 100 mL）；約為安靜時的 2.86 倍。"},{"f":"心電圖紙速為 25 mm/s，若相鄰兩個 R 波相距 20 小格，心跳速率為多少？","b":"75 次／分。（1 小格 = 0.04 秒，R–R 間隔 = 20 × 0.04 = 0.8 秒，心跳 = 60 ÷ 0.8 = 75）。"},{"f":"【常見迷思辨正】「動脈裡面流的一定是充氧血，靜脈裡面流的一定是缺氧血。」這句話是否正確？","b":"錯誤。動脈與靜脈是依據血流方向定義。例如肺動脈流的是缺氧血，肺靜脈流的是充氧血。"},{"f":"【常見迷思辨正】「左心室肌肉壁比右心室厚，所以每次心室收縮時左心室打出的血量比右心室多。」這句話是否正確？","b":"錯誤。左右心室每次打出的血量相等（每搏輸出量相同）；左心室壁厚是因為需產生更高壓力以推進體循環。"},{"f":"【常見迷思辨正】「心跳是由大腦下達指令才能發生的發起過程。」這句話是否正確？","b":"錯誤。心肌具有自律性（肌源性），心跳發起於竇房結；自主神經與激素僅負責調控心跳快慢與強度。"},{"f":"比較動脈、微血管與靜脈的管壁構造差異。","b":"動脈管壁最厚，富含彈性纖維與平滑肌；微血管最薄，僅由單層內皮細胞構成；靜脈管壁較薄且彈性較小。"},{"f":"四肢靜脈內防止血液逆流的構造是什麼？促進靜脈血液回流的主要動力有哪些？","b":"構造為靜脈瓣膜。回流動力包括：心臟舒張時的抽吸力、骨骼肌收縮擠壓靜脈，以及呼吸時胸腔壓力的變化。"},{"f":"平均動脈壓的估計計算公式為何？若某人血壓為 120／80 mmHg，其平均動脈壓約為多少？","b":"公式：平均動脈壓 ≈ 舒張壓 + (收縮壓 − 舒張壓) ÷ 3。120／80 mmHg 計算結果約為 93 mmHg。"},{"f":"血液在循環過程中，血壓降幅最大的是哪一種血管？血壓最低的部位在哪裡？","b":"血壓降幅最大的是小動脈；血壓最低的部位是大靜脈（上、下腔靜脈）與右心房（接近 0 mmHg）。"},{"f":"微血管管徑極細，為什麼血流速度卻是所有血管當中最慢的？這有何生理意義？","b":"因為微血管數量極多，總截面積最大，流速與總截面積成反比。流速最慢可提供充足時間進行物質交換。"},{"f":"根據數值約定（動脈端血壓 35 mmHg、靜脈端血壓 15 mmHg、血漿膠體滲透壓 25 mmHg），微血管動脈端與靜脈端的淨壓分別為多少？","b":"動脈端淨壓為 +10 mmHg（濾出）；靜脈端淨壓為 −10 mmHg（回收）。"},{"f":"當肝臟病變導致血漿膠體滲透壓降至 15 mmHg 時，微血管物質交換會發生什麼變化？為什麼會引發水腫？","b":"動脈端淨壓增至 +20 mmHg（濾出增加），靜脈端淨壓變為 0 mmHg（無法回收）。組織液大量累積超過淋巴回收極限，形成水腫。"},{"f":"人體心跳與血壓的神經控制中樞位於腦的哪一個部位？感受血壓變化的感受器位於何處？","b":"控制中樞位於延腦（心血管中樞）；壓力感受器位於主動脈弓與頸動脈竇。"},{"f":"當身體突然失血導致血壓下降時，交感神經與迷走神經（副交感神經）如何調節以恢復血壓？","b":"延腦增加交感神經活性（心跳加快、收縮力增強、血管收縮）並減少迷走神經活性（降低抑制），使血壓回升。"},{"f":"【常見迷思辨正】「微血管是物質交換的地方，所以血管中的血壓在微血管處最低。」這句話是否正確？","b":"錯誤。血壓沿血流方向一路下降，最低處在大靜脈與右心房。微血管是「流速」最慢，而非血壓最低。"},{"f":"【常見迷思辨正】「平時在手腕體表看到的青色血管有脈搏，可以用來測量心跳。」這句話是否正確？","b":"錯誤。體表看到的青色血管是靜脈，靜脈沒有脈搏。測量脈搏需按壓動脈（如橈動脈）。"},{"f":"離心後的血液主要分成哪兩大層？其體積比例分別約為多少？","b":"上層為血漿（約 55%），下層為血球（約 45%，即血球比容）。"},{"f":"血液中的「血漿」與血液凝固後析出的「血清」有何化學成分差異？","b":"血清 = 血漿 − 纖維蛋白原等凝血因子。"},{"f":"比較人類成熟紅血球與白血球在「細胞核有無」與「主要生理功能」上的差異。","b":"成熟紅血球無細胞核，主要功能為運送 O₂；白血球有細胞核，主要功能為防禦與免疫。"},{"f":"請簡述血液凝固機制中，關鍵酵素與蛋白質活化的連鎖反應步驟。","b":"傷口釋出凝血致活素 → 在 Ca²⁺ 參與下促使凝血酶原活化為凝血酶 → 凝血酶催化可溶性纖維蛋白原轉變為不溶性纖維蛋白網住血球。"},{"f":"血液凝固過程中不可或缺的無機離子與維生素分別為何？","b":"離子為 Ca²⁺；維生素為維生素 K（用於肝臟合成凝血因子）。"},{"f":"捐血袋中加入「檸檬酸鈉」可以防止血液凝固，其抗凝血原理為何？若要使該袋血液重新凝固需加入什麼？","b":"檸檬酸鈉可結合血漿中的 Ca²⁺ 阻止凝血反應；加入足量 Ca²⁺（如氯化鈣）即可恢復凝血。"},{"f":"填表說明 ABO 血型系統中，A 型、B 型、AB 型與 O 型者的紅血球表面抗原與血漿抗體。","b":"A 型：A 抗原、抗 B 抗體；B 型：B 抗原、抗 A 抗體；AB 型：A 與 B 抗原、無抗體；O 型：無抗原、抗 A 與抗 B 抗體。"},{"f":"某人血液遇「抗 A 血清」凝集、遇「抗 B 血清」不凝集、遇「抗 Rh 血清」凝集，其血型及血漿中的 ABO 抗體為何？","b":"血型為 A 型、Rh⁺（即 A⁺）；血漿中含有抗 B 抗體。"},{"f":"臨床輸血的核心安全原則為何？","b":"以同型輸血為原則。重點在於「捐血者的紅血球不可被受血者血漿中的抗體凝集」。"},{"f":"新生兒溶血症通常發生於何種父母與胎兒血型組合？其發病機制為何？","b":"發生於 Rh⁻ 母親懷 Rh⁺ 胎兒。第一胎分娩時母體接觸胎兒血液產生抗 Rh 抗體；第二胎若仍為 Rh⁺，抗體穿過胎盤破壞胎兒紅血球。"},{"f":"淋巴液吸收後，最後經由哪一條主要管道注入血管？注入哪一條靜脈回到血液循環？","b":"經由胸管（及右淋巴總管）注入鎖骨下靜脈回到血液循環。"},{"f":"【常見迷思辨正】「O 型血是萬能捐血者，因此在任何緊急情況下都可以大量輸給任何血型的病人。」這句話是否正確？","b":"錯誤。O 型血漿中含有抗 A 與抗 B 抗體，大量輸入仍可能凝集受血者的紅血球；醫療上仍以同型輸血並做交叉配血為原則。"},{"f":"【常見迷思辨正】「Rh 陰性（Rh⁻）的人天生血漿中就含有抗 Rh 抗體。」這句話是否正確？","b":"錯誤。ABO 抗體是天生的，但 Rh⁻ 的人血漿中原本沒有抗 Rh 抗體，必須在接觸 Rh⁺ 血液後才會誘發產生。"},{"f":"反芻動物（如牛）的胃分為哪四室？其中真正能分泌胃液進行化學消化的「真胃」是哪一室？","b":"四室為瘤胃、網胃、重瓣胃、皺胃。真正分泌胃液的真胃是「皺胃」。"},{"f":"唾液澱粉酶由何處分泌？其最適 pH 值與化學消化的產物為何？","b":"由唾腺分泌；最適 pH 約為 7（中性）；將澱粉水解為麥芽糖（及較短醣鏈）。"},{"f":"胃腺中的「壁細胞」與「主細胞」分別分泌什麼物質？","b":"壁細胞分泌鹽酸（HCl）；主細胞分泌胃蛋白酶原。"},{"f":"胃液中鹽酸（HCl）的主要生理功能有哪些？","b":"殺菌、使食物蛋白質變性、將無活性的胃蛋白酶原活化為胃蛋白酶（並提供強酸環境）。"},{"f":"膽汁由何處製造？儲存於何處？其在脂質消化中的作用機制為何？","b":"由肝臟製造、膽囊儲存。膽汁不含消化酶，其中的膽鹽將脂肪「乳化」成小油滴（物理性消化），增加胰脂肪酶的作用面積。"},{"f":"胰液中含有哪一種無機化合物用來中和胃酸？胰腺分泌的四大類化學消化酶為何？","b":"含有 NaHCO₃（碳酸氫鈉）。消化酶包含：胰澱粉酶、胰蛋白酶原、胰脂肪酶、核酸酶。"},{"f":"無活性的胰蛋白酶原進入十二指腸後，是如何被活化為胰蛋白酶的？","b":"由十二指腸腸壁分泌的「腸激酶」活化為胰蛋白酶。"},{"f":"小腸上皮刷狀緣（Brush Border）主要含有哪些雙醣酶與胜肽酶？其最終產物為何？","b":"雙醣酶（麥芽糖酶、蔗糖酶、乳糖酶）將雙醣水解為單醣；胜肽酶將多肽水解為胺基酸。"},{"f":"將澱粉液分別做以下處理（37 °C 放置 10 分鐘後滴加碘液）：試管甲加唾液；試管乙加煮沸過的唾液；試管丙加唾液+稀鹽酸。哪些試管會呈藍黑色？","b":"試管乙與試管丙呈藍黑色（試管乙酵素高溫變性、試管丙強酸使酵素失去活性，澱粉未被分解）。試管甲不呈藍黑色。"},{"f":"【常見迷思辨正】「膽汁含有豐富的脂肪酶，能把脂肪化學分解為脂肪酸與甘油。」這句話是否正確？","b":"錯誤。膽汁不含任何消化酶，膽鹽僅能「乳化」脂肪（物理性消化）；真正化學分解脂肪的是胰脂肪酶。"},{"f":"【常見迷思辨正】「胃是人體消化食物最主要的器官。」這句話是否正確？","b":"錯誤。胃主要進行蛋白質的初步分解與儲存食物；醣類、脂質與蛋白質的主要消化與吸收場所都在小腸。"},{"f":"【常見迷思辨正】「隨食糜進入十二指腸的胃蛋白酶，能在弱鹼性的小腸環境中繼續發揮消化蛋白質的功能。」這句話是否正確？","b":"錯誤。胃蛋白酶適應強酸環境（pH 1.5～2），進入小腸被 NaHCO₃ 中和後即失去活性，小腸內由胰蛋白酶接手。"},{"f":"小腸內壁如何擴大吸收表面積？請由大到小寫出三層特化構造。","b":"環狀皺褶 → 絨毛 → 微絨毛。"},{"f":"水溶性養分（葡萄糖、胺基酸）被小腸絨毛吸收後，經由什麼路徑運送到心臟？","b":"絨毛微血管 → 肝門靜脈 → 肝臟 → 肝靜脈 → 下腔靜脈 → 右心房。"},{"f":"脂溶性養分（脂肪酸、甘油單酯）在小腸吸收後，如何加工並經由什麼路徑進入血液循環？","b":"在上皮細胞內重組成三酸甘油酯並包合成「乳糜微粒」→ 進入乳糜管 → 淋巴管 → 胸管 → 鎖骨下靜脈 → 上腔靜脈 → 右心房。"},{"f":"「肝門靜脈」連接哪兩個器官的微血管網？其主要生理意義為何？","b":"連接消化道（腸胃）微血管與肝臟微血管。使吸收的水溶性養分與毒物先經肝臟處理（如調節血糖、解毒）。"},{"f":"人體大腸的主要生理功能是什麼？大腸內的腸道菌對人體有何貢獻？","b":"大腸主要吸收水分與無機鹽，形成糞便。腸道菌可合成維生素 K 與部分維生素 B 群，並發酵膳食纖維。"},{"f":"請列舉肝臟在消化與代謝方面的四大主要功能。","b":"1. 製造膽汁；2. 調節血糖（肝醣合成與分解）；3. 將氨轉化為尿素；4. 合成血漿蛋白（白蛋白、凝血因子）。"},{"f":"胃泌素（Gastrin）由何處分泌？其刺激分泌條件與生理作用為何？","b":"由胃幽門部黏膜分泌。受食物（蛋白質）進入胃或胃壁張開刺激分泌。作用：促進胃液（鹽酸與胃蛋白酶原）分泌及胃蠕動。"},{"f":"胰泌素（Secretin）由何處分泌？其主要生理作用為何？","b":"由十二指腸黏膜受酸性食糜刺激後分泌。作用：促進胰臟分泌富含 NaHCO₃ 的胰液（中和胃酸），並抑制胃的活動。"},{"f":"膽囊收縮素（CCK）由何處分泌？其主要生理作用為何？","b":"由十二指腸黏膜受脂肪與蛋白質分解產物刺激後分泌。作用：促進膽囊收縮排出膽汁、促進胰臟分泌消化酶，並抑制胃排空。"},{"f":"【常見迷思辨正】「所有經小腸吸收的養分，都會直接進入血管並經由肝門靜脈送到肝臟。」這句話是否正確？","b":"錯誤。大部分脂質會包合成乳糜微粒進入乳糜管，經由淋巴系統回流至鎖骨下靜脈進入血液，不經過肝門靜脈。"},{"f":"【常見迷思辨正】「胰泌素的主要功能是刺激胰臟分泌各種化學消化酶。」這句話是否正確？","b":"錯誤。胰泌素主要促進胰臟分泌 NaHCO₃（中和胃酸）；促進胰臟分泌化學消化酶與刺激膽囊收縮的是膽囊收縮素（CCK）。"}];
+/* NotebookLM 學習卡的化學式與數學式是 LaTeX，這裡轉成 Unicode 文字顯示 */
+function tex2u(s){
+  const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','−':'⁻','-':'⁻','n':'ⁿ','x':'ˣ','m':'ᵐ','t':'ᵗ','a':'ᵃ','b':'ᵇ','k':'ᵏ','h':'ʰ','i':'ⁱ','u':'ᵘ','v':'ᵛ','y':'ʸ'};
+  const SUB={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉','+':'₊','−':'₋','i':'ᵢ','n':'ₙ'};
+  const supOK=t=>t.length<=2||/^[−\-+]?\d+$/.test(t);
+  const sup=t=>[...t].every(c=>SUP[c])&&supOK(t)?[...t].map(c=>SUP[c]).join(''):'^('+t+')';
+  /* 化學下標：數字用 Unicode 下標（H₂O、P₁），中文直接接在後面（P氣），其他字母保留底線（P_A） */
+  const sub=t=>[...t].every(c=>SUB[c])?[...t].map(c=>SUB[c]).join(''):/[一-鿿]/.test(t)?t:'_'+t;
+  const simple=t=>/^[\w.]+$/.test(t);
+  return s.replace(/\$([^$]+)\$/g,(_,m)=>{
+    m=m.replace(/\\(?:text|mathrm)\{([^{}]*)\}/g,'$1').replace(/\^\\circ/g,'°').replace(/\\circ/g,'°')
+     .replace(/\\propto/g,'∝').replace(/\\(?:long)?rightarrow/g,'→').replace(/\\sum/g,'Σ').replace(/\\bar\{([^{}]*)\}/g,'$1̄')
+     .replace(/\\(?:dots|ldots|cdots)/g,'…').replace(/\\sim/g,'～')
+     .replace(/\\left|\\right/g,'').replace(/\\%/g,'%').replace(/\\mathbb\{R\}/g,'ℝ')
+     .replace(/\\neq/g,'≠').replace(/\\le(q)?/g,'≤').replace(/\\ge(q)?/g,'≥').replace(/\\times/g,'×').replace(/\\div/g,'÷')
+     .replace(/\\cdot/g,'·').replace(/\\implies/g,'⇒').replace(/\\Rightarrow/g,'⇒').replace(/\\to/g,'→').replace(/\\infty/g,'∞')
+     .replace(/\\approx/g,'≈').replace(/\\pm/g,'±').replace(/\\,|\\;|\\ /g,' ').replace(/-/g,'−');
+    for(let k=0;k<12;k++){const o=m;
+      m=m.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g,(_,a,b)=>(simple(a)?a:'('+a+')')+'/'+(simple(b)?b:'('+b+')'))
+         .replace(/\\sqrt\[([^\]]*)\]\{([^{}]*)\}/g,(_,n,x)=>[...n].map(c=>SUP[c]||c).join('')+'√'+(simple(x)?x:'('+x+')'))
+         .replace(/\\sqrt\{([^{}]*)\}/g,(_,x)=>'√'+(simple(x)?x:'('+x+')'))
+         .replace(/\^\{([^{}]*)\}/g,(_,t)=>sup(t)).replace(/\^([0-9a-z])/g,(_,c)=>SUP[c]||'^'+c)
+         .replace(/_\{([^{}]*)\}/g,(_,t)=>sub(t)).replace(/_([0-9])/g,(_,c)=>SUB[c]);
+      if(m===o)break;}
+    return m.replace(/[{}]/g,'').replace(/\\/g,'');
+  });
+}
+const CARDS=CARDS_RAW.map(c=>({f:tex2u(c.f),b:tex2u(c.b)}));
+(function(){
+  const KEY='bio-e3-ch2-cards';let mark={};try{mark=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){mark={};}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(mark));}catch(e){}};
+  let order=CARDS.map((_,i)=>i),filter='all',pos=0;
+  const fc=$('#fc');
+  const list=()=>filter==='all'?order:order.filter(i=>mark[i]!=='know');
+  function show(){
+    const L=list();
+    if(!CARDS.length){$('#fcFront').textContent='（學習卡資料尚未載入）';$('#fcStat').textContent='';return;}
+    if(!L.length){$('#fcFront').textContent='🎉 全部都會了！按「清除標記」或切回「全部」再練一次。';$('#fcBack').textContent='';fc.classList.remove('flip');statLine();return;}
+    pos=(pos+L.length)%L.length;const i=L[pos],c=CARDS[i];fc.classList.remove('flip');
+    const tag=`第 ${pos+1} / ${L.length} 張`+(mark[i]==='know'?'　✔ 會了':mark[i]==='again'?'　↻ 再複習':'');
+    setTimeout(()=>{$('#fcFront').textContent=c.f;$('#fcBack').textContent=c.b;},fc.classList.contains('flip')?250:0);
+    $('#fcFront').textContent=c.f;$('#fcBack').textContent=c.b;$('#fcTagF').textContent=tag;$('#fcTagB').textContent=tag+'　答案';statLine();
+  }
+  function statLine(){const k=Object.values(mark).filter(v=>v==='know').length,a=Object.values(mark).filter(v=>v==='again').length;
+    $('#fcStat').textContent=`共 ${CARDS.length} 張｜我會了 ${k}｜再複習 ${a}｜未標記 ${CARDS.length-k-a}`;}
+  const flip=()=>fc.classList.toggle('flip');
+  fc.onclick=flip;$('#fcFlip').onclick=flip;
+  $('#fcPrev').onclick=()=>{pos--;show();};$('#fcNext').onclick=()=>{pos++;show();};
+  $('#fcShuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}pos=0;show();};
+  const setMark=v=>{const L=list();if(!L.length)return;mark[L[pos]]=v;save();if(filter==='todo'&&v==='know'){show();}else{pos++;show();}};
+  $('#fcKnow').onclick=()=>setMark('know');$('#fcAgain').onclick=()=>setMark('again');
+  $('#fcReset').onclick=()=>{mark={};save();pos=0;show();};
+  segTabs($('#fcFilter'),b=>{filter=b.dataset.f;pos=0;show();});
+  fc.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){flip();e.preventDefault();}if(e.key==='ArrowRight'){pos++;show();}if(e.key==='ArrowLeft'){pos--;show();}});
+  show();
+})();
+
+/* ================= Tools panel ================= */
+(function(){
+  const tools=$('#tools'),head=$('#toolsHead');
+  /* 收合／展開：收合時只剩左側圖示列，頁面內容自動讓位（body.tools-min） */
+  const MINKEY='lesson-tools-min';
+  function setMin(m){tools.classList.toggle('min',m);document.body.classList.toggle('tools-min',m);
+    const b=$('#toolsMin');b.textContent=m?'»':'«';b.title=m?'展開教學工具':'收合成工具列';
+    try{localStorage.setItem(MINKEY,m?'1':'0');}catch(e){}}
+  let saved=null;try{saved=localStorage.getItem(MINKEY);}catch(e){}
+  setMin(saved!==null?saved==='1':innerWidth<900);
+  $$('.tool-tabs button').forEach(b=>b.onclick=()=>{$$('.tool-tabs button').forEach(x=>x.classList.toggle('on',x===b));$$('.tool-pane').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));if(tools.classList.contains('min'))setMin(false);});
+  $('#toolsMin').onclick=e=>{e.stopPropagation();setMin(!tools.classList.contains('min'));};
+
+  /* big overlay */
+  const big=$('#bigShow');let bigMode=null;
+  big.onclick=()=>{big.classList.remove('on','alarm');bigMode=null;};
+  function showBig(text,sub,mode){$('#bigNum').textContent=text;$('#bigSub').textContent=sub;big.classList.add('on');bigMode=mode;}
+
+  /* audio */
+  let ac=null;function beep(times=3){if(!$('#tSound').checked)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+    for(let i=0;i<times;i++){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=880;o.connect(g);g.connect(ac.destination);
+      const t0=ac.currentTime+i*0.45;g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.4,t0+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.35);o.start(t0);o.stop(t0+0.4);}}catch(e){}}
+
+  /* lottery */
+  let drawn=[],rolling=false;
+  function pool(){const a=+$('#lotFrom').value,b=+$('#lotTo').value,lo=Math.min(a,b),hi=Math.max(a,b);const arr=[];for(let i=lo;i<=hi;i++)if(!$('#lotNoRep').checked||!drawn.includes(i))arr.push(i);return arr;}
+  function hist(){$('#lotHist').innerHTML=drawn.map(n=>`<span>${n}</span>`).join('');$('#lotInfo').textContent=`已抽 ${drawn.length} 位，剩 ${pool().length} 位可抽`;}
+  $('#lotGo').onclick=()=>{if(rolling)return;const p=pool();if(!p.length){$('#lotNum').textContent='抽完';return;}
+    rolling=true;const num=$('#lotNum');const t0=performance.now();
+    const tick=()=>{num.textContent=p[Math.floor(Math.random()*p.length)];if(performance.now()-t0<1300){setTimeout(tick,60+(performance.now()-t0)/12);}
+      else{const pick=p[Math.floor(Math.random()*p.length)];num.textContent=pick;drawn.push(pick);hist();rolling=false;beep(1);
+        if($('#lotBig').checked)showBig(pick,'抽中座號 · 點任意處關閉','lot');}};
+    tick();};
+  $('#lotReset').onclick=()=>{drawn=[];$('#lotNum').textContent='?';hist();};
+  ['lotFrom','lotTo','lotNoRep'].forEach(id=>$('#'+id).onchange=hist);hist();
+
+  /* timer */
+  let total=180,remain=180000,endAt=0,running=false,iv=null;
+  const disp=$('#tDisp'),startBtn=$('#tStart');
+  const fmt=ms=>{const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+  function render(){disp.textContent=fmt(remain);if(bigMode==='timer')$('#bigNum').textContent=fmt(remain);}
+  function stop(){running=false;clearInterval(iv);startBtn.textContent=remain>0?'▶ 繼續':'▶ 開始';startBtn.classList.remove('stop');}
+  function set(sec){stop();total=Math.max(0,sec);remain=total*1000;disp.classList.remove('alarm');big.classList.remove('alarm');startBtn.textContent='▶ 開始';render();}
+  startBtn.onclick=()=>{if(running){remain=Math.max(0,endAt-Date.now());stop();render();return;}
+    if(remain<=0)remain=total*1000;if(remain<=0)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume();}catch(e){}
+    disp.classList.remove('alarm');big.classList.remove('alarm');
+    running=true;endAt=Date.now()+remain;startBtn.textContent='⏸ 暫停';startBtn.classList.add('stop');
+    iv=setInterval(()=>{remain=Math.max(0,endAt-Date.now());render();if(remain<=0){stop();disp.classList.add('alarm');if(bigMode==='timer'){big.classList.add('alarm');$('#bigSub').textContent='時間到！點任意處關閉';}beep(4);}},200);};
+  $('#tReset').onclick=()=>set(total);
+  $$('[data-s]').forEach(b=>b.onclick=()=>set(+b.dataset.s));
+  $$('[data-d]').forEach(b=>b.onclick=()=>{const cur=running?Math.max(0,endAt-Date.now()):remain;const nv=Math.max(0,cur+(+b.dataset.d)*1000);
+    if(running){endAt=Date.now()+nv;remain=nv;}else{remain=nv;total=Math.ceil(nv/1000);}disp.classList.remove('alarm');render();});
+  $('#tBig').onclick=()=>showBig(fmt(remain),running?'計時中 · 點任意處關閉':'點任意處關閉','timer');
+
+  /* pen */
+  const cv=$('#ink'),ctx=cv.getContext('2d');let strokes=[],cur=null,active=false,color='#ff5a5a',mode='pen';
+  const COLORS=['#ff5a5a','#ffd84d','#36e0ff','#3ee08f','#ffffff','#000000'];
+  $('#penColors').innerHTML=COLORS.map((c,i)=>`<button class="sw ${i?'':'on'}" style="background:${c}" data-c="${c}" aria-label="顏色"></button>`).join('');
+  $$('#penColors .sw').forEach(b=>b.onclick=()=>{color=b.dataset.c;$$('#penColors .sw').forEach(x=>x.classList.toggle('on',x===b));if(mode==='er')setMode('pen');});
+  function setMode(m){mode=m;$$('#penModes button').forEach(x=>x.classList.toggle('on',x.dataset.m===m));}
+  $$('#penModes button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+  function size(){const d=devicePixelRatio||1;cv.width=innerWidth*d;cv.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0);redraw();}
+  function redraw(){ctx.clearRect(0,0,innerWidth,innerHeight);const sx=scrollX,sy=scrollY;
+    for(const s of strokes){if(s.pts.length<1)continue;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.globalCompositeOperation=s.mode==='er'?'destination-out':'source-over';ctx.globalAlpha=s.mode==='hl'?0.35:1;
+      ctx.strokeStyle=s.color;ctx.lineWidth=s.mode==='hl'?s.size*3:(s.mode==='er'?s.size*4:s.size);
+      ctx.beginPath();ctx.moveTo(s.pts[0][0]-sx,s.pts[0][1]-sy);for(const p of s.pts)ctx.lineTo(p[0]-sx,p[1]-sy);if(s.pts.length===1)ctx.lineTo(s.pts[0][0]-sx+0.1,s.pts[0][1]-sy);ctx.stroke();ctx.restore();}}
+  let raf=0;const sched=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;redraw();});};
+  addEventListener('resize',size);addEventListener('scroll',()=>{if(strokes.length)sched();},{passive:true});
+  cv.addEventListener('pointerdown',e=>{if(!active)return;cv.setPointerCapture(e.pointerId);cur={mode,color,size:+$('#penSize').value,pts:[[e.clientX+scrollX,e.clientY+scrollY]]};strokes.push(cur);sched();});
+  cv.addEventListener('pointermove',e=>{if(!cur)return;cur.pts.push([e.clientX+scrollX,e.clientY+scrollY]);sched();});
+  const end=()=>{cur=null;};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  cv.addEventListener('wheel',e=>{scrollBy(0,e.deltaY);},{passive:true});
+  function setActive(on){active=on;cv.classList.toggle('active',on);document.body.classList.toggle('inking',on);
+    const b=$('#penToggle');b.textContent=on?'⏹ 結束畫筆':'✏️ 開始畫筆';b.classList.toggle('stop',on);}
+  $('#penToggle').onclick=()=>setActive(!active);
+  $('#penUndo').onclick=()=>{strokes.pop();redraw();};
+  $('#penClear').onclick=()=>{strokes=[];redraw();};
+  addEventListener('keydown',e=>{if(e.key==='Escape'){if(active)setActive(false);lb.classList.remove('on');big.classList.remove('on','alarm');bigMode=null;}
+    if((e.ctrlKey||e.metaKey)&&e.key==='z'&&active){strokes.pop();redraw();e.preventDefault();}});
+  size();
+})();
+
+/* ================= Superscript exponents =================
+   把文字裡的 a^(m/n)、2^√2、2^1.41 自動改成真正的上標（HTML 用 <sup>，SVG 用縮小上移的 tspan）。
+   互動圖形每次重畫的文字也會被 MutationObserver 自動轉換。 */
+(function(){
+  const RE=/\^(\((?:[^()]|\([^()]*\))*\)|√?[0-9A-Za-z.]+)/g;
+  const SVGNS='http://www.w3.org/2000/svg';
+  function fix(t){
+    const s=t.nodeValue,p=t.parentNode;if(!s||s.indexOf('^')<0||!p)return;
+    if(p.closest&&p.closest('script,style,textarea,title'))return;
+    const svg=p instanceof SVGElement;const frag=document.createDocumentFragment();let last=0,m;RE.lastIndex=0;
+    const plain=x=>{if(!x)return;if(svg){const ts=document.createElementNS(SVGNS,'tspan');ts.textContent=x;frag.appendChild(ts);}else frag.appendChild(document.createTextNode(x));};
+    while((m=RE.exec(s))){
+      plain(s.slice(last,m.index));
+      let e=m[1];if(e[0]==='('&&e[e.length-1]===')')e=e.slice(1,-1);
+      if(svg){const ts=document.createElementNS(SVGNS,'tspan');ts.setAttribute('baseline-shift','super');ts.setAttribute('font-size','72%');ts.textContent=e;frag.appendChild(ts);}
+      else{const su=document.createElement('sup');su.className='ex';su.textContent=e;frag.appendChild(su);}
+      last=RE.lastIndex;}
+    if(!last)return;plain(s.slice(last));p.replaceChild(frag,t);
+  }
+  function scan(root){
+    if(root.nodeType===3){fix(root);return;}
+    if(root.nodeType!==1)return;
+    const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.indexOf('^')>=0?1:3});
+    const list=[];while(w.nextNode())list.push(w.currentNode);list.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver(ms=>ms.forEach(mu=>{if(mu.type==='characterData')fix(mu.target);else mu.addedNodes.forEach(scan);}))
+    .observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+
+/* nav highlight */
+(function(){const links=$$('nav.top a');const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id));});},{rootMargin:'-40% 0px -55% 0px'});
+  $$('.unit').forEach(s=>io.observe(s));})();
+</script>
+</body>
+</html>
