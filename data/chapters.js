@@ -15,7 +15,9 @@ window.SITE = {
       path: 'elective3/',
       chapters: [
         { no: '第二章', title: '循環與消化', path: 'elective3/ch2/', ready: true,
-          desc: '循環系統的類型與心臟、血管與血壓、血液與淋巴系統、消化系統與消化作用、養分的吸收與消化的調節；含心智圖與 68 張學習卡', cover: 'elective3/ch2/assets/slides/slide01.jpg' }
+          desc: '循環系統的類型與心臟、血管與血壓、血液與淋巴系統、消化系統與消化作用、養分的吸收與消化的調節；含心智圖與 68 張學習卡', cover: 'elective3/ch2/assets/slides/slide01.jpg' },
+        { no: '第三章', title: '呼吸與排泄', path: 'elective3/ch3/', ready: true,
+          desc: '動物的呼吸構造、人體的呼吸系統與呼吸運動、氣體的交換與運輸、含氮廢物與排泄構造的演化、人體泌尿系統與尿液的形成、排泄的調節與腎臟的恆定功能；含心智圖與 65 張學習卡', cover: 'elective3/ch3/assets/slides/slide01.jpg' }
       ]
     }
   ]
