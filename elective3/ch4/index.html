@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>選修生物 III 第四章 神經內分泌與免疫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06142b; --panel:#0b2147; --panel2:#0f2c5c; --line:rgba(120,190,255,.18);
+  --ink:#e8f1ff; --mute:#9fb6d9; --cyan:#36e0ff; --yellow:#ffd84d; --pink:#ff7aa8;
+  --orange:#ff9f43; --green:#3ee08f; --red:#ff5a5a; --radius:16px;
+  --tools-w:250px; --rail-w:60px; --side:var(--tools-w);
+}
+body.tools-min{--side:var(--rail-w)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(80,150,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(80,150,255,.07) 1px,transparent 1px);
+  background-size:32px 32px;
+  font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif; line-height:1.6;
+  padding-left:var(--side); transition:padding-left .2s;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+
+/* ---------- Hero & nav ---------- */
+.hero{position:relative;min-height:340px;display:flex;align-items:flex-end;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:url(assets/slides/slide01.jpg) 100% 0%/max(300%,1200px) auto;opacity:.45;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 75%);mask-image:linear-gradient(180deg,#000 45%,transparent 75%)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,20,43,.1),rgba(6,20,43,.95))}
+.hero-in{position:relative;z-index:1;padding:40px 24px 28px;max-width:1200px;width:100%;margin:0 auto}
+.kicker{color:var(--cyan);font-weight:700;letter-spacing:.12em;font-size:14px}
+.hero h1{margin:6px 0 4px;font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:.04em;text-shadow:0 0 24px rgba(54,224,255,.35)}
+.hero p{margin:0;color:var(--mute);font-size:17px}
+nav.top{position:sticky;top:0;z-index:50;background:rgba(6,20,43,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .in{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;gap:8px;flex-wrap:wrap}
+nav.top a{color:var(--ink);text-decoration:none;padding:6px 14px;border-radius:999px;border:1px solid var(--line);font-size:15px;background:var(--panel)}
+nav.top a:hover,nav.top a.on{border-color:var(--cyan);color:var(--cyan)}
+nav.top a b{color:var(--yellow);margin-right:6px}
+@media(max-width:700px){nav.top .in{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:8px 16px}nav.top .in::-webkit-scrollbar{display:none}nav.top a{white-space:nowrap}main{padding:8px 16px 80px}}
+
+main{max-width:1200px;margin:0 auto;padding:8px 24px 80px}
+
+/* ---------- Units ---------- */
+.unit{scroll-margin-top:64px;padding:36px 0 12px;border-bottom:1px dashed var(--line)}
+.unit-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.tag{flex:none;font-weight:900;font-size:22px;color:#06142b;background:var(--yellow);border-radius:12px;padding:6px 12px;box-shadow:0 0 18px rgba(255,216,77,.35)}
+.unit-head h2{margin:0;font-size:clamp(24px,3vw,32px);line-height:1.25}
+.unit-head ul{margin:6px 0 0;padding-left:20px;color:var(--mute)}
+.unit-head li{margin:2px 0}
+.grid-a{display:grid;grid-template-columns:3fr 1fr;gap:18px;align-items:start}
+.grid-b{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;margin-top:18px;align-items:start}
+@media(max-width:900px){.grid-a,.grid-b{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card h3{margin:0 0 10px;font-size:16px;color:var(--cyan);display:flex;align-items:center;gap:8px;letter-spacing:.05em}
+.card h3 .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--cyan);color:#06142b;font-size:13px;font-weight:900}
+
+/* ---------- Carousel ---------- */
+.carousel{outline:none}
+.car-stage{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;touch-action:pan-y}
+.car-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s;user-select:none;-webkit-user-drag:none}
+.car-stage img.on{opacity:1}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border:none;border-radius:10px;background:rgba(6,20,43,.6);font-size:34px;line-height:1;opacity:.75}
+.car-btn:hover{opacity:1;background:rgba(54,224,255,.35)}
+.car-btn.prev{left:8px}.car-btn.next{right:8px}
+.car-fs{position:absolute;top:8px;right:8px;border:none;border-radius:8px;background:rgba(6,20,43,.6);padding:4px 10px;font-size:18px}
+.car-stage:fullscreen{border-radius:0}
+.car-bar{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;border:none;background:rgba(159,182,217,.35);padding:0}
+.dot.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.count{color:var(--mute);font-size:14px}
+
+/* ---------- Infographic crop ---------- */
+.info-crop{width:100%;border-radius:12px;background-repeat:no-repeat;cursor:zoom-in;border:1px solid var(--line);background-color:#f6f3ec;transition:transform .2s}
+.info-crop:hover{transform:scale(1.02)}
+.cap{color:var(--mute);font-size:13px;margin-top:6px;text-align:center}
+
+/* ---------- Interactive ---------- */
+.viz svg{width:100%;height:auto;display:block;background:rgba(3,12,28,.55);border-radius:12px;border:1px solid var(--line);touch-action:none}
+.viz .lbl{fill:var(--ink);font-size:15px;font-weight:700;paint-order:stroke;stroke:#06142b;stroke-width:4px}
+.viz .sm{font-size:13px;font-weight:500}
+sup.ex{font-size:.72em;line-height:0;position:relative;top:-.05em;margin-left:.04em;font-weight:inherit}
+.handle{cursor:grab;fill:#fff;stroke:var(--cyan);stroke-width:3}
+.handle:hover{fill:var(--cyan)}
+.readout{margin-top:10px;background:rgba(3,12,28,.55);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:16px}
+.readout .big{font-size:20px;font-weight:700}
+.y{color:var(--yellow)}.c{color:var(--cyan)}.p{color:var(--pink)}.o{color:var(--orange)}.g{color:var(--green)}.r{color:var(--red)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.seg button,.btn{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 14px;font-size:14px}
+.seg button.on,.btn.pri{background:var(--cyan);color:#06142b;border-color:var(--cyan);font-weight:700}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:10px;font-size:15px}
+.ctrl input[type=range]{accent-color:var(--cyan);width:150px;vertical-align:middle}
+.hint{color:var(--mute);font-size:13px;margin:6px 0 0}
+
+/* ---------- Quiz ---------- */
+.q{padding:10px 0;border-bottom:1px dashed var(--line)}
+.qt{margin:0 0 8px;font-size:16px}
+.qt b{color:var(--yellow);margin-right:4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:rgba(3,12,28,.5);border-radius:10px;padding:7px 10px;font-size:15px;display:flex;gap:8px;align-items:center}
+.opt span{display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:var(--panel2);font-size:12px;font-weight:700}
+.opt:hover{border-color:var(--cyan)}
+.answered .opt{cursor:default}
+.opt.right{border-color:var(--green);background:rgba(62,224,143,.18)}
+.opt.wrong{border-color:var(--red);background:rgba(255,90,90,.18)}
+.exp{margin:6px 0 0;font-size:14px;display:none}
+.exp.ok{display:block;color:var(--green)}.exp.no{display:block;color:#ffb3b3}
+.q-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px}
+.score{font-weight:700;color:var(--yellow)}
+
+/* ---------- YouTube ---------- */
+.yt-player{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.yt-player iframe{width:100%;height:100%;border:0;display:block}
+.yt-bar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.yt-bar a{color:var(--cyan);font-size:14px}
+
+/* ---------- Review ---------- */
+.review-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:start}
+@media(max-width:900px){.review-grid{grid-template-columns:1fr}}
+.full-info{width:100%;border-radius:12px;cursor:zoom-in;display:block}
+video{width:100%;border-radius:12px;background:#000;display:block}
+
+/* ---------- Lightbox / big overlay ---------- */
+.overlay{position:fixed;inset:0;z-index:2000;background:rgba(2,8,20,.88);display:none;place-items:center;padding:20px}
+.overlay.on{display:grid}
+.overlay img{max-width:96vw;max-height:94vh;border-radius:10px}
+#bigShow .bignum{font-size:min(38vw,60vh);font-weight:900;line-height:1;color:var(--yellow);text-shadow:0 0 60px rgba(255,216,77,.5);font-variant-numeric:tabular-nums}
+#bigShow .bigsub{text-align:center;color:var(--mute);font-size:22px;margin-top:10px}
+#bigShow.alarm .bignum{color:var(--red);animation:blink .5s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- Tools panel ---------- */
+/* 左側直式工具列：固定在左邊、整個高度；頁面內容用 body 的 padding-left 讓位，所以不會被遮住。
+   收合時變成 60px 寬的圖示列（body.tools-min）。 */
+.tools{position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:1000;background:rgba(11,33,71,.98);border-right:1px solid rgba(54,224,255,.45);box-shadow:4px 0 24px rgba(0,0,0,.35);display:flex;flex-direction:column;transition:width .2s}
+.tools-head{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:12px;background:linear-gradient(180deg,#123a78,#0e2d5f);user-select:none;font-weight:700;white-space:nowrap}
+.tools-head button{border:none;background:rgba(255,255,255,.14);border-radius:8px;width:34px;height:30px;font-size:16px;flex:none}
+.tools-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 14px 16px}
+.tool-tabs{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:12px}
+.tool-tabs button{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 10px;font-size:15px;display:flex;align-items:center;gap:8px;text-align:left;white-space:nowrap}
+.tool-tabs i{font-style:normal;font-size:20px;line-height:1}
+.tool-tabs button.on{background:var(--cyan);color:#06142b;font-weight:700;border-color:var(--cyan)}
+.tools.min .tools-head{justify-content:center;padding:12px 0}
+.tools.min .tools-head .lbl,.tools.min .tool-tabs span,.tools.min .tool-pane{display:none!important}
+.tools.min .tools-body{padding:10px 8px}
+.tools.min .tool-tabs button{justify-content:center;padding:10px 0}
+.tool-pane{display:none}.tool-pane.on{display:block}
+.trow{display:flex;gap:6px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.trow input[type=number]{width:70px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:#06142b;color:var(--ink)}
+.tbtn{flex:1;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 4px;font-size:14px}
+.tbtn.on{border-color:var(--cyan);color:var(--cyan)}
+.tbig{width:100%;border:none;border-radius:12px;padding:10px;font-size:17px;font-weight:900;background:linear-gradient(90deg,var(--yellow),#ffb84d);color:#06142b;margin:6px 0}
+.tbig.stop{background:linear-gradient(90deg,var(--pink),var(--red));color:#fff}
+.lot-num{text-align:center;font-size:72px;font-weight:900;color:var(--yellow);line-height:1.1;font-variant-numeric:tabular-nums;min-height:80px}
+.lot-hist{display:flex;flex-wrap:wrap;gap:4px;min-height:24px;font-size:13px}
+.lot-hist span{background:var(--panel2);border-radius:6px;padding:1px 7px}
+.lot-info{font-size:13px;color:var(--mute)}
+.chk{font-size:14px;display:flex;gap:6px;align-items:center}
+.timer-disp{text-align:center;font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--cyan);line-height:1.15}
+.timer-disp.alarm{color:var(--red);animation:blink .5s steps(2) infinite}
+.swatches{display:flex;gap:8px;margin:8px 0}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid transparent;padding:0}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--cyan)}
+#ink{position:fixed;inset:0;z-index:900;pointer-events:none}
+#ink.active{pointer-events:auto;cursor:crosshair}
+body.inking .tools{box-shadow:inset 0 0 0 3px var(--pink),4px 0 24px rgba(0,0,0,.35)}
+@media(max-width:700px){:root{--tools-w:210px;--rail-w:52px}}
+.info-strip{margin-bottom:18px}
+.stack{display:grid;gap:18px;align-content:start}
+.info-strip .info-crop{max-width:1100px;margin:0 auto}
+/* ---------- Mind map ---------- */
+.mm-root{text-align:center;margin:0 auto 16px;max-width:420px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,#36e0ff,#7aa8ff);color:#06142b;font-weight:900;font-size:22px;box-shadow:0 0 24px rgba(54,224,255,.35)}
+.mm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.mm-br{border:1px solid var(--line);border-top:4px solid var(--bc);border-radius:14px;background:rgba(3,12,28,.5);padding:10px 12px}
+.mm-br h4{margin:0 0 8px;color:var(--bc);font-size:17px}
+.mm-br details{margin:6px 0;border-left:2px solid var(--bc);padding-left:10px}
+.mm-br summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}
+.mm-br summary::-webkit-details-marker{display:none}
+.mm-br summary::before{content:'▸ ';color:var(--bc)}
+.mm-br details[open]>summary::before{content:'▾ '}
+.mm-leaf{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.mm-leaf span{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:14px}
+/* ---------- Flashcards ---------- */
+.fc-wrap{max-width:760px;margin:0 auto}
+.fc{perspective:1200px;cursor:pointer;height:280px;outline:none}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:grid;place-items:center;padding:24px 28px;text-align:center;font-size:clamp(18px,2.6vw,26px);font-weight:700;line-height:1.5;overflow:auto}
+.fc-front{background:linear-gradient(160deg,#123a78,#0b2147);border:2px solid var(--cyan)}
+.fc-back{background:linear-gradient(160deg,#1b4d3a,#0b2a24);border:2px solid var(--green);transform:rotateY(180deg);font-weight:500}
+.fc-tag{position:absolute;top:10px;left:14px;font-size:13px;color:var(--mute);font-weight:500}
+.fc-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:12px}
+.fc-stat{color:var(--mute);font-size:14px;text-align:center;margin-top:8px}
+@media(max-width:700px){.fc{height:320px}}
+.viz text.y{fill:var(--yellow)}.viz text.c{fill:var(--cyan)}.viz text.p{fill:var(--pink)}.viz text.o{fill:var(--orange)}.viz text.g{fill:var(--green)}
+.seg button:disabled{opacity:.4}
+.ctrl input[type=range]:disabled{opacity:.35}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="kicker">高中選修生物 III（龍騰版）· 第四章</div>
+    <h1>神經內分泌與免疫</h1>
+    <p>4-1 神經元與神經衝動 ｜ 4-2 突觸與神經傳遞物質 ｜ 4-3 人體的神經系統與反射 ｜ 4-4 內分泌系統與激素的作用 ｜ 4-5 激素的調節與恆定 ｜ 4-6 先天免疫 ｜ 4-7 後天免疫與免疫失調</p>
+  </div>
+</header>
+
+<nav class="top"><div class="in">
+  <a href="../" title="回到選修生物 III 目錄"><b>⌂</b>選修生物 III</a>
+  <a href="#s1"><b>4-1</b>神經衝動</a>
+  <a href="#s2"><b>4-2</b>突觸</a>
+  <a href="#s3"><b>4-3</b>神經系統</a>
+  <a href="#s4"><b>4-4</b>激素作用</a>
+  <a href="#s5"><b>4-5</b>恆定調節</a>
+  <a href="#s6"><b>4-6</b>先天免疫</a>
+  <a href="#s7"><b>4-7</b>後天免疫</a>
+  <a href="#mind"><b>🧠</b>心智圖</a>
+  <a href="#cards"><b>🃏</b>學習卡</a>
+  <a href="#review"><b>★</b>總複習</a>
+</div></nav>
+
+<main>
+
+<!-- ================= 4-1 ================= -->
+<section class="unit" id="s1">
+  <div class="unit-head"><span class="tag">4-1</span><div>
+    <h2>神經元與神經衝動</h2>
+    <ul><li>靜止膜電位約 −70 mV（鈉鉀幫浦＋K⁺ 漏通道）；達閾值 −55 mV 時 Na⁺ 流入去極化到 +30 mV，再由 K⁺ 流出再極化</li><li>動作電位遵守全有全無律，刺激強弱以「頻率」編碼；有髓鞘纖維以跳躍傳導，可達 100～120 m／s</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s1" role="img" aria-label="資訊圖表：神經衝動"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：動作電位實驗室與傳導競賽</h3>
+      <div class="seg" id="v1tabs"><button class="on" data-tab="ap">動作電位實驗室</button><button data-tab="race">跳躍傳導競賽</button></div>
+      <div id="v1ap">
+        <svg id="v1" viewBox="0 0 520 320"></svg>
+        <div class="ctrl">
+          <label>刺激強度（膜電位可達）<b id="v1sv"></b> mV <input type="range" id="v1s" min="-68" max="-35" step="1" value="-50"></label>
+          <label>觀察時間 <b id="v1tv"></b> ms <input type="range" id="v1t" min="0" max="20" step="0.1" value="3"></label>
+          <label class="chk"><input type="checkbox" id="v1ttx"> 加入河豚毒素（阻斷 Na⁺ 通道）</label>
+        </div>
+        <div class="seg" id="v1pre" style="margin-top:10px"><button data-pre="-60">未達閾值（−60）</button><button data-pre="-55">剛好達閾值（−55）</button><button data-pre="-48">中等刺激</button><button data-pre="-36">強刺激</button></div>
+      </div>
+      <div id="v1race" hidden>
+        <svg id="v1r" viewBox="0 0 520 300"></svg>
+        <div class="ctrl">
+          <label>距離 <b id="v1dv"></b> m <input type="range" id="v1d" min="0.1" max="1.5" step="0.1" value="1.2"></label>
+          <label>有髓鞘速率 <b id="v1mv"></b> m／s <input type="range" id="v1m" min="20" max="120" step="10" value="120"></label>
+          <label>無髓鞘速率 <b id="v1uv"></b> m／s <input type="range" id="v1u" min="0.5" max="2" step="0.5" value="1"></label>
+          <button class="btn pri" id="v1go">▶ 同時出發</button>
+        </div>
+        <p class="hint">動畫已放慢：有髓鞘的衝動在蘭氏結之間「跳」；無髓鞘的衝動一段一段連續前進。時間以實際數值計算（例題 4-1-5）。</p>
+      </div>
+      <div class="readout" id="v1out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="2,3,4"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s1"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-2 ================= -->
+<section class="unit" id="s2">
+  <div class="unit-head"><span class="tag">4-2</span><div>
+    <h2>突觸與神經傳遞物質</h2>
+    <ul><li>動作電位到末梢 → Ca²⁺ 流入 → 胞吐釋放傳遞物質 → 與突觸後膜受體結合 → 離子通道打開；之後被分解或回收</li><li>突觸只能單向傳遞；興奮性突觸使膜去極化、抑制性突觸使膜過極化，神經元把兩者加總後才決定是否產生動作電位</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s2" role="img" aria-label="資訊圖表：突觸"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：突觸的毒素與藥物、突觸整合</h3>
+      <div class="seg" id="v2tabs"><button class="on" data-tab="tox">毒素與藥物</button><button data-tab="sum">突觸整合（興奮＋抑制）</button></div>
+      <div id="v2tox">
+        <svg id="v2" viewBox="0 0 520 330"></svg>
+        <div class="seg" id="v2mode" style="margin-top:10px"><button class="on" data-mode="normal">正常</button><button data-mode="ttx">河豚毒素</button><button data-mode="botox">肉毒桿菌毒素</button><button data-mode="curare">箭毒</button><button data-mode="op">有機磷殺蟲劑</button><button data-mode="nic">尼古丁</button></div>
+        <div class="ctrl" style="margin-top:4px"><button class="btn pri" id="v2fire">⚡ 送出一個動作電位</button></div>
+      </div>
+      <div id="v2sum" hidden>
+        <svg id="v2s" viewBox="0 0 520 300"></svg>
+        <div class="ctrl"><button class="btn" id="v2A" style="border-color:var(--green)">刺激 A（興奮性，+8 mV）</button><button class="btn" id="v2B" style="border-color:var(--pink)">刺激 B（抑制性，−5 mV）</button><button class="btn" id="v2AB">A、B 同時</button><button class="btn" id="v2AA">A 快速連續兩次</button><button class="btn" id="v2clr">↺ 清除</button></div>
+        <p class="hint">例題 4-2-4 的簡化模型：每次突觸後電位約 5 ms 內消退；短時間內的電位會加總，加總後達到閾值 −55 mV 才產生動作電位。</p>
+      </div>
+      <div class="readout" id="v2out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="5,6,7"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s2"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-3 ================= -->
+<section class="unit" id="s3">
+  <div class="unit-head"><span class="tag">4-3</span><div>
+    <h2>人體的神經系統與反射</h2>
+    <ul><li>中樞：大腦（高等功能）、小腦（平衡協調）、間腦（視丘、下視丘）、腦幹（延腦管呼吸心跳）、脊髓；周邊：腦神經 12 對、脊神經 31 對</li><li>交感神經「戰鬥或逃跑」、副交感神經「休息與消化」，相互拮抗；反射弧：受器 → 感覺神經元 →（中間神經元）→ 運動神經元 → 動器</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s3" role="img" aria-label="資訊圖表：神經系統"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：自主神經、反射弧、尺落實驗</h3>
+      <div class="seg" id="v3tabs"><button class="on" data-tab="ans">交感 vs 副交感</button><button data-tab="arc">反射弧剪刀</button><button data-tab="ruler">尺落反應時間</button></div>
+      <div id="v3ans">
+        <svg id="v3" viewBox="0 0 520 320"></svg>
+        <div class="ctrl"><label>副交感 ◀ <b id="v3bv"></b> ▶ 交感 <input type="range" id="v3b" min="-100" max="100" step="5" value="0" style="width:220px"></label></div>
+        <div class="seg" id="v3pre" style="margin-top:10px"><button data-pre="0">平衡</button><button data-pre="70">考試緊張（例題 4-3-2）</button><button data-pre="100">被狗追</button><button data-pre="-70">飯後休息</button></div>
+      </div>
+      <div id="v3arc" hidden>
+        <svg id="v3a" viewBox="0 0 520 320"></svg>
+        <div class="seg" id="v3type" style="margin-top:10px"><button class="on" data-rt="knee">膝跳反射（單突觸）</button><button data-rt="hand">縮手反射（有中間神經元）</button></div>
+        <div class="ctrl"><button class="btn" id="v3cut">✂ 情境：腰部脊髓與大腦的聯絡被切斷（例題 4-3-1）</button><button class="btn" id="v3heal">↺ 全部接回</button></div>
+        <p class="hint">點圖上的任一段構造可以把它「剪斷」或接回，看看反射與感覺是否還在。</p>
+      </div>
+      <div id="v3ruler" hidden>
+        <svg id="v3r" viewBox="0 0 520 320"></svg>
+        <div class="ctrl"><button class="btn pri" id="v3ready">① 準備（隨機時間後放手）</button><button class="btn" id="v3catch" disabled>② 接住！（或按空白鍵）</button><button class="btn" id="v3rclr">清除紀錄</button></div>
+        <p class="hint">由電腦隨機放開直尺，看到直尺開始下落就立刻按「接住」。直尺落下距離 d = ½gt²（g = 9.8 m／s²），本工具用你的反應時間換算距離。</p>
+      </div>
+      <div class="readout" id="v3out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="8,9,10"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s3"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-4 ================= -->
+<section class="unit" id="s4">
+  <div class="unit-head"><span class="tag">4-4</span><div>
+    <h2>內分泌系統與激素的作用</h2>
+    <ul><li>內分泌腺沒有導管，激素經血液送到全身，只作用於有受體的標的細胞；激素是訊息分子，不是酶、也不提供能量</li><li>水溶性激素（蛋白質、肽類、多數胺類）用膜受體與第二傳訊者；脂溶性激素（類固醇、甲狀腺素）用細胞內受體調控基因</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s4" role="img" aria-label="資訊圖表：激素"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：激素如何作用在標的細胞</h3>
+      <div class="seg" id="v4hor"><button class="on" data-hor="ins">胰島素</button><button data-hor="epi">腎上腺素</button><button data-hor="adh">抗利尿激素</button><button data-hor="cort">皮質醇</button><button data-hor="ald">醛固酮</button><button data-hor="thy">甲狀腺素</button><button data-hor="est">雌激素</button></div>
+      <svg id="v4" viewBox="0 0 520 320"></svg>
+      <div class="ctrl"><label class="chk"><input type="checkbox" id="v4rec" checked> 這個細胞有該激素的受體（是標的細胞）</label><button class="btn" id="v4oral">💊 改成口服會怎樣？</button></div>
+      <div class="readout" id="v4out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="11,12,13"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s4"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-5 ================= -->
+<section class="unit" id="s5">
+  <div class="unit-head"><span class="tag">4-5</span><div>
+    <h2>激素的調節與恆定</h2>
+    <ul><li>負回饋維持恆定（甲狀腺素抑制 TRH、TSH）；正回饋加速完成（分娩的催產素）；缺碘時 TSH 偏高、甲狀腺腫大</li><li>胰島素（唯一降血糖）與升糖素拮抗；第一型糖尿病是自體免疫破壞 β 細胞，第二型是胰島素阻抗</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s5" role="img" aria-label="資訊圖表：恆定"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：葡萄糖耐受測驗與甲狀腺回饋</h3>
+      <div class="seg" id="v5tabs"><button class="on" data-tab="ogtt">喝糖水後的血糖</button><button data-tab="thy">甲狀腺負回饋</button></div>
+      <div id="v5ogtt">
+        <svg id="v5" viewBox="0 0 520 320"></svg>
+        <div class="seg" id="v5who" style="margin-top:10px"><button class="on" data-who="n">健康的人</button><button data-who="t1">第一型糖尿病</button><button data-who="t2">第二型糖尿病</button><button data-who="all">三者比較</button></div>
+        <div class="ctrl"><label>時間 <b id="v5tv"></b> 分鐘 <input type="range" id="v5t" min="0" max="240" step="5" value="120"></label></div>
+        <p class="hint">示意曲線：第 0 分鐘喝下含 75 g 葡萄糖的溶液（例題 4-5-2）。紅色虛線為腎糖閾 180 mg／dL。</p>
+      </div>
+      <div id="v5thy" hidden>
+        <svg id="v5b" viewBox="0 0 520 320"></svg>
+        <div class="seg" id="v5case" style="margin-top:10px"><button class="on" data-cs="norm">正常</button><button data-cs="iod">缺碘</button><button data-cs="graves">甲狀腺功能亢進</button><button data-cs="cut">甲狀腺切除（未補充）</button><button data-cs="pit">腦垂腺受損</button></div>
+      </div>
+      <div class="readout" id="v5out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="14,15,16"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s5"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-6 ================= -->
+<section class="unit" id="s6">
+  <div class="unit-head"><span class="tag">4-6</span><div>
+    <h2>先天免疫（非專一性防禦）</h2>
+    <ul><li>第一道防線：皮膚、黏膜與纖毛、溶菌酶、胃酸；第二道防線：吞噬細胞、發炎反應、發燒、自然殺手細胞、干擾素、補體</li><li>發炎：組織胺使微血管擴張（紅、熱）、通透性增加（腫）、刺激神經（痛）；嗜中性球吞噬細菌後死亡形成膿</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s6" role="img" aria-label="資訊圖表：先天免疫"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：木刺扎傷後的發炎反應</h3>
+      <svg id="v6" viewBox="0 0 520 330"></svg>
+      <div class="ctrl"><label>受傷後 <b id="v6tv"></b> 小時 <input type="range" id="v6t" min="0" max="72" step="1" value="2" style="width:220px"></label>
+        <label class="chk"><input type="checkbox" id="v6ah"> 服用抗組織胺</label></div>
+      <div class="seg" id="v6pre" style="margin-top:10px"><button data-hr="0">剛刺傷</button><button data-hr="1">1 小時</button><button data-hr="6">6 小時</button><button data-hr="24">1 天</button><button data-hr="72">3 天</button></div>
+      <p class="hint">示意模型（數量以相對值表示）：細菌由傷口進入組織；嗜中性球先到、巨噬細胞較晚到。</p>
+      <div class="readout" id="v6out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="17,18,19"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s6"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4-7 ================= -->
+<section class="unit" id="s7">
+  <div class="unit-head"><span class="tag">4-7</span><div>
+    <h2>後天免疫與免疫失調</h2>
+    <ul><li>輔助 T 細胞指揮：B 細胞 → 漿細胞分泌抗體（體液免疫）；胞毒 T 細胞殺死被感染的細胞（細胞免疫）；兩者都留下記憶細胞</li><li>再次反應快、強、久（疫苗原理）；主動免疫可預防、被動免疫立即但短暫；過敏、自體免疫、AIDS 是免疫失調</li></ul>
+  </div></div>
+  <div class="card info-strip"><h3><span class="n">4</span>資訊圖表重點</h3><div class="info-crop" data-crop="s7" role="img" aria-label="資訊圖表：後天免疫"></div><div class="cap">點一下放大全圖</div></div>
+  <div class="grid-b">
+    <div class="card viz"><h3><span class="n">2</span>互動視覺化：抗體濃度模擬器</h3>
+      <svg id="v7" viewBox="0 0 520 320"></svg>
+      <div class="ctrl"><label>事件時間：第 <b id="v7dv"></b> 天 <input type="range" id="v7d" min="0" max="80" step="1" value="0"></label></div>
+      <div class="ctrl" style="margin-top:6px"><button class="btn pri" id="v7vac">💉 接種疫苗 A</button><button class="btn" id="v7anti">🧪 注射抗血清（抗 A 抗體）</button><button class="btn" id="v7b">🦠 接觸另一種抗原 B</button><button class="btn" id="v7clr">↺ 清除</button></div>
+      <div class="ctrl" style="margin-top:6px"><label class="chk"><input type="checkbox" id="v7hiv"> 輔助 T 細胞大量減少（HIV 感染晚期）</label></div>
+      <div class="seg" id="v7pre" style="margin-top:10px"><button data-ex="ex1">例題 4-7-1：第 0、28 天各一劑</button><button data-ex="snake">被蛇咬：抗血清 vs 疫苗</button><button data-ex="flu">接種 A 後遇到 B</button></div>
+      <p class="hint">示意模型：縱軸為抗體濃度（相對值，初次反應高峰記為 1）。先選事件時間，再按事件按鈕。</p>
+      <div class="readout" id="v7out"></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報</h3><div class="carousel" data-slides="20,21,22"></div></div>
+      <div class="card"><h3><span class="n">3</span>隨堂評量</h3><div class="quiz" data-quiz="s7"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Mind map ================= -->
+<section class="unit" id="mind">
+  <div class="unit-head"><span class="tag">🧠</span><div>
+    <h2>本章心智圖</h2>
+    <ul><li>NotebookLM 產生的概念架構（中文版）：點小標題可展開或收合</li><li>上課可先全部收合，請學生猜每個分支下面有什麼，再逐一打開</li></ul>
+  </div></div>
+  <div class="card">
+    <div class="fc-bar" style="justify-content:flex-start;margin:0 0 12px"><button class="btn pri" id="mmOpen">全部展開</button><button class="btn" id="mmClose">全部收合</button></div>
+    <div id="mindmap"></div>
+  </div>
+</section>
+
+<!-- ================= Flashcards ================= -->
+<section class="unit" id="cards">
+  <div class="unit-head"><span class="tag">🃏</span><div>
+    <h2>學習卡</h2>
+    <ul><li>點卡片（或按空白鍵）翻面看答案；← → 切換上一張、下一張</li><li>標記「我會了／再複習」，可以只練還不熟的卡片；標記只存在這台電腦的瀏覽器</li></ul>
+  </div></div>
+  <div class="card"><div class="fc-wrap">
+    <div class="seg" id="fcFilter"><button class="on" data-f="all">全部</button><button data-f="todo">只練「再複習」與未標記</button></div>
+    <div class="fc" id="fc" tabindex="0" role="button" aria-label="學習卡，點一下翻面"><div class="fc-in">
+      <div class="fc-face fc-front"><span class="fc-tag" id="fcTagF"></span><div id="fcFront"></div></div>
+      <div class="fc-face fc-back"><span class="fc-tag" id="fcTagB"></span><div id="fcBack"></div></div>
+    </div></div>
+    <div class="fc-bar">
+      <button class="btn" id="fcPrev">‹ 上一張</button><button class="btn pri" id="fcFlip">翻面</button><button class="btn" id="fcNext">下一張 ›</button>
+      <button class="btn" id="fcShuffle">🔀 洗牌</button>
+    </div>
+    <div class="fc-bar">
+      <button class="btn" id="fcKnow" style="border-color:var(--green)">✔ 我會了</button><button class="btn" id="fcAgain" style="border-color:var(--orange)">↻ 再複習</button><button class="btn" id="fcReset">清除標記</button>
+    </div>
+    <div class="fc-stat" id="fcStat"></div>
+  </div></div>
+</section>
+
+<!-- ================= Review ================= -->
+<section class="unit" id="review">
+  <div class="unit-head"><span class="tag">★</span><div>
+    <h2>總複習</h2>
+    <ul><li>本章重點總整理、形成性評量 10 題（附答案）、完整資訊圖表與教學影片</li></ul>
+  </div></div>
+  <div class="review-grid">
+    <div>
+      <div class="card"><h3><span class="n">1</span>NotebookLM 簡報：重點總整理與形成性評量</h3><div class="carousel" data-slides="1,23,24,25"></div></div>
+      <div class="card" style="margin-top:18px"><h3><span class="n">▶</span>NotebookLM 教學影片</h3>
+        <div class="yt-player" id="mainVideo"><iframe src="https://www.youtube.com/embed/T-ci58zxTyw?rel=0&amp;playsinline=1" title="選修生物 III 第四章 神經內分泌與免疫 教學影片" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="yt-bar"><span class="hint" style="margin:0">若無法播放，請改在 YouTube 觀看</span><a href="https://www.youtube.com/watch?v=T-ci58zxTyw" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a></div>
+      </div>
+    </div>
+    <div class="card"><h3><span class="n">4</span>完整資訊圖表</h3><img class="full-info" src="assets/infographic.jpg" alt="神經內分泌與免疫完整資訊圖表"><div class="cap">點一下放大</div></div>
+  </div>
+</section>
+</main>
+
+<!-- ================= Tools ================= -->
+<aside class="tools" id="tools">
+  <div class="tools-head" id="toolsHead"><span class="lbl">🧰 教學工具</span><button id="toolsMin" title="收合成工具列">«</button></div>
+  <div class="tools-body">
+    <div class="tool-tabs">
+      <button class="on" data-t="lot" title="抽籤"><i>🎲</i><span>抽籤</span></button><button data-t="timer" title="計時器"><i>⏱</i><span>計時</span></button><button data-t="pen" title="畫筆"><i>✏️</i><span>畫筆</span></button>
+    </div>
+
+    <div class="tool-pane on" data-p="lot">
+      <div class="trow">座號 <input type="number" id="lotFrom" value="1" min="1"> 到 <input type="number" id="lotTo" value="30" min="1"></div>
+      <label class="chk"><input type="checkbox" id="lotNoRep" checked> 抽過的不重複</label>
+      <div class="lot-num" id="lotNum">?</div>
+      <button class="tbig" id="lotGo">🎲 開始抽籤</button>
+      <div class="lot-info" id="lotInfo">已抽：</div>
+      <div class="lot-hist" id="lotHist"></div>
+      <div class="trow"><button class="tbtn" id="lotReset">清除紀錄</button><label class="chk" style="flex:1"><input type="checkbox" id="lotBig" checked> 放大顯示</label></div>
+    </div>
+
+    <div class="tool-pane" data-p="timer">
+      <div class="timer-disp" id="tDisp">03:00</div>
+      <div class="trow">
+        <button class="tbtn" data-s="30">30秒</button><button class="tbtn" data-s="60">1分</button><button class="tbtn" data-s="180">3分</button><button class="tbtn" data-s="300">5分</button><button class="tbtn" data-s="600">10分</button>
+      </div>
+      <div class="trow">
+        <button class="tbtn" data-d="-60">−1分</button><button class="tbtn" data-d="-10">−10秒</button><button class="tbtn" data-d="10">+10秒</button><button class="tbtn" data-d="60">+1分</button>
+      </div>
+      <button class="tbig" id="tStart">▶ 開始</button>
+      <div class="trow"><button class="tbtn" id="tReset">↺ 重設</button><button class="tbtn" id="tBig">⛶ 放大</button><label class="chk"><input type="checkbox" id="tSound" checked> 鈴聲</label></div>
+    </div>
+
+    <div class="tool-pane" data-p="pen">
+      <button class="tbig" id="penToggle">✏️ 開始畫筆</button>
+      <div class="swatches" id="penColors"></div>
+      <div class="trow">粗細 <input type="range" id="penSize" min="2" max="24" value="5" style="flex:1;accent-color:var(--cyan)"></div>
+      <div class="trow" id="penModes"><button class="tbtn on" data-m="pen">畫筆</button><button class="tbtn" data-m="hl">螢光筆</button><button class="tbtn" data-m="er">橡皮擦</button></div>
+      <div class="trow"><button class="tbtn" id="penUndo">↶ 復原</button><button class="tbtn" id="penClear">🗑 全部清除</button></div>
+      <p class="hint">畫的內容會跟著頁面捲動。按 Esc 結束畫筆。</p>
+    </div>
+  </div>
+</aside>
+
+<canvas id="ink"></canvas>
+<div class="overlay" id="lightbox"><img alt="放大圖"></div>
+<div class="overlay" id="bigShow"><div><div class="bignum" id="bigNum"></div><div class="bigsub" id="bigSub">點任意處關閉</div></div></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(g,x,y,s,cls='lbl',anchor='middle'){const t=el('text',{x,y,class:cls,'text-anchor':anchor,'dominant-baseline':'middle'},g);t.textContent=s;return t;}
+const D=Math.PI/180;
+function norm(d){while(d<=-Math.PI)d+=2*Math.PI;while(d>Math.PI)d-=2*Math.PI;return d;}
+function arcD(P,Q,R,r,sector){const a1=Math.atan2(Q.y-P.y,Q.x-P.x);const d=norm(Math.atan2(R.y-P.y,R.x-P.x)-a1);const a2=a1+d;
+  const x1=P.x+r*Math.cos(a1),y1=P.y+r*Math.sin(a1),x2=P.x+r*Math.cos(a2),y2=P.y+r*Math.sin(a2);
+  const s=`A${r},${r} 0 0 ${d>0?1:0} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+  return sector?`M${P.x},${P.y} L${x1.toFixed(1)},${y1.toFixed(1)} ${s} Z`:`M${x1.toFixed(1)},${y1.toFixed(1)} ${s}`;}
+function midDir(P,Q,R){const a1=Math.atan2(Q.y-P.y,Q.x-P.x);return a1+norm(Math.atan2(R.y-P.y,R.x-P.x)-a1)/2;}
+function ang(P,Q,R){return Math.abs(norm(Math.atan2(Q.y-P.y,Q.x-P.x)-Math.atan2(R.y-P.y,R.x-P.x)))/D;}
+function dist(P,Q){return Math.hypot(P.x-Q.x,P.y-Q.y);}
+function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse());}
+function drag(svg,h,onMove){h.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();h.setPointerCapture(e.pointerId);
+  const mv=ev=>onMove(svgPt(svg,ev));const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
+  h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);});}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const f0=v=>Math.round(v), f1=v=>(Math.round(v*10)/10).toString();
+
+/* ================= Carousel ================= */
+function buildCarousel(root){
+  const ids=root.dataset.slides.split(',').map(Number);
+  root.innerHTML=`<div class="car-stage">${ids.map((n,i)=>`<img src="assets/slides/slide${String(n).padStart(2,'0')}.jpg" alt="簡報第 ${n} 頁" class="${i?'':'on'}" draggable="false">`).join('')}
+    <button class="car-btn prev" aria-label="上一張">‹</button><button class="car-btn next" aria-label="下一張">›</button>
+    <button class="car-fs" title="全螢幕播放">⛶</button></div>
+    <div class="car-bar"><div class="dots">${ids.map((n,i)=>`<button class="dot ${i?'':'on'}" aria-label="第 ${i+1} 張"></button>`).join('')}</div><span class="count">1 / ${ids.length}</span></div>`;
+  let i=0;const st=$('.car-stage',root),imgs=$$('img',root),dots=$$('.dot',root),cnt=$('.count',root);
+  const go=k=>{i=(k+ids.length)%ids.length;imgs.forEach((im,j)=>im.classList.toggle('on',j===i));dots.forEach((d,j)=>d.classList.toggle('on',j===i));cnt.textContent=`${i+1} / ${ids.length}`;};
+  $('.prev',root).onclick=()=>go(i-1);$('.next',root).onclick=()=>go(i+1);
+  dots.forEach((d,j)=>d.onclick=()=>go(j));
+  root.tabIndex=0;
+  const key=e=>{if(e.key==='ArrowLeft'){go(i-1);e.preventDefault();}if(e.key==='ArrowRight'){go(i+1);e.preventDefault();}};
+  root.addEventListener('keydown',key);
+  document.addEventListener('keydown',e=>{if(document.fullscreenElement===st)key(e);});
+  $('.car-fs',root).onclick=()=>{document.fullscreenElement?document.exitFullscreen():st.requestFullscreen&&st.requestFullscreen();};
+  let sx=null;st.addEventListener('pointerdown',e=>{if(!e.target.closest('button'))sx=e.clientX;});
+  st.addEventListener('pointerup',e=>{if(sx!==null&&Math.abs(e.clientX-sx)>50)go(i+(e.clientX<sx?1:-1));sx=null;});
+}
+$$('.carousel').forEach(buildCarousel);
+
+/* ================= Infographic crops ================= */
+const IW=1536,IH=2752;
+const CROPS={s1:[70,225,1406,320],s2:[70,551,1406,311],s3:[70,869,1406,318],s4:[70,1192,1406,317],s5:[70,1517,1406,316],s6:[70,1842,1406,315],s7:[70,2165,1406,318]};
+const lb=$('#lightbox');
+function openLB(src){$('img',lb).src=src;lb.classList.add('on');}
+lb.onclick=()=>lb.classList.remove('on');
+$$('.info-crop').forEach(r=>{const[x,y,w,h]=CROPS[r.dataset.crop];
+  r.style.aspectRatio=`${w}/${h}`;r.style.backgroundImage='url(assets/infographic.jpg)';
+  r.style.backgroundSize=`${IW/w*100}% auto`;r.style.backgroundPosition=`${x/(IW-w)*100}% ${y/(IH-h)*100}%`;
+  r.onclick=()=>openLB('assets/infographic.jpg');});
+$('.full-info').onclick=()=>openLB('assets/infographic.jpg');
+
+function segTabs(root,cb){$$('button',root).forEach(b=>b.addEventListener('click',()=>{$$('button',root).forEach(x=>x.classList.toggle('on',x===b));cb(b);}));}
+/* ================= Quiz ================= */
+const QUIZ={
+ s1:[
+  {q:'神經元靜止時膜內約 −70 mV，下列何者「不是」形成靜止膜電位的原因？',o:['鈉鉀幫浦送出 3 個 Na⁺、送入 2 個 K⁺','K⁺ 經漏通道流出細胞','電位控制型 Na⁺ 通道大量開放','細胞內有帶負電的大分子'],a:2,e:'靜止時電位控制型 Na⁺ 通道大多關閉；它打開、Na⁺ 流入，是動作電位的「去極化」。'},
+  {q:'動作電位「去極化」階段，主要的離子移動是？',o:['K⁺ 流出','Na⁺ 流入','Cl⁻ 流入','Ca²⁺ 流出'],a:1,e:'電位控制型 Na⁺ 通道打開，Na⁺ 順濃度差流入，膜電位由 −55 mV 迅速升到約 +30 mV；再極化才是 K⁺ 流出。'},
+  {q:'刺激強度由剛好達閾值增加到兩倍，單一神經元的反應是？',o:['動作電位峰值變成兩倍','動作電位峰值不變，但產生的頻率增加','不再產生動作電位','膜電位停在 +30 mV'],a:1,e:'全有全無律：達閾值後動作電位大小固定，刺激越強，動作電位越頻繁。'},
+  {q:'在神經上相距 10 cm 的兩點，衝動到達的時間差為 2.0 ms，傳導速率為？',o:['5 m／s','20 m／s','50 m／s','200 m／s'],a:2,e:'0.10 m ÷ 0.002 s = 50 m／s（例題 4-1-2）。'}],
+ s2:[
+  {q:'動作電位傳到軸突末梢後，促使突觸小泡釋放神經傳遞物質的離子是？',o:['Na⁺','K⁺','Ca²⁺','Cl⁻'],a:2,e:'末梢的電位控制型 Ca²⁺ 通道打開，Ca²⁺ 流入，促使突觸小泡與細胞膜融合，以胞吐作用釋放傳遞物質。'},
+  {q:'神經衝動在突觸只能單向傳遞，原因是？',o:['突觸後膜沒有離子通道','只有突觸前末梢有突觸小泡，受體只在突觸後膜','神經傳遞物質只能往下游擴散','突觸間隙有單向的血流'],a:1,e:'突觸小泡（裝傳遞物質）只在突觸前的軸突末梢，受體只在突觸後膜，所以訊號只能前往後傳。'},
+  {q:'有機磷殺蟲劑中毒時肌肉持續抽搐，原因是？',o:['阻止乙醯膽鹼釋放','阻斷乙醯膽鹼受體','抑制乙醯膽鹼酯酶，乙醯膽鹼無法分解','阻斷電位控制型 Na⁺ 通道'],a:2,e:'乙醯膽鹼酯酶被抑制，乙醯膽鹼在突觸間隙持續作用。阻止釋放是肉毒桿菌毒素、阻斷受體是箭毒、阻斷 Na⁺ 通道是河豚毒素（三者都造成麻痺）。'},
+  {q:'GABA 與受體結合後使 Cl⁻ 流入突觸後神經元，結果是？',o:['去極化，較易產生動作電位','過極化，較難產生動作電位','膜電位維持 +30 mV','突觸後神經元死亡'],a:1,e:'Cl⁻ 帶負電，流入使膜內更負（過極化），離閾值更遠，是抑制性突觸。'}],
+ s3:[
+  {q:'喝醉後走路搖晃、無法走直線，主要與哪一部位受酒精影響有關？',o:['延腦','小腦','下視丘','視丘'],a:1,e:'小腦負責協調肌肉運動與維持平衡；延腦管呼吸心跳，下視丘管體溫與口渴，視丘是感覺轉運站。'},
+  {q:'下列何者是交感神經興奮時的反應？',o:['瞳孔縮小','消化道蠕動加快','支氣管擴張','心跳減慢'],a:2,e:'交感神經「戰鬥或逃跑」：心跳加快、支氣管擴張、瞳孔放大，但會抑制消化道活動。其餘三項是副交感神經的作用。'},
+  {q:'膝跳反射非常快，主要是因為？',o:['訊息不經過脊髓','感覺神經元直接與運動神經元形成突觸（單突觸）','由大腦判斷後再下令','只靠激素傳遞'],a:1,e:'膝跳反射的中樞在脊髓，感覺神經元直接連到運動神經元，只經過一個突觸，突觸延遲最少。'},
+  {q:'尺落實驗中直尺落下 4.9 cm（g = 9.8 m／s²），反應時間約為？',o:['0.01 s','0.05 s','0.10 s','0.49 s'],a:2,e:'t = √(2d／g) = √(2 × 0.049 ÷ 9.8) = √0.01 = 0.10 s。'}],
+ s4:[
+  {q:'血液把激素送到全身，但只有某些細胞會反應，原因是？',o:['激素只流到特定器官的血管','只有標的細胞具有該激素的受體','其他細胞會把激素立刻分解','激素只在白天作用'],a:1,e:'受體決定細胞對激素的反應；沒有受體的細胞即使接觸激素也不會反應。'},
+  {q:'下列哪一種激素的受體位在細胞內，並能直接調控基因轉錄？',o:['胰島素','腎上腺素','抗利尿激素','皮質醇'],a:3,e:'皮質醇是類固醇，屬脂溶性，可穿過細胞膜與細胞內受體結合；其餘三者是水溶性，受體在細胞膜上。'},
+  {q:'抗利尿激素（ADH）的製造與釋放部位分別是？',o:['腦垂腺後葉製造、腦垂腺後葉釋放','下視丘製造、腦垂腺後葉釋放','腦垂腺前葉製造、下視丘釋放','腎臟製造、腎上腺釋放'],a:1,e:'ADH 與催產素都在下視丘製造，沿軸突送到腦垂腺後葉儲存與釋放。'},
+  {q:'糖尿病患者通常需要注射胰島素而不能口服，原因是？',o:['胰島素是類固醇，會被胃酸活化','胰島素是蛋白質，口服會被消化分解','胰島素無法溶於水','口服會使血糖過低'],a:1,e:'胰島素是蛋白質（肽類）激素，在消化道會被蛋白酶分解成胺基酸而失去功能。'}],
+ s5:[
+  {q:'缺碘時甲狀腺腫大，此時血液中的 TSH 與甲狀腺素分別如何？',o:['TSH 高、甲狀腺素高','TSH 高、甲狀腺素低','TSH 低、甲狀腺素高','TSH 低、甲狀腺素低'],a:1,e:'缺碘 → 甲狀腺素做不出來 → 負回饋減弱 → TSH 大量分泌、刺激甲狀腺增生，但甲狀腺素仍然偏低。'},
+  {q:'下列何者屬於正回饋？',o:['血糖上升時胰島素分泌增加','體溫上升時流汗','分娩時催產素使子宮收縮越來越強','甲狀腺素增加抑制 TSH 分泌'],a:2,e:'正回饋使變化加速直到完成（胎兒產出）；其餘三項都使數值回到正常範圍，是負回饋。'},
+  {q:'人體內唯一能降低血糖的激素是？',o:['升糖素','腎上腺素','胰島素','皮質醇'],a:2,e:'胰島素促進細胞吸收葡萄糖、合成肝糖與脂肪；升糖素、腎上腺素、皮質醇都會使血糖上升。'},
+  {q:'關於第一型糖尿病，下列敘述何者正確？',o:['主要原因是吃太多糖','是自體免疫破壞胰島 β 細胞，需注射胰島素','胰島素分泌正常但細胞沒有反應','只會發生在老年人'],a:1,e:'第一型：免疫系統攻擊 β 細胞，胰島素不足，需注射胰島素；「胰島素分泌但細胞反應差」是第二型（胰島素阻抗）。'}],
+ s6:[
+  {q:'下列哪些屬於第一道防線？(甲) 胃酸 (乙) 嗜中性球 (丙) 淚液中的溶菌酶 (丁) 呼吸道纖毛 (戊) 干擾素',o:['甲、丙、丁','甲、乙、丙','乙、丁、戊','丙、丁、戊'],a:0,e:'第一道防線是阻擋入侵的屏障與分泌物；嗜中性球、干擾素屬第二道防線。'},
+  {q:'發炎時局部「腫」起來，主要是因為？',o:['細菌大量繁殖撐大組織','組織胺使微血管通透性增加，血漿滲入組織','白血球分裂變大','血液凝固塞住微血管'],a:1,e:'肥大細胞釋放組織胺，使微血管擴張（紅、熱）、通透性增加（血漿滲出 → 腫），腫脹壓迫神經造成痛。'},
+  {q:'傷口化膿的「膿」主要來自？',o:['死亡的嗜中性球、細菌與組織碎片','漿細胞分泌的抗體','凝固的紅血球','皮脂腺分泌物'],a:0,e:'嗜中性球最先到達感染處，吞噬細菌後常自己死亡，與死亡細菌、組織碎片形成膿。'},
+  {q:'關於發炎與抗生素，下列敘述何者正確？',o:['發炎一定是細菌感染','扭傷不會發炎','抗生素對病毒引起的感冒無效','發燒一定要立刻退燒'],a:2,e:'發炎是防禦反應，扭傷、燙傷也會發炎；抗生素只對細菌有效；適度發燒是防禦的一部分。'}],
+ s7:[
+  {q:'HIV 主要感染哪一種細胞，因而同時削弱體液免疫與細胞免疫？',o:['B 細胞','胞毒 T 細胞','輔助 T 細胞','紅血球'],a:2,e:'輔助 T 細胞分泌細胞激素活化 B 細胞與胞毒 T 細胞；它減少後兩種免疫都無法正常啟動。'},
+  {q:'第二劑疫苗後抗體上升得又快又多，主要原因是？',o:['第二劑的劑量是第一劑的 10 倍','第一劑已產生記憶細胞','第二劑含有抗體','抗原變得比較毒'],a:1,e:'記憶 B 細胞與記憶 T 細胞數量多，再次遇到同一抗原時迅速增殖、分化成大量漿細胞（再次反應，以 IgG 為主）。'},
+  {q:'被雨傘節咬傷應立即注射抗蛇毒血清，這屬於？',o:['自然主動免疫','人工主動免疫','自然被動免疫','人工被動免疫'],a:3,e:'直接給予別的動物製造的抗體，立即生效但不產生記憶細胞，屬人工被動免疫；疫苗才是人工主動免疫。'},
+  {q:'對花生過敏的人第二次吃花生時起疹子、呼吸困難，主要是哪種物質大量釋放？',o:['胰島素','組織胺','干擾素','穿孔素'],a:1,e:'過敏原與肥大細胞上的 IgE 結合，肥大細胞釋放大量組織胺；過敏是免疫系統反應過度，不是免疫力太弱。'}]
+};
+function buildQuiz(root){
+  const qs=QUIZ[root.dataset.quiz];let score=0,done=0;
+  root.innerHTML=qs.map((it,k)=>`<div class="q" data-k="${k}"><p class="qt"><b>Q${k+1}</b>${it.q}</p><div class="opts">${it.o.map((o,j)=>`<button class="opt" data-j="${j}"><span>${'ABCD'[j]}</span>${o}</button>`).join('')}</div><p class="exp"></p></div>`).join('')
+    +`<div class="q-foot"><span class="score">得分 0 / ${qs.length}</span><button class="btn" data-reset>重新作答</button></div>`;
+  $$('.q',root).forEach(qd=>{const it=qs[qd.dataset.k];
+    $$('.opt',qd).forEach(b=>b.onclick=()=>{if(qd.classList.contains('answered'))return;qd.classList.add('answered');
+      const ok=+b.dataset.j===it.a;b.classList.add(ok?'right':'wrong');$$('.opt',qd)[it.a].classList.add('right');
+      const ex=$('.exp',qd);ex.textContent=(ok?'✔ 答對了！':'✘ 正解是 '+'ABCD'[it.a]+'。')+' '+it.e;ex.classList.add(ok?'ok':'no');
+      if(ok)score++;done++;$('.score',root).textContent=`得分 ${score} / ${qs.length}`+(done===qs.length&&score===qs.length?'  🎉 全對！':'');});});
+  $('[data-reset]',root).onclick=()=>buildQuiz(root);
+}
+$$('.quiz').forEach(buildQuiz);
+
+/* ================= shared bio helpers ================= */
+const COL={cyan:'#36e0ff',yellow:'#ffd84d',pink:'#ff7aa8',orange:'#ff9f43',green:'#3ee08f',red:'#ff5a5a',mute:'#9fb6d9',ink:'#e8f1ff',blue:'#5a8cff',dark:'#06142b',vein:'#4a78d8',art:'#e0475a'};
+const fx=(v,d=2)=>(Math.round(v*10**d)/10**d).toFixed(d).replace('-','−');
+const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
+function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+function segT(box,attr,cb){$$('button[data-'+attr+']',box).forEach(b=>b.onclick=()=>{$$('button[data-'+attr+']',box).forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset[attr],b);});}
+function setSeg(box,attr,val){$$('button[data-'+attr+']',box).forEach(x=>x.classList.toggle('on',x.dataset[attr]===val));}
+function arrow(g,x1,y1,x2,y2,color,w=3){el('line',{x1,y1,x2,y2,stroke:color,'stroke-width':w,'stroke-linecap':'round'},g);
+  const a=Math.atan2(y2-y1,x2-x1),s=7+w;el('path',{d:`M${x2},${y2} L${x2-s*Math.cos(a-0.45)},${y2-s*Math.sin(a-0.45)} L${x2-s*Math.cos(a+0.45)},${y2-s*Math.sin(a+0.45)} Z`,fill:color},g);}
+function box(g,x,y,w,h,label,opt={}){el('rect',{x,y,width:w,height:h,rx:opt.rx??8,fill:opt.fill||'rgba(15,44,92,.9)',stroke:opt.stroke||'rgba(120,190,255,.35)','stroke-width':opt.sw||1.5},g);
+  if(label!==undefined){const lines=String(label).split('\n');lines.forEach((s,i)=>txt(g,x+w/2,y+h/2+(i-(lines.length-1)/2)*15,s,opt.cls||'lbl sm'));}}
+
+
+function tabSwitch(segId,map,onShow){segT($(segId),'tab',v=>{Object.entries(map).forEach(([k,id])=>$(id).hidden=k!==v);onShow&&onShow(v);});}
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
+function line(g,x1,y1,x2,y2,stroke,w=1.5,dash){const a={x1,y1,x2,y2,stroke,'stroke-width':w};if(dash)a['stroke-dasharray']=dash;return el('line',a,g);}
+function pathOf(pts){return pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');}
+
+/* ================= V1: action potential lab & conduction race ================= */
+(function(){
+  const svg=$('#v1'),out=$('#v1out');let S=-50,T=3,TTX=false,tab='ap';
+  const X0=60,X1=500,Y0=280,Y1=92,xs=t=>X0+(X1-X0)*t/20,ys=v=>Y0-(Y0-Y1)*(v+90)/130;
+  function spikes(){if(TTX||S<-55)return[];const I=clamp(8-(S+55)*0.33,2.5,8),r=[];for(let t=2.6;t<16;t+=I)r.push(+t.toFixed(3));return r;}
+  function graded(t){if(t<2)return -70;const top=-70+(S+70)*(1-Math.exp(-(16-2)/0.8));
+    if(t<=16)return -70+(S+70)*(1-Math.exp(-(t-2)/0.8));return -70+(top+70)*Math.exp(-(t-16)/1.0);}
+  function V(t,sp){if(!sp.length)return graded(t);if(t<2)return -70;if(t<sp[0])return -70+15*(t-2)/(sp[0]-2);
+    let k=sp.length-1;while(k>0&&t<sp[k])k--;const u=t-sp[k],next=sp[k+1];
+    if(u<0.5)return -55+85*Math.sin(Math.PI/2*u/0.5);
+    if(u<1.5)return 30-110*(1-Math.cos(Math.PI*(u-0.5)))/2;
+    if(next!==undefined){const gap=next-sp[k]-1.5;return -80+25*Math.pow((u-1.5)/gap,1.5);}
+    return -70-10*Math.exp(-(u-1.5)/1.2);}
+  function phase(t,sp){
+    for(const s of sp){const u=t-s;if(u>=0&&u<0.5)return{n:'去極化',na:'開（Na⁺ 流入）',k:'關',c:'g'};
+      if(u>=0.5&&u<1.5)return{n:'再極化',na:'失活（不反應期）',k:'開（K⁺ 流出）',c:'p'};
+      if(u>=1.5&&u<2.5)return{n:'過極化',na:'失活 → 恢復中',k:'開，正在關閉（K⁺ 繼續流出）',c:'o'};}
+    const v=V(t,sp);
+    if(t<2||(t>16&&Math.abs(v+70)<0.5))return{n:'靜止',na:TTX?'被河豚毒素阻斷':'關',k:'漏通道開（少量 K⁺ 流出）',c:'c'};
+    if(sp.length&&t<sp[0])return{n:'受刺激、逼近閾值',na:'開始打開',k:'關',c:'y'};
+    return{n:sp.length?'恢復中，等待下一次動作電位':'局部去極化（未達閾值）',na:TTX?'被河豚毒素阻斷':'關',k:'漏通道開',c:'y'};}
+  function draw(){
+    clear(svg);const sp=spikes();
+    [30,0,-55,-70,-80].forEach(v=>{line(svg,X0,ys(v),X1,ys(v),v===-55?COL.yellow:'rgba(159,182,217,.18)',v===-55?1.5:1,v===-55?'6 4':null);
+      txt(svg,X0-6,ys(v),(v>0?'+':'')+String(v).replace('-','−'),'lbl sm'+(v===-55?' y':''),'end');});
+    txt(svg,X1,ys(-55)-10,'閾值 −55 mV','lbl sm y','end');
+    line(svg,X0,Y0,X1,Y0,COL.mute);line(svg,X0,Y0,X0,Y1-4,COL.mute);
+    [0,5,10,15,20].forEach(t=>txt(svg,xs(t),Y0+13,t+' ms','lbl sm'));
+    txt(svg,10,Y1-18,'膜電位（mV）','lbl sm','start');
+    el('rect',{x:xs(2),y:Y0+22,width:xs(16)-xs(2),height:6,rx:3,fill:COL.yellow,opacity:.7},svg);
+    txt(svg,xs(2)-4,Y0+25,'刺激','lbl sm y','end');
+    const pts=[];for(let i=0;i<=800;i++){const t=i/40;pts.push([xs(t),ys(V(t,sp))]);}
+    el('path',{d:pathOf(pts),fill:'none',stroke:COL.cyan,'stroke-width':2.6},svg);
+    sp.forEach(s=>{el('circle',{cx:xs(s+0.5),cy:ys(30),r:3.5,fill:COL.pink},svg);});
+    const v=V(T,sp),ph=phase(T,sp);
+    line(svg,xs(T),Y1,xs(T),Y0,'#fff',1.2,'3 3');
+    el('circle',{cx:xs(T),cy:ys(v),r:6,fill:'#fff',stroke:COL.cyan,'stroke-width':2},svg);
+    const bx=8,by=6;el('rect',{x:bx,y:by,width:504,height:48,rx:8,fill:'rgba(6,20,43,.88)',stroke:'rgba(120,190,255,.35)'},svg);
+    txt(svg,bx+10,by+15,'Na⁺ 通道：'+ph.na,'lbl sm','start');txt(svg,bx+10,by+34,'K⁺ 通道：'+ph.k,'lbl sm','start');
+    txt(svg,bx+496,by+15,'t = '+T.toFixed(1)+' ms','lbl sm c','end');txt(svg,bx+496,by+34,'V = '+fx(v,0)+' mV','lbl sm c','end');
+    $('#v1sv').textContent=String(S).replace('-','−');$('#v1tv').textContent=T.toFixed(1);
+    let msg;
+    if(TTX)msg=`河豚毒素阻斷電位控制型 Na⁺ 通道：刺激只造成局部去極化（最高約 ${fx(Math.min(S,graded(16)),0)} mV），<b class="r">無法產生動作電位</b>，所以會全身麻痺。`;
+    else if(!sp.length)msg=`刺激只把膜電位推到約 ${String(S).replace('-','−')} mV，<b class="r">未達閾值 −55 mV</b>，不產生動作電位；停止刺激後膜電位回到 −70 mV。`;
+    else msg=`達到閾值，刺激期間產生 <b class="y">${sp.length} 個動作電位</b>，每一個峰值都是 <b class="p">+30 mV</b>（全有全無律）。刺激越強，動作電位<b class="g">越頻繁</b>，但不會變大；兩個動作電位之間至少隔著不反應期。`;
+    out.innerHTML=`<span class="big ${ph.c}">目前階段：${ph.n}</span><br>${msg}`;
+  }
+  $('#v1s').oninput=e=>{S=+e.target.value;$$('#v1pre button').forEach(b=>b.classList.remove('on'));draw();};
+  $('#v1t').oninput=e=>{T=+e.target.value;draw();};
+  $('#v1ttx').onchange=e=>{TTX=e.target.checked;draw();};
+  segT($('#v1pre'),'pre',v=>{S=+v;$('#v1s').value=S;draw();});
+  /* race */
+  const sr=$('#v1r');let Dm=1.2,Vm=120,Vu=1,anim=null,prog=0;
+  function drawRace(p){
+    clear(sr);const L0=60,L1=480,tm=Dm/Vm,tu=Dm/Vu;
+    txt(sr,20,24,'腳趾（受器）','lbl sm','start');txt(sr,500,24,'脊髓','lbl sm','end');
+    // myelinated axon
+    const yA=90,yB=210;txt(sr,L0,yA-40,'有髓鞘纖維（跳躍傳導）','lbl sm y','start');
+    const N=12,seg=(L1-L0)/N;
+    for(let i=0;i<N;i++)el('rect',{x:L0+i*seg+4,y:yA-11,width:seg-8,height:22,rx:10,fill:'rgba(255,216,77,.28)',stroke:'rgba(255,216,77,.6)'},sr);
+    line(sr,L0,yA,L1,yA,COL.ink,2);
+    for(let i=0;i<=N;i++)el('circle',{cx:L0+i*seg,cy:yA,r:3,fill:COL.yellow},sr);
+    txt(sr,L0+seg*0.5,yA+24,'髓鞘','lbl sm','middle');txt(sr,L0+seg,yA-22,'蘭氏結','lbl sm y','middle');
+    // unmyelinated
+    txt(sr,L0,yB-40,'無髓鞘纖維（連續傳導）','lbl sm p','start');
+    el('rect',{x:L0,y:yB-6,width:L1-L0,height:12,rx:6,fill:'rgba(255,122,168,.18)',stroke:'rgba(255,122,168,.5)'},sr);
+    // positions (p = elapsed real seconds)
+    const fm=clamp(p/tm,0,1),fu=clamp(p/tu,0,1);
+    const node=Math.floor(fm*N+1e-9),xm=L0+Math.min(N,node)*seg;
+    el('circle',{cx:xm,cy:yA,r:9,fill:COL.yellow,stroke:'#fff','stroke-width':2},sr);
+    const xu=L0+(L1-L0)*fu;el('rect',{x:L0,y:yB-6,width:xu-L0,height:12,rx:6,fill:COL.pink,opacity:.75},sr);
+    el('circle',{cx:xu,cy:yB,r:8,fill:COL.pink,stroke:'#fff','stroke-width':2},sr);
+    txt(sr,L1,yA+40,fm>=1?'抵達！ '+fx(tm*1000,1)+' ms':'','lbl y','end');
+    txt(sr,L1,yB+34,fu>=1?'抵達！ '+fx(tu,2)+' s':'','lbl p','end');
+    txt(sr,260,286,'經過時間（實際）：'+(p<1?fx(p*1000,0)+' ms':fx(p,2)+' s'),'lbl sm c');
+    $('#v1dv').textContent=Dm.toFixed(1);$('#v1mv').textContent=Vm;$('#v1uv').textContent=Vu;
+    out.innerHTML=`<span class="big y">有髓鞘：${Dm.toFixed(1)} ÷ ${Vm} = ${fx(tm*1000,1)} ms</span>　<span class="big p">無髓鞘：${Dm.toFixed(1)} ÷ ${Vu} = ${fx(tu,2)} s</span><br>
+      有髓鞘快了約 <b>${f0(tu/tm)}</b> 倍。離子只在蘭氏結進出，衝動一個結「跳」一個結；這也是「刺痛」（有髓鞘）比「悶痛」（無髓鞘）先感覺到的原因。`;
+  }
+  function race(){cancelAnimationFrame(anim);const tu=Dm/Vu,scale=4/tu,t0=performance.now();
+    const step=now=>{prog=Math.min(tu,(now-t0)/1000/scale);drawRace(prog);if(prog<tu)anim=requestAnimationFrame(step);};anim=requestAnimationFrame(step);}
+  ['v1d','v1m','v1u'].forEach(id=>$('#'+id).oninput=()=>{Dm=+$('#v1d').value;Vm=+$('#v1m').value;Vu=+$('#v1u').value;cancelAnimationFrame(anim);prog=0;drawRace(0);});
+  $('#v1go').onclick=race;
+  tabSwitch('#v1tabs',{ap:'#v1ap',race:'#v1race'},v=>{tab=v;v==='ap'?draw():drawRace(prog);});
+  draw();
+})();
+
+/* ================= V2: synapse toxins & summation ================= */
+(function(){
+  const svg=$('#v2'),out=$('#v2out');let mode='normal',p=-1,anim=null;
+  const M={
+    normal:{pre:1,rel:1,bind:1,deg:1,post:'one',t:'正常：Ca²⁺ 流入 → 胞吐釋放乙醯膽鹼 → 與受體結合 → Na⁺ 流入，突觸後產生一次動作電位；乙醯膽鹼隨即被<b class="g">乙醯膽鹼酯酶分解</b>，訊號結束。'},
+    ttx:{pre:0,rel:0,bind:0,deg:1,post:'none',t:'河豚毒素阻斷<b class="r">電位控制型 Na⁺ 通道</b>：動作電位根本傳不到末梢，後面所有步驟都不會發生 → 麻痺。'},
+    botox:{pre:1,rel:0,bind:0,deg:1,post:'none',t:'肉毒桿菌毒素<b class="r">阻止乙醯膽鹼釋放</b>：動作電位到了、Ca²⁺ 也流入，但突觸小泡不胞吐 → 肌肉鬆弛性麻痺（醫美除皺用極微量局部注射）。'},
+    curare:{pre:1,rel:1,bind:0,deg:1,post:'none',t:'箭毒<b class="r">占住乙醯膽鹼受體</b>但不打開通道：乙醯膽鹼釋放了卻接不上 → 骨骼肌麻痺，呼吸肌麻痺可致死。'},
+    op:{pre:1,rel:1,bind:1,deg:0,post:'many',t:'有機磷<b class="r">抑制乙醯膽鹼酯酶</b>：乙醯膽鹼無法分解、持續作用 → 突觸後細胞一再興奮，肌肉抽搐、痙攣（例題 4-2-3）。'},
+    nic:{pre:1,rel:1,bind:1,deg:1,post:'extra',t:'尼古丁與乙醯膽鹼受體結合並<b class="y">使它活化</b>：即使沒有神經衝動，受體也會被打開 → 興奮作用，長期使用造成成癮。'}};
+  const PRE={x:40,y:60},CL=300,RX=340;
+  function scene(){
+    const m=M[mode];clear(svg);
+    // presynaptic terminal
+    el('path',{d:`M0,120 L120,120 C200,120 250,70 300,80 L300,250 C250,260 200,210 120,210 L0,210 Z`,fill:'rgba(255,216,77,.16)',stroke:'rgba(255,216,77,.6)','stroke-width':2},svg);
+    txt(svg,70,104,'軸突末梢（突觸前）','lbl sm y');
+    el('path',{d:'M340,40 L520,40 L520,290 L340,290 C330,200 330,130 340,40 Z',fill:'rgba(54,224,255,.12)',stroke:'rgba(54,224,255,.55)','stroke-width':2},svg);
+    txt(svg,440,30,'突觸後細胞','lbl sm c');txt(svg,320,30,'間隙','lbl sm');
+    // receptors
+    for(let i=0;i<5;i++){const y=95+i*35;el('rect',{x:333,y:y-9,width:14,height:18,rx:3,fill:mode==='curare'?'#8a8f99':COL.cyan,id:'rc'+i},svg);
+      if(mode==='curare')el('circle',{cx:326,cy:y,r:5,fill:'#8a8f99'},svg);}
+    if(mode==='curare')txt(svg,430,308,'灰色＝箭毒占住受體','lbl sm');
+    if(mode==='nic')for(let i=0;i<5;i++)el('circle',{cx:327,cy:95+i*35,r:5,fill:COL.orange},svg);
+    // Ca channel
+    el('rect',{x:225,y:76,width:16,height:22,rx:3,fill:mode==='ttx'?'#666':COL.green},svg);txt(svg,233,64,'Ca²⁺ 通道','lbl sm g');
+    return m;}
+  function draw(){
+    const m=scene(),q=p<0?0:p;
+    // AP pulse along axon
+    const ap=clamp(q/0.25,0,1);
+    if(p>=0&&(m.pre||q<0.12)){const x=m.pre?ap*200:clamp(q/0.12,0,1)*80;el('circle',{cx:x,cy:165,r:10,fill:COL.yellow,opacity:.85},svg);}
+    if(p>=0&&!m.pre){txt(svg,95,165,'✕','lbl r');txt(svg,95,190,'動作電位傳不下去','lbl sm r');}
+    // Ca influx
+    if(m.pre&&q>0.25){const k=clamp((q-0.25)/0.15,0,1);for(let i=0;i<4;i++)el('circle',{cx:233+(i%2?6:-6),cy:60+k*60+i*6,r:4,fill:COL.green},svg);}
+    // vesicles
+    const rel=m.rel&&q>0.4,rk=clamp((q-0.4)/0.15,0,1);
+    const ves=[[160,150],[200,130],[210,185],[250,155],[245,210]];
+    ves.forEach(([x,y],i)=>{const xx=rel?x+(290-x)*rk:x;el('circle',{cx:xx,cy:y,r:13,fill:'rgba(255,255,255,.08)',stroke:'rgba(255,255,255,.55)'},svg);
+      if(!rel||rk<1)for(let j=0;j<3;j++)el('circle',{cx:xx-5+j*5,cy:y+(j%2?3:-3),r:2.6,fill:COL.pink},svg);});
+    if(m.pre&&!m.rel&&q>0.4){txt(svg,200,240,'✕ 小泡不胞吐','lbl sm r');}
+    // transmitter in cleft
+    if(rel&&rk>=1){const dk=clamp((q-0.55)/0.15,0,1);const fade=m.deg?clamp(1-(q-0.8)/0.12,0,1):1;
+      const R=rng(7);for(let i=0;i<18;i++){const y=90+R()*150,x0=302,x1=m.bind?329:318+R()*6;el('circle',{cx:x0+(x1-x0)*dk,cy:y,r:2.8,fill:COL.pink,opacity:fade},svg);}
+      if(m.deg&&q>0.8)txt(svg,320,276,'分解','lbl sm g');if(!m.deg&&q>0.8)txt(svg,320,276,'無法分解','lbl sm r');}
+    // post trace
+    const tx0=360,tx1=510,ty0=250,ty1=170;el('rect',{x:tx0-6,y:ty1-14,width:tx1-tx0+12,height:ty0-ty1+30,rx:6,fill:'rgba(6,20,43,.7)'},svg);
+    txt(svg,tx0,ty1-4,'突觸後膜電位','lbl sm','start');
+    const pts=[];const spikesAt=[];
+    if(m.post==='one')spikesAt.push(0.7);if(m.post==='many')spikesAt.push(0.7,0.78,0.86,0.94);if(m.post==='extra')spikesAt.push(0.18,0.45,0.7);
+    for(let i=0;i<=120;i++){const s=i/120;let v=0;if(p>=0&&s<=q)spikesAt.forEach(a=>{const u=(s-a)/0.03;if(u>0&&u<2)v=Math.max(v,u<0.6?u/0.6:Math.max(0,1-(u-0.6)/1.0));});
+      if(s<=Math.max(q,0)||p<0)pts.push([tx0+(tx1-tx0)*s,ty0-8-(ty0-ty1-14)*v]);}
+    el('path',{d:pathOf(pts),fill:'none',stroke:COL.cyan,'stroke-width':2},svg);
+    out.innerHTML=m.t+(p<0?'<br><span class="hint">按「⚡ 送出一個動作電位」看看會發生什麼。</span>':'');
+  }
+  function fire(){cancelAnimationFrame(anim);const t0=performance.now();const step=now=>{p=clamp((now-t0)/3200,0,1);draw();if(p<1)anim=requestAnimationFrame(step);};anim=requestAnimationFrame(step);}
+  segT($('#v2mode'),'mode',v=>{mode=v;cancelAnimationFrame(anim);p=-1;draw();});
+  $('#v2fire').onclick=fire;
+  /* summation */
+  const ss=$('#v2s');let ev=[],slot=3;
+  const X0=60,X1=500,Y0=260,Y1=40,xs=t=>X0+(X1-X0)*t/30,ys=v=>Y0-(Y0-Y1)*(v+80)/115;
+  const psp=(t,e)=>{const x=(t-e.t)/2;return x>0?e.a*x*Math.exp(1-x):0;};
+  function drawSum(){
+    clear(ss);[30,-55,-70].forEach(v=>{line(ss,X0,ys(v),X1,ys(v),v===-55?COL.yellow:'rgba(159,182,217,.2)',v===-55?1.5:1,v===-55?'6 4':null);txt(ss,X0-6,ys(v),(v>0?'+':'')+String(v).replace('-','−'),'lbl sm'+(v===-55?' y':''),'end');});
+    line(ss,X0,Y0,X1,Y0,COL.mute);[0,10,20,30].forEach(t=>txt(ss,xs(t),Y0+14,t+' ms','lbl sm'));
+    let fireT=null;const vs=[];for(let i=0;i<=600;i++){const t=i/20;const v=-70+ev.reduce((s,e)=>s+psp(t,e),0);vs.push(v);if(fireT===null&&v>=-55)fireT=t;}
+    const pts=[];for(let i=0;i<=600;i++){const t=i/20;let v=vs[i];
+      if(fireT!==null&&t>=fireT){const u=t-fireT;v=u<0.5?-55+85*Math.sin(Math.PI/2*u/0.5):u<1.5?30-110*(1-Math.cos(Math.PI*(u-0.5)))/2:-70-10*Math.exp(-(u-1.5)/1.2);}
+      pts.push([xs(t),ys(v)]);}
+    el('path',{d:pathOf(pts),fill:'none',stroke:COL.cyan,'stroke-width':2.4},ss);
+    ev.forEach(e=>{el('path',{d:`M${xs(e.t)},${Y0+22} l-6,8 h12 z`,fill:e.a>0?COL.green:COL.pink},ss);txt(ss,xs(e.t),Y0+38,e.a>0?'A':'B','lbl sm '+(e.a>0?'g':'p'));});
+    txt(ss,X1,ys(-55)-10,'閾值 −55 mV','lbl sm y','end');
+    const mx=Math.max(...vs);
+    out.innerHTML=ev.length?(fireT!==null?`<span class="big g">加總後達到閾值 → 產生動作電位！</span>（最高約 ${fx(mx,1)} mV）`:`<span class="big o">加總最高約 ${fx(mx,1)} mV，未達 −55 mV → 不產生動作電位</span>`)+
+      '<br>興奮性突觸（A）使膜去極化、抑制性突觸（B）使膜過極化；兩個 A 必須在很短時間內接連發生才能疊加，相隔太久前一個就消退了。':'按下方按鈕送出突觸輸入。綠色 A：興奮性（+8 mV）；粉紅 B：抑制性（−5 mV）。';
+  }
+  const add=a=>{if(slot>27){ev=[];slot=3;}ev.push({t:slot,a});slot+=6;drawSum();};
+  $('#v2A').onclick=()=>add(8);$('#v2B').onclick=()=>add(-5);
+  $('#v2AB').onclick=()=>{ev=[{t:5,a:8},{t:5,a:-5}];slot=27;drawSum();};
+  $('#v2AA').onclick=()=>{ev=[{t:5,a:8},{t:6,a:8}];slot=27;drawSum();};
+  $('#v2clr').onclick=()=>{ev=[];slot=3;drawSum();};
+  tabSwitch('#v2tabs',{tox:'#v2tox',sum:'#v2sum'},v=>{v==='tox'?draw():drawSum();});
+  draw();
+})();
+
+/* ================= V3: autonomic balance, reflex arc, ruler drop ================= */
+(function(){
+  const out=$('#v3out');let tab='ans';
+  /* autonomic */
+  const sv=$('#v3');let B=0;
+  function drawANS(){
+    clear(sv);const sym=B>0?B/100:0,par=B<0?-B/100:0;
+    const hr=Math.round(B>=0?75+0.45*B:75+0.15*B),pup=(4+0.03*B),bron=B>=0?'擴張':'收縮',gut=Math.round(50-0.5*B),sal=Math.round(50-0.4*B),glu=Math.round(B>0?90+0.4*B:90);
+    const rows=[
+      ['❤️','心跳',`${hr} 次／分`,clamp((hr-50)/80,0,1),B>=0?COL.pink:COL.cyan],
+      ['👁','瞳孔',`直徑約 ${fx(pup,1)} mm（${B>10?'放大':B<-10?'縮小':'中等'}）`,clamp(pup/7,0,1),B>=0?COL.pink:COL.cyan],
+      ['🫁','支氣管',Math.abs(B)<10?'中等':bron,clamp(0.5+B/200,0,1),B>=0?COL.pink:COL.cyan],
+      ['🍽','消化道蠕動',`${gut<35?'受抑制':gut>65?'旺盛':'中等'}`,clamp(gut/100,0,1),B<=0?COL.green:COL.orange],
+      ['💧','唾液',`${sal<35?'少而黏稠':sal>65?'多而稀':'中等'}`,clamp(sal/100,0,1),B<=0?COL.green:COL.orange],
+      ['🚽','膀胱',B>10?'放鬆（抑制排尿）':B<-10?'收縮（促進排尿）':'中等',clamp(0.5-B/200,0,1),B<=0?COL.green:COL.orange],
+      ['🩸','血糖',`約 ${glu} mg／dL`,clamp((glu-70)/80,0,1),B>0?COL.pink:COL.cyan]];
+    rows.forEach((r,i)=>{const y=34+i*40;txt(sv,22,y,r[0],'lbl','middle');txt(sv,44,y,r[1],'lbl sm','start');
+      el('rect',{x:150,y:y-9,width:200,height:18,rx:9,fill:'rgba(159,182,217,.15)'},sv);
+      el('rect',{x:150,y:y-9,width:Math.max(6,200*r[3]),height:18,rx:9,fill:r[4],opacity:.85},sv);
+      txt(sv,362,y,r[2],'lbl sm','start');});
+    txt(sv,260,310,B>0?`交感神經作用為主（${B}%）`:B<0?`副交感神經作用為主（${-B}%）`:'兩者平衡','lbl sm '+(B>0?'p':B<0?'c':''));
+    $('#v3bv').textContent=B>0?'交感 '+B:B<0?'副交感 '+(-B):'平衡';
+    out.innerHTML=B>0?`<span class="big p">交感神經：「戰鬥或逃跑」</span><br>心跳加快、支氣管擴張、瞳孔放大、血糖上升（肝糖分解），但<b class="o">消化道活動與唾液分泌被抑制</b>——所以考前緊張會口乾、不覺得餓。`:
+      B<0?`<span class="big c">副交感神經：「休息與消化」</span><br>心跳減慢、瞳孔縮小、支氣管收縮，<b class="g">促進消化道蠕動與消化液分泌</b>、膀胱收縮促進排尿。主要的副交感神經是迷走神經。`:
+      '多數內臟同時受交感與副交感神經支配，兩者<b>相互拮抗</b>，使器官活動可以精細調整。拖曳滑桿看看。';}
+  $('#v3b').oninput=e=>{B=+e.target.value;$$('#v3pre button').forEach(b=>b.classList.remove('on'));drawANS();};
+  segT($('#v3pre'),'pre',v=>{B=+v;$('#v3b').value=B;drawANS();});
+  /* reflex arc */
+  const sa=$('#v3a');let rt='knee',cut={};
+  const PARTS={rec:'受器',sen:'感覺神經元',inter:'中間神經元',mot:'運動神經元',eff:'動器（肌肉）',up:'上行路徑（往大腦）',down:'下行路徑（大腦下令）',brain:'大腦'};
+  function drawArc(){
+    clear(sa);
+    const pth={
+      brain:'M215,44 a45,28 0 1,1 90,0 a45,28 0 1,1 -90,0',
+      up:'M272,72 L272,190',down:'M248,72 L248,190',
+      sen:'M440,262 C440,200 360,205 280,205',inter:'M276,212 L244,226',
+      mot:rt==='knee'?'M276,205 C230,214 150,214 112,262':'M242,226 C200,232 150,220 112,262',
+      rec:'M428,262 h24 v20 h-24 z',eff:'M84,262 h56 v22 h-56 z'};
+    el('rect',{x:236,y:66,width:48,height:182,rx:20,fill:'rgba(159,182,217,.12)',stroke:'rgba(159,182,217,.4)'},sa);
+    txt(sa,260,262,'脊髓','lbl sm');
+    const parts=['brain','up','down','sen','mot','rec','eff'];if(rt==='hand')parts.push('inter');
+    parts.forEach(k=>{const isFill=k==='rec'||k==='eff'||k==='brain';const c=cut[k];
+      const col={brain:COL.blue,up:COL.cyan,down:COL.orange,sen:COL.yellow,inter:COL.green,mot:COL.pink,rec:COL.yellow,eff:COL.pink}[k];
+      const e=el('path',{d:pth[k],fill:isFill?(c?'#555':col):'none',stroke:c?'#666':col,'stroke-width':isFill?2:5,'stroke-dasharray':c?'6 6':null,'stroke-linecap':'round',opacity:isFill?.8:1,style:'cursor:pointer'},sa);
+      const hit=el('path',{d:pth[k],fill:isFill?'transparent':'none',stroke:'transparent','stroke-width':22,style:'cursor:pointer'},sa);
+      hit.addEventListener('click',()=>{cut[k]=!cut[k];drawArc();});
+      if(c){const bb=e.getBBox();txt(sa,bb.x+bb.width/2,bb.y+bb.height/2,'✂','lbl r');}});
+    txt(sa,260,44,'大腦','lbl sm');txt(sa,286,130,'上行','lbl sm c','start');txt(sa,234,130,'下行','lbl sm o','end');
+    txt(sa,440,298,rt==='knee'?'受器（膝蓋下方肌腱）':'受器（指尖皮膚）','lbl sm y');txt(sa,112,298,rt==='knee'?'動器（大腿股四頭肌）':'動器（手臂屈肌）','lbl sm p');
+    txt(sa,380,190,'感覺神經元','lbl sm y');txt(sa,150,200,'運動神經元','lbl sm p');if(rt==='hand')txt(sa,206,246,'中間神經元','lbl sm g');
+    const reflex=!cut.rec&&!cut.sen&&!cut.mot&&!cut.eff&&(rt==='knee'||!cut.inter);
+    const feel=!cut.rec&&!cut.sen&&!cut.up&&!cut.brain;
+    const vol=!cut.brain&&!cut.down&&!cut.mot&&!cut.eff;
+    const cuts=Object.keys(cut).filter(k=>cut[k]&&(k!=='inter'||rt==='hand')).map(k=>PARTS[k]);
+    out.innerHTML=`${cuts.length?'已剪斷：'+cuts.join('、'):'所有構造完整'}<br>
+      <span class="big ${reflex?'g':'r'}">${reflex?'✔':'✘'} ${rt==='knee'?'膝跳':'縮手'}反射${reflex?'仍會發生':'不會發生'}</span>
+      <span class="big ${feel?'g':'r'}">${feel?'✔':'✘'} ${feel?'感覺得到':'感覺不到'}${rt==='knee'?'被敲':'刺痛'}</span>
+      <span class="big ${vol?'g':'r'}">${vol?'✔':'✘'} ${vol?'能':'不能'}隨意控制這塊肌肉</span><br>
+      <span class="hint">反射弧：受器 → 感覺神經元 → ${rt==='knee'?'（直接連到）':'中間神經元 → '}運動神經元 → 動器，不需要大腦；但「感覺到」必須經上行路徑傳到大腦。</span>`;}
+  segT($('#v3type'),'rt',v=>{rt=v;drawArc();});
+  $('#v3cut').onclick=()=>{cut={up:true,down:true};drawArc();};
+  $('#v3heal').onclick=()=>{cut={};drawArc();};
+  /* ruler drop */
+  const sr=$('#v3r');let st='idle',tDrop=0,timer=null,anim=null,hist=[],lastY=0;
+  const PXCM=8,TOP=40;
+  function drawRuler(yoff,msg,cls){
+    clear(sr);
+    el('rect',{x:225,y:TOP+yoff,width:46,height:30*PXCM,rx:4,fill:'#f2e2b3',stroke:'#c8a95a'},sr);
+    for(let c=0;c<=30;c++){const y=TOP+yoff+c*PXCM;line(sr,225,y,225+(c%5?10:18),y,'#5a4a20',c%5?1:1.6);if(c%5===0&&c)txt(sr,260,y,String(c),'lbl sm','middle');}
+    el('path',{d:'M150,40 q-20,10 -10,30 l30,0',fill:'none',stroke:COL.mute,'stroke-width':3},sr);
+    txt(sr,120,30,'同學放手處','lbl sm','middle');
+    el('ellipse',{cx:248,cy:TOP+10,rx:40,ry:12,fill:'none',stroke:COL.cyan,'stroke-width':3,'stroke-dasharray':'5 4'},sr);
+    txt(sr,330,TOP+10,'← 受測者的手指','lbl sm c','start');
+    if(msg)txt(sr,390,180,msg,'lbl '+(cls||''),'middle');
+    hist.slice(-5).forEach((h,i)=>txt(sr,520-8,230+i*18,`第 ${hist.length-Math.min(5,hist.length)+i+1} 次：${fx(h.t,3)} s，${fx(h.d,1)} cm`,'lbl sm','end'));
+  }
+  function readoutRuler(extra){const n=hist.length;const avg=n?hist.reduce((s,h)=>s+h.t,0)/n:0;
+    out.innerHTML=(extra||'')+(n?`<br>共 ${n} 次，平均反應時間 <b class="c">${fx(avg,3)} s</b>（相當於落下 ${fx(0.5*9.8*avg*avg*100,1)} cm）。`:'')+
+      '<br><span class="hint">換算：t = √(2d／g)。落下 4.9 cm → 0.10 s、19.6 cm → 0.20 s。看到直尺掉落再捏住，要經過眼睛、大腦判斷、運動神經與肌肉，比膝跳反射慢得多。</span>';}
+  $('#v3ready').onclick=()=>{clearTimeout(timer);cancelAnimationFrame(anim);st='wait';$('#v3catch').disabled=false;drawRuler(0,'準備……注意看！','y');readoutRuler('等待直尺落下……');
+    timer=setTimeout(()=>{st='drop';tDrop=performance.now();const step=now=>{if(st!=='drop')return;const t=(now-tDrop)/1000;const d=0.5*9.8*t*t*100;lastY=d*PXCM;
+      if(d>30){st='idle';$('#v3catch').disabled=true;drawRuler(Math.min(lastY,260),'沒接到！直尺掉下去了','r');readoutRuler('<span class="big r">太慢了，直尺已經掉到底（超過 30 cm）。</span>');return;}
+      drawRuler(lastY);anim=requestAnimationFrame(step);};anim=requestAnimationFrame(step);},1000+Math.random()*2000);};
+  function doCatch(){if(st==='wait'){clearTimeout(timer);st='idle';$('#v3catch').disabled=true;drawRuler(0,'太早了！還沒放手','r');readoutRuler('<span class="big r">犯規：直尺還沒落下就出手了。</span>');return;}
+    if(st!=='drop')return;st='idle';cancelAnimationFrame(anim);$('#v3catch').disabled=true;const t=(performance.now()-tDrop)/1000,d=0.5*9.8*t*t*100;
+    if(d>30){drawRuler(260,'沒接到！直尺掉下去了','r');readoutRuler('<span class="big r">太慢了，直尺已經掉到底（超過 30 cm）。</span>');return;}
+    hist.push({t,d});
+    drawRuler(d*PXCM,`接住！${fx(d,1)} cm`,'g');readoutRuler(`<span class="big g">反應時間 ${fx(t,3)} s → 直尺落下 ½ × 9.8 × ${fx(t,3)}² ≈ ${fx(d,1)} cm</span>`);}
+  $('#v3catch').onclick=doCatch;
+  document.addEventListener('keydown',e=>{if(e.key===' '&&tab==='ruler'&&(st==='wait'||st==='drop')){e.preventDefault();doCatch();}});
+  $('#v3rclr').onclick=()=>{hist=[];drawRuler(0);readoutRuler('按「① 準備」開始。');};
+  tabSwitch('#v3tabs',{ans:'#v3ans',arc:'#v3arc',ruler:'#v3ruler'},v=>{tab=v;if(v==='ans')drawANS();if(v==='arc')drawArc();if(v==='ruler'){drawRuler(0);readoutRuler('按「① 準備」開始。');}});
+  drawANS();
+})();
+
+/* ================= V4: hormone action on target cells ================= */
+(function(){
+  const svg=$('#v4'),out=$('#v4out');let H='ins',REC=true,ORAL=false;
+  const D={
+    ins:{n:'胰島素',g:'胰島 β 細胞',c:'蛋白質（肽類）',w:1,cell:'肝細胞',eff:'促進吸收葡萄糖、合成肝糖 → 血糖下降',oral:'胰島素是蛋白質，口服會在消化道被蛋白酶分解成胺基酸而失效，所以要注射。'},
+    epi:{n:'腎上腺素',g:'腎上腺髓質',c:'胺類',w:1,cell:'肝細胞',eff:'肝糖分解成葡萄糖 → 血糖迅速上升',oral:'腎上腺素口服後大部分在消化道與肝臟被分解，效果很差；過敏性休克急救是用注射（腎上腺素筆）。'},
+    adh:{n:'抗利尿激素',g:'下視丘製造、腦垂腺後葉釋放',c:'肽類',w:1,cell:'集尿管細胞',eff:'增加水通道 → 水再吸收增加、尿量減少',oral:'ADH 是肽類，口服會被消化分解而失效。'},
+    cort:{n:'皮質醇',g:'腎上腺皮質',c:'類固醇',w:0,cell:'肝細胞',eff:'調控基因 → 合成新酶，使非醣類轉成葡萄糖、抑制發炎',oral:'類固醇是脂溶性小分子，不會被蛋白酶分解，可以口服（醫療上的類固醇藥物）。'},
+    ald:{n:'醛固酮',g:'腎上腺皮質',c:'類固醇',w:0,cell:'遠曲小管、集尿管細胞',eff:'調控基因 → 合成 Na⁺ 通道與鈉鉀幫浦 → Na⁺ 再吸收、K⁺ 分泌',oral:'類固醇可以被消化道吸收而不被分解，可以口服。'},
+    thy:{n:'甲狀腺素',g:'甲狀腺',c:'胺類（含碘），但為脂溶性',w:0,cell:'幾乎全身的細胞',eff:'調控基因 → 提高細胞代謝率、促進生長發育',oral:'甲狀腺素可以口服；甲狀腺切除的病人每天服用甲狀腺素片。'},
+    est:{n:'雌激素',g:'卵巢',c:'類固醇',w:0,cell:'子宮內膜細胞',eff:'調控基因 → 子宮內膜增厚等',oral:'類固醇可以口服（例如口服避孕藥含雌激素類藥物）。'}};
+  function draw(){
+    const h=D[H];clear(svg);
+    // blood vessel
+    el('rect',{x:10,y:40,width:90,height:250,rx:30,fill:'rgba(224,71,90,.18)',stroke:'rgba(224,71,90,.6)','stroke-width':2},svg);
+    txt(svg,55,30,'血液','lbl sm p');
+    const R=rng(3);for(let i=0;i<6;i++)el('circle',{cx:30+R()*50,cy:70+i*36,r:6,fill:h.w?COL.yellow:COL.orange},svg);
+    // cell
+    el('ellipse',{cx:330,cy:170,rx:170,ry:130,fill:'rgba(54,224,255,.07)',stroke:COL.cyan,'stroke-width':4},svg);
+    txt(svg,330,30,h.cell+(REC?'（標的細胞）':'（沒有受體）'),'lbl sm c');
+    el('ellipse',{cx:380,cy:205,rx:58,ry:44,fill:'rgba(180,140,255,.18)',stroke:'#b48cff','stroke-width':2},svg);txt(svg,450,170,'細胞核','lbl sm','start');
+    if(!REC){arrow(svg,104,170,150,170,COL.mute,2);el('circle',{cx:150,cy:150,r:7,fill:h.w?COL.yellow:COL.orange},svg);
+      txt(svg,330,140,'沒有受體 → 激素沒有作用','lbl r');txt(svg,330,165,'（激素隨血液流走）','lbl sm');}
+    else if(h.w){
+      el('path',{d:'M158,150 v-14 h8 v14 M174,150 v-14 h8 v14',stroke:COL.green,'stroke-width':4,fill:'none'},svg);
+      el('rect',{x:156,y:150,width:28,height:40,rx:5,fill:COL.green},svg);el('circle',{cx:170,cy:130,r:8,fill:COL.yellow},svg);
+      txt(svg,170,206,'膜受體','lbl sm g');arrow(svg,104,130,156,130,COL.yellow,2);
+      txt(svg,170,226,'激素不進入細胞','lbl sm');
+      arrow(svg,190,170,222,170,COL.ink,2);el('circle',{cx:240,cy:170,r:16,fill:'rgba(255,159,67,.3)',stroke:COL.orange,'stroke-width':2},svg);txt(svg,240,170,'cAMP','lbl sm o');
+      txt(svg,240,196,'第二傳訊者','lbl sm o');
+      txt(svg,300,96,'酶的連鎖反應（訊號放大，示意）','lbl sm y','middle');
+      ['1 個激素','→ 約 10','→ 約 100','→ 約 1000'].forEach((s,i)=>txt(svg,214+i*60,116,s,'lbl sm y','start'));
+      arrow(svg,258,170,300,140,COL.ink,2);txt(svg,330,300-18,h.eff,'lbl sm g');
+      txt(svg,306,140,'改變原有酶的活性','lbl sm','start');
+    }else{
+      arrow(svg,104,130,236,150,COL.orange,2);el('circle',{cx:250,cy:152,r:8,fill:COL.orange},svg);
+      txt(svg,190,118,'直接穿過細胞膜','lbl sm o');
+      el('path',{d:'M262,152 a12,12 0 1,0 0.1,0',fill:'none',stroke:COL.green,'stroke-width':4},svg);txt(svg,262,178,'細胞內受體','lbl sm g');
+      arrow(svg,276,160,330,190,COL.ink,2);txt(svg,380,196,'DNA → mRNA','lbl sm');txt(svg,380,214,'（調控轉錄）','lbl sm');
+      arrow(svg,380,250-6,380,280,COL.ink,2);txt(svg,330,292,'合成新蛋白質：'+h.eff.replace(/^調控基因 → /,''),'lbl sm g');
+    }
+    out.innerHTML=`<span class="big">${h.n}</span>　分泌：${h.g}　化學性質：${h.c}　<b class="${h.w?'y':'o'}">${h.w?'水溶性':'脂溶性'}</b><br>`+
+      (REC?(h.w?`受體在<b class="g">細胞膜上</b> → 產生第二傳訊者（cAMP）→ 一連串酶被活化 → ${h.eff}。反應快（秒到分鐘）。`:`可穿過細胞膜，受體在<b class="g">細胞內</b> → 激素－受體複合物進入細胞核調控基因轉錄 → ${h.eff.replace(/^調控基因 → /,'')}。反應慢（數小時）但持久。`)
+        :'這個細胞沒有該激素的受體，即使血液中有激素也<b class="r">不會反應</b>——激素只作用於標的細胞。')+
+      (ORAL?`<br>💊 <b>${h.w?'不能口服':'可以口服'}</b>：${h.oral}`:'');
+  }
+  segT($('#v4hor'),'hor',v=>{H=v;ORAL=false;draw();});
+  $('#v4rec').onchange=e=>{REC=e.target.checked;draw();};
+  $('#v4oral').onclick=()=>{ORAL=!ORAL;draw();};
+  draw();
+})();
+
+/* ================= V5: OGTT & thyroid feedback ================= */
+(function(){
+  const out=$('#v5out');
+  const sv=$('#v5');let who='n',T=120;
+  const P={n:{name:'健康的人',gb:90,ga:50,gt:40,ib:8,ia:60,it:40,c:COL.green},t1:{name:'第一型糖尿病',gb:160,ga:150,gt:70,ib:2,ia:3,it:60,c:COL.pink},t2:{name:'第二型糖尿病',gb:135,ga:90,gt:60,ib:18,ia:70,it:80,c:COL.orange}};
+  const gam=(t,b,a,tau)=>b+a*(t/tau)*Math.exp(1-t/tau);
+  const G=(k,t)=>gam(t,P[k].gb,P[k].ga,P[k].gt),I=(k,t)=>gam(t,P[k].ib,P[k].ia,P[k].it);
+  function drawO(){
+    clear(sv);const X0=60,X1=500,gy0=200,gy1=24,gmin=50,gmax=350,xs=t=>X0+(X1-X0)*t/240,gys=v=>gy0-(gy0-gy1)*(v-gmin)/(gmax-gmin);
+    const iy0=300,iy1=232,iys=v=>iy0-(iy0-iy1)*v/100;
+    [100,180,250,300].forEach(v=>{line(sv,X0,gys(v),X1,gys(v),v===180?COL.red:'rgba(159,182,217,.18)',v===180?1.5:1,v===180?'6 4':null);txt(sv,X0-6,gys(v),String(v),'lbl sm','end');});
+    txt(sv,X1,gys(180)-9,'腎糖閾 180','lbl sm','end');
+    line(sv,X0,gy0,X1,gy0,COL.mute);txt(sv,18,14,'血糖（mg／dL）','lbl sm','start');
+    line(sv,X0,iy0,X1,iy0,COL.mute);txt(sv,18,222,'胰島素（相對值）','lbl sm','start');
+    [0,30,60,90,120,180,240].forEach(t=>txt(sv,xs(t),iy0+13,String(t),'lbl sm'));
+    const keys=who==='all'?['n','t1','t2']:[who];
+    keys.forEach(k=>{const gp=[],ip=[];for(let t=0;t<=240;t+=2){gp.push([xs(t),gys(G(k,t))]);ip.push([xs(t),iys(I(k,t))]);}
+      el('path',{d:pathOf(gp),fill:'none',stroke:P[k].c,'stroke-width':2.8},sv);el('path',{d:pathOf(ip),fill:'none',stroke:P[k].c,'stroke-width':2,'stroke-dasharray':'5 3'},sv);
+      el('circle',{cx:xs(T),cy:gys(G(k,T)),r:5,fill:P[k].c,stroke:'#fff','stroke-width':1.5},sv);});
+    line(sv,xs(T),gy1,xs(T),iy0,'#fff',1,'3 3');
+    $('#v5tv').textContent=T;
+    if(who==='all'){out.innerHTML=`第 ${T} 分鐘：`+keys.map(k=>`<b style="color:${P[k].c}">${P[k].name} ${f0(G(k,T))}</b>`).join('　')+' mg／dL<br>健康的人胰島素隨血糖上升，2 小時內血糖回落；第一型幾乎沒有胰島素；第二型胰島素不少，但細胞反應差（胰島素阻抗），血糖降得慢。';return;}
+    const p=P[who];let pk=0,pt=0;for(let t=0;t<=240;t++){const g=G(who,t);if(g>pk){pk=g;pt=t;}}
+    const g0=G(who,0),g2=G(who,120),gt=G(who,T);
+    out.innerHTML=`<span class="big" style="color:${p.c}">${p.name}</span>　第 ${T} 分鐘：血糖 <b>${f0(gt)}</b> mg／dL，胰島素 ${f0(I(who,T))}（相對值）<br>
+      空腹 ${f0(g0)}：${g0>=126?'<b class="r">≥ 126，可判定糖尿病</b>':g0<=100?'<b class="g">正常（70～100）</b>':'偏高'}；高峰 ${f0(pk)}（第 ${pt} 分鐘）；2 小時 ${f0(g2)}。
+      ${gt>180?'<br><b class="r">此時血糖超過腎糖閾，尿中可能出現葡萄糖（糖尿），並因滲透壓使尿量增加。</b>':''}
+      ${who==='n'?'<br>胰島素隨血糖上升而增加，促進細胞吸收葡萄糖、合成肝糖，血糖約 2 小時內回到接近正常（負回饋）。':who==='t1'?'<br>β 細胞被自體免疫破壞，胰島素幾乎不上升，血糖居高不下 → 需注射胰島素。':'<br>胰島素分泌甚至偏多，但標的細胞反應差（胰島素阻抗），血糖下降很慢 → 飲食、運動、藥物控制。'}`;}
+  segT($('#v5who'),'who',v=>{who=v;drawO();});
+  $('#v5t').oninput=e=>{T=+e.target.value;drawO();};
+  /* thyroid */
+  const sb=$('#v5b');let cs='norm';
+  const CS={norm:{trh:1,tsh:1,t4:1,size:1,n:'正常',t:'甲狀腺素濃度回饋抑制下視丘與腦垂腺，三者維持在正常範圍（負回饋）。'},
+    iod:{trh:1.8,tsh:2,t4:0.35,size:1.7,n:'缺碘',t:'缺碘 → 甲狀腺素做不出來 → <b class="y">負回饋減弱</b> → TRH、TSH 大量分泌 → 甲狀腺被持續刺激而<b class="r">增生腫大</b>，但甲狀腺素仍然偏低（例題 4-5-1 甲）。'},
+    graves:{trh:0.4,tsh:0.25,t4:2,size:1.5,n:'甲狀腺功能亢進（葛瑞夫茲氏病）',t:'自體抗體模仿 TSH、持續刺激甲狀腺 → 甲狀腺素過多、甲狀腺腫大；過多的甲狀腺素經負回饋使 <b class="c">TRH、TSH 偏低</b>（例題 4-5-1 乙）。'},
+    cut:{trh:1.9,tsh:2.2,t4:0.1,size:0,n:'甲狀腺切除（未補充）',t:'沒有甲狀腺素 → 負回饋消失 → TSH 很高；需每天口服甲狀腺素補充，之後 TSH 會回到正常。'},
+    pit:{trh:1.8,tsh:0.3,t4:0.35,size:0.7,n:'腦垂腺受損',t:'腦垂腺無法分泌 TSH → 甲狀腺缺乏刺激而萎縮、甲狀腺素偏低；下視丘因負回饋減弱而分泌較多 TRH。'}};
+  function drawT(){
+    clear(sb);const c=CS[cs];
+    const nodes=[['下視丘','TRH',260,40,c.trh],['腦垂腺前葉','TSH',260,130,c.tsh],['甲狀腺','甲狀腺素',260,232,c.t4]];
+    nodes.forEach(([n,h,x,y,lv],i)=>{box(sb,x-62,y-18,124,36,n,{fill:'rgba(15,44,92,.95)',cls:'lbl sm'});});
+    const w=v=>1+4*v;
+    arrow(sb,260,60,260,108,COL.green,w(c.trh));txt(sb,270,84,'TRH（＋）','lbl sm g','start');
+    arrow(sb,260,150,260,206,COL.green,w(c.tsh));txt(sb,270,180,'TSH（＋）','lbl sm g','start');
+    if(c.size>0){el('path',{d:`M${260-40*c.size},262 q${20*c.size},${30*c.size} ${40*c.size},0 q${20*c.size},${30*c.size} ${40*c.size},0`,fill:'rgba(255,122,168,.35)',stroke:COL.pink,'stroke-width':2},sb);}
+    else txt(sb,260,272,'（已切除）','lbl sm r');
+    // feedback
+    el('path',{d:'M198,232 C120,232 120,140 198,130',fill:'none',stroke:COL.red,'stroke-width':w(c.t4)*0.8,'stroke-dasharray':'6 4'},sb);
+    el('path',{d:'M198,232 C70,232 70,40 198,40',fill:'none',stroke:COL.red,'stroke-width':w(c.t4)*0.8,'stroke-dasharray':'6 4'},sb);
+    txt(sb,96,140,'抑制（−）','lbl sm r','middle');
+    if(cs==='iod')txt(sb,380,262,'缺碘 ✕','lbl r','start');
+    if(cs==='graves')txt(sb,360,236,'自體抗體刺激 →','lbl sm o','start');
+    if(cs==='pit')txt(sb,330,130,'✕ 受損','lbl r','start');
+    // level bars
+    const lab=v=>v<0.6?'低':v>1.4?'高':'正常';
+    [['TRH',c.trh],['TSH',c.tsh],['甲狀腺素',c.t4]].forEach(([n,v],i)=>{const y=56+i*44;txt(sb,404,y-14,n+'：'+lab(v),'lbl sm','start');
+      el('rect',{x:404,y:y-6,width:100,height:12,rx:6,fill:'rgba(159,182,217,.15)'},sb);el('rect',{x:404,y:y-6,width:Math.max(3,clamp(v/2.2,0,1)*100),height:12,rx:6,fill:v<0.6?COL.cyan:v>1.4?COL.red:COL.green},sb);
+      line(sb,404+100/2.2,y-9,404+100/2.2,y+9,'#fff',1);});
+    out.innerHTML=`<span class="big">${c.n}</span>　TRH ${lab(c.trh)}、TSH ${lab(c.tsh)}、甲狀腺素 ${lab(c.t4)}、甲狀腺${c.size===0?'已切除':c.size>1.2?'<b class="r">腫大</b>':c.size<0.9?'萎縮':'大小正常'}<br>${c.t}`;}
+  segT($('#v5case'),'cs',v=>{cs=v;drawT();});
+  tabSwitch('#v5tabs',{ogtt:'#v5ogtt',thy:'#v5thy'},v=>{v==='ogtt'?drawO():drawT();});
+  drawO();
+})();
+
+/* ================= V6: inflammation time course ================= */
+(function(){
+  const svg=$('#v6'),out=$('#v6out');let T=2,AH=false;
+  const ge=(t,tau)=>t<=0?0:(t/tau)*Math.exp(1-t/tau);
+  const Bf=t=>100*(1+t/3)*Math.exp(-t/12)/1.82, Hf=t=>t<=0?0:100*Math.min(1,t/0.3)*(0.55*Math.exp(-t/4)+0.45*Bf(t)/100),
+        Nf=t=>100*ge(t,8),Mf=t=>100*ge(t,24),Pf=t=>t<=2?0:100*(1-Math.exp(-(t-2)/14))*Math.exp(-Math.max(0,t-40)/30);
+  function draw(){
+    clear(svg);const b=clamp(Bf(T),0,100),h=Hf(T),E=h*(AH?0.3:1)/100,n=Nf(T),m=Mf(T),pu=Pf(T);
+    // tissue
+    el('rect',{x:10,y:40,width:340,height:280,rx:10,fill:`rgba(255,${Math.round(200-110*E)},${Math.round(190-120*E)},${0.10+0.25*E})`,stroke:'rgba(159,182,217,.3)'},svg);
+    el('rect',{x:10,y:40,width:340,height:26,fill:'rgba(240,210,170,.35)'},svg);txt(svg,20,53,'皮膚','lbl sm','start');
+    el('path',{d:'M150,10 L176,10 L170,150 L160,150 Z',fill:'#a77b4a',stroke:'#6b4b28'},svg);txt(svg,200,22,'木刺','lbl sm','start');
+    // capillary
+    const cw=22+16*E,cy=262;
+    el('rect',{x:10,y:cy-cw/2,width:340,height:cw,fill:'rgba(224,71,90,.45)',stroke:COL.art,'stroke-width':2},svg);txt(svg,20,cy,'微血管','lbl sm','start');
+    const R=rng(11);
+    // fluid (edema)
+    for(let i=0;i<Math.round(28*E);i++)el('circle',{cx:30+R()*300,cy:110+R()*120,r:3,fill:'rgba(120,190,255,.6)'},svg);
+    // bacteria
+    const R2=rng(5);for(let i=0;i<Math.round(b/5);i++){const x=120+R2()*100,y=90+R2()*90;el('ellipse',{cx:x,cy:y,rx:6,ry:3.5,fill:COL.green,transform:`rotate(${R2()*180} ${x} ${y})`},svg);}
+    // neutrophils
+    const R3=rng(9);for(let i=0;i<Math.round(n/9);i++){const x=90+R3()*160,y=110+R3()*110;el('circle',{cx:x,cy:y,r:8,fill:'rgba(180,140,255,.55)',stroke:'#b48cff'},svg);el('path',{d:`M${x-4},${y} q2,-4 4,0 q2,4 4,0`,stroke:'#5b3a9a','stroke-width':2,fill:'none'},svg);}
+    // macrophages
+    const R4=rng(13);for(let i=0;i<Math.round(m/14);i++){const x=80+R4()*190,y=100+R4()*120;el('circle',{cx:x,cy:y,r:13,fill:'rgba(54,224,255,.35)',stroke:COL.cyan},svg);}
+    // pus
+    if(pu>5)el('ellipse',{cx:165,cy:120,rx:10+pu*0.35,ry:6+pu*0.2,fill:'rgba(255,230,120,.75)',stroke:'#d4b13a'},svg);
+    // mast cell histamine
+    el('circle',{cx:60,cy:150,r:14,fill:'rgba(255,159,67,.45)',stroke:COL.orange},svg);txt(svg,60,174,'肥大細胞','lbl sm o');
+    for(let i=0;i<Math.round(10*h/100);i++)el('circle',{cx:80+i*7,cy:140+((i%3)-1)*8,r:2.4,fill:COL.orange},svg);
+    // bars
+    const bars=[['細菌',b,COL.green],['組織胺作用',E*100,COL.orange],['嗜中性球',n,'#b48cff'],['巨噬細胞',m,COL.cyan],['膿',pu,'#ffe678']];
+    bars.forEach(([lb,v,c],i)=>{const y=60+i*50;txt(svg,366,y,lb,'lbl sm','start');el('rect',{x:366,y:y+10,width:140,height:14,rx:7,fill:'rgba(159,182,217,.15)'},svg);
+      el('rect',{x:366,y:y+10,width:Math.max(3,1.4*clamp(v,0,100)),height:14,rx:7,fill:c},svg);});
+    $('#v6tv').textContent=T;
+    const red=E>0.5?'明顯':E>0.2?'輕微':'消退',sw=E>0.5?'明顯':E>0.2?'輕微':'消退';
+    let stage;
+    if(T===0)stage='剛刺傷：第一道防線（皮膚）被突破，細菌進入組織。';
+    else if(T<=2)stage='肥大細胞釋放<b class="o">組織胺</b> → 微血管擴張（紅、熱）、通透性增加，血漿滲出（腫）。';
+    else if(T<=12)stage='化學訊號吸引<b style="color:#b48cff">嗜中性球</b>穿出微血管，最先抵達並吞噬細菌。';
+    else if(T<=36)stage='嗜中性球吞噬後死亡，與細菌、組織碎片形成<b class="y">膿</b>；單核球進入組織變成<b class="c">巨噬細胞</b>，繼續清理。';
+    else stage='細菌大多被清除，發炎逐漸消退；巨噬細胞清理殘骸，組織開始修復。';
+    out.innerHTML=`<span class="big">受傷後 ${T} 小時</span>　紅、熱：${red}　腫：${sw}　痛：${E>0.2?'有':'減輕'}<br>${stage}`+(AH?'<br><b class="o">抗組織胺</b>阻斷組織胺的作用，紅腫減輕，但不會殺死細菌。':'');}
+  $('#v6t').oninput=e=>{T=+e.target.value;$$('#v6pre button').forEach(b=>b.classList.remove('on'));draw();};
+  $('#v6ah').onchange=e=>{AH=e.target.checked;draw();};
+  segT($('#v6pre'),'hr',v=>{T=+v;$('#v6t').value=T;draw();});
+  draw();
+})();
+
+/* ================= V7: antibody response simulator ================= */
+(function(){
+  const svg=$('#v7'),out=$('#v7out');let ev=[],D=0,HIV=false;
+  const g=x=>x>0?x*Math.exp(1-x):0;
+  function curves(t){let a=0,pas=0,b=0;
+    const act=k=>ev.filter(e=>e.k===k).sort((x,y)=>x.t-y.t);
+    const resp=(list,t)=>{let s=0;list.forEach((e,i)=>{const n=HIV?0:i;const amp=(n===0?1:n===1?10:14)*(HIV?0.1:1);
+      if(n===0)s+=amp*g((t-e.t-5)/9);else{const x=(t-e.t-1)/5;s+=amp*(x<=0?0:x<1?g(x):Math.exp(-(x-1)/3));}});return s;};
+    a=resp(act('A'),t);b=resp(act('B'),t);ev.filter(e=>e.k==='P').forEach(e=>{if(t>=e.t)pas+=5*Math.exp(-(t-e.t)/10);});
+    return{a,pas,b};}
+  function draw(){
+    clear(svg);const X0=56,X1=500,Y0=280,Y1=30,TMAX=100;let ymax=2;
+    for(let t=0;t<=TMAX;t+=0.5){const c=curves(t);ymax=Math.max(ymax,c.a+c.pas,c.b);}ymax*=1.12;
+    const xs=t=>X0+(X1-X0)*t/TMAX,ys=v=>Y0-(Y0-Y1)*v/ymax;
+    line(svg,X0,Y0,X1,Y0,COL.mute);line(svg,X0,Y0,X0,Y1,COL.mute);
+    [0,20,40,60,80,100].forEach(t=>txt(svg,xs(t),Y0+14,t+' 天','lbl sm'));
+    const step=ymax>20?5:ymax>8?2:ymax>3?1:0.5;for(let v=step;v<ymax;v+=step){line(svg,X0,ys(v),X1,ys(v),'rgba(159,182,217,.15)');txt(svg,X0-6,ys(v),String(v),'lbl sm','end');}
+    txt(svg,14,16,'抗體濃度（相對值）','lbl sm','start');
+    const pa=[],pp=[],pb=[];for(let t=0;t<=TMAX;t+=0.5){const c=curves(t);pa.push([xs(t),ys(c.a+c.pas)]);pp.push([xs(t),ys(c.pas)]);pb.push([xs(t),ys(c.b)]);}
+    if(ev.some(e=>e.k==='P'))el('path',{d:pathOf(pp),fill:'none',stroke:COL.orange,'stroke-width':2,'stroke-dasharray':'6 4'},svg);
+    el('path',{d:pathOf(pa),fill:'none',stroke:COL.cyan,'stroke-width':3},svg);
+    if(ev.some(e=>e.k==='B'))el('path',{d:pathOf(pb),fill:'none',stroke:COL.pink,'stroke-width':3},svg);
+    ev.forEach(e=>{const c=e.k==='A'?COL.cyan:e.k==='B'?COL.pink:COL.orange;el('path',{d:`M${xs(e.t)},${Y1+2} l-7,-12 h14 z`,fill:c},svg);
+      txt(svg,xs(e.t),Y1+14,e.k==='A'?'疫苗A':e.k==='B'?'抗原B':'抗血清','lbl sm','middle');});
+    line(svg,xs(D),Y1,xs(D),Y0,'rgba(255,255,255,.35)',1,'2 4');
+    $('#v7dv').textContent=D;
+    if(!ev.length){out.innerHTML='先用滑桿選「事件時間」，再按「接種疫苗 A」等按鈕；或直接點下方的例題。';return;}
+    const As=ev.filter(e=>e.k==='A').sort((x,y)=>x.t-y.t);let lines=[];
+    As.forEach((e,i)=>{let pk=0,pt=e.t;const end=As[i+1]?As[i+1].t:TMAX;for(let t=e.t;t<=end;t+=0.5){const v=curves(t).a;if(v>pk){pk=v;pt=t;}}
+      lines.push(`第 ${e.t} 天疫苗 A：${i===0||HIV?'初次反應':'再次反應'}，約第 ${f0(pt)} 天達高峰（${fx(pk,1)}）`);});
+    if(ev.some(e=>e.k==='P'))lines.push('抗血清：<b class="o">立刻</b>有抗體，但逐漸被分解，不產生記憶細胞（被動免疫）');
+    if(ev.some(e=>e.k==='B'))lines.push('抗原 B：對 A 的記憶細胞<b class="p">認不得 B</b>，所以 B 是初次反應（專一性）');
+    out.innerHTML=lines.join('<br>')+(HIV?'<br><b class="r">輔助 T 細胞大量減少：B 細胞與胞毒 T 細胞無法被活化，抗體幾乎上不來，也沒有有效的記憶反應。</b>':
+      As.length>=2?'<br><b class="g">再次反應快、強、久：記憶細胞迅速分化成漿細胞（以 IgG 為主），這就是追加劑的原理。</b>':As.length===1?'<br>初次反應約 7～10 天才明顯上升（以 IgM 為主），同時留下<b class="g">記憶細胞</b>。':'');}
+  const add=k=>{ev.push({k,t:D});draw();};
+  $('#v7d').oninput=e=>{D=+e.target.value;draw();};
+  $('#v7vac').onclick=()=>add('A');$('#v7anti').onclick=()=>add('P');$('#v7b').onclick=()=>add('B');
+  $('#v7clr').onclick=()=>{ev=[];draw();};
+  $('#v7hiv').onchange=e=>{HIV=e.target.checked;draw();};
+  segT($('#v7pre'),'ex',v=>{ev=v==='ex1'?[{k:'A',t:0},{k:'A',t:28}]:v==='snake'?[{k:'P',t:10},{k:'A',t:10}]:[{k:'A',t:0},{k:'A',t:28},{k:'B',t:56}];draw();});
+  draw();
+})();
+const MINDMAP={"name":"第四章 神經內分泌與免疫","children":[{"name":"4-1 神經元與神經衝動","children":[{"name":"神經元的構造","children":[{"name":"細胞本體"},{"name":"樹突"},{"name":"軸突與軸突末梢"}]},{"name":"神經元的種類","children":[{"name":"感覺神經元（傳入）"},{"name":"中間神經元"},{"name":"運動神經元（傳出）"}]},{"name":"神經膠細胞與髓鞘","children":[{"name":"許旺細胞（周邊）"},{"name":"寡突膠細胞（中樞）"},{"name":"蘭氏結"}]},{"name":"靜止膜電位（−70 mV）","children":[{"name":"鈉鉀幫浦（3 Na⁺ 出、2 K⁺ 入）"},{"name":"K⁺ 漏通道"},{"name":"細胞內帶負電的分子"}]},{"name":"動作電位","children":[{"name":"閾值（−55 mV）"},{"name":"去極化：Na⁺ 流入（+30 mV）"},{"name":"再極化：K⁺ 流出"},{"name":"過極化（−80 mV）"},{"name":"全有全無律"},{"name":"刺激強弱以頻率編碼"},{"name":"不反應期"}]},{"name":"神經衝動的傳導","children":[{"name":"連續傳導（無髓鞘）"},{"name":"跳躍傳導（有髓鞘）"},{"name":"影響因素：髓鞘、軸突直徑"}]}]},{"name":"4-2 突觸與神經傳遞物質","children":[{"name":"突觸的構造","children":[{"name":"突觸前膜"},{"name":"突觸間隙"},{"name":"突觸後膜"}]},{"name":"傳遞步驟","children":[{"name":"Ca²⁺ 流入"},{"name":"胞吐釋放神經傳遞物質"},{"name":"與受體結合"},{"name":"被酶分解或回收"},{"name":"單向傳遞"},{"name":"突觸延遲（約 0.5 ms）"}]},{"name":"突觸類型與整合","children":[{"name":"興奮性（Na⁺ 流入）"},{"name":"抑制性（Cl⁻ 流入／K⁺ 流出）"},{"name":"訊號整合"}]},{"name":"神經傳遞物質","children":[{"name":"乙醯膽鹼（ACh）"},{"name":"正腎上腺素"},{"name":"多巴胺"},{"name":"血清素"},{"name":"GABA"},{"name":"腦內啡"}]},{"name":"藥物與毒素","children":[{"name":"肉毒桿菌毒素（阻止 ACh 釋放）"},{"name":"箭毒（阻斷 ACh 受體）"},{"name":"有機磷（抑制乙醯膽鹼酯酶）"},{"name":"河豚毒素（阻斷 Na⁺ 通道）"},{"name":"古柯鹼、安非他命（多巴胺回收）"}]}]},{"name":"4-3 人體的神經系統與反射","children":[{"name":"中樞神經系統","children":[{"name":"大腦（感覺、運動、思考）"},{"name":"間腦（視丘、下視丘）"},{"name":"腦幹（中腦、橋腦、延腦）"},{"name":"小腦（平衡與協調）"},{"name":"脊髓（灰質、白質）"}]},{"name":"周邊神經系統","children":[{"name":"腦神經（12 對）"},{"name":"脊神經（31 對）"},{"name":"體神經（控制骨骼肌）"}]},{"name":"自主神經系統","children":[{"name":"交感神經（戰鬥或逃跑）"},{"name":"副交感神經（休息與消化）"},{"name":"雙重拮抗支配"}]},{"name":"反射與反射弧","children":[{"name":"受器 → 感覺神經元 → 中樞 → 運動神經元 → 動器"},{"name":"單突觸反射（膝跳反射）"},{"name":"多突觸反射（縮手反射）"}]}]},{"name":"4-4 內分泌系統與激素的作用","children":[{"name":"外分泌與內分泌","children":[{"name":"外分泌腺（有導管）"},{"name":"內分泌腺（無導管，經血液）"},{"name":"標的細胞與受體"}]},{"name":"主要內分泌腺與激素","children":[{"name":"下視丘（釋放／抑制激素）"},{"name":"腦垂腺後葉（釋放 ADH、催產素）"},{"name":"腦垂腺前葉（GH、TSH、ACTH、FSH、LH、催乳素）"},{"name":"甲狀腺（甲狀腺素、降鈣素）"},{"name":"副甲狀腺（副甲狀腺素）"},{"name":"胰島（β 胰島素、α 升糖素）"},{"name":"腎上腺皮質（皮質醇、醛固酮）"},{"name":"腎上腺髓質（腎上腺素、正腎上腺素）"},{"name":"性腺（雌激素、黃體素、睪固酮）"},{"name":"松果腺（褪黑激素）"}]},{"name":"作用機制","children":[{"name":"水溶性（肽類、胺類）：膜受體"},{"name":"水溶性：第二傳訊者（cAMP）"},{"name":"脂溶性（類固醇、甲狀腺素）：細胞內受體"},{"name":"脂溶性：調控基因表現"}]}]},{"name":"4-5 激素的調節與恆定","children":[{"name":"回饋機制","children":[{"name":"負回饋（維持恆定）"},{"name":"正回饋（分娩、哺乳）"}]},{"name":"下視丘－腦垂腺軸","children":[{"name":"甲狀腺軸（TRH → TSH → 甲狀腺素）"},{"name":"缺碘性甲狀腺腫"},{"name":"甲狀腺功能亢進（葛瑞夫茲氏病）"}]},{"name":"血糖的調節","children":[{"name":"胰島素（降血糖）"},{"name":"升糖素（升血糖）"},{"name":"糖尿病（第一型、第二型）"}]},{"name":"血鈣的調節","children":[{"name":"副甲狀腺素（升血鈣）"},{"name":"降鈣素（降血鈣）"}]},{"name":"壓力反應","children":[{"name":"短期：交感神經＋腎上腺素"},{"name":"長期：ACTH＋皮質醇"}]}]},{"name":"4-6 先天免疫","children":[{"name":"第一道防線","children":[{"name":"皮膚（物理與酸性屏障）"},{"name":"黏膜與纖毛"},{"name":"分泌物（溶菌酶、胃酸）"}]},{"name":"第二道防線","children":[{"name":"吞噬細胞（嗜中性球、巨噬細胞、樹突細胞）"},{"name":"發炎反應（組織胺；紅、腫、熱、痛）"},{"name":"發燒（下視丘調定點上調）"},{"name":"自然殺手細胞（NK 細胞）"},{"name":"干擾素與補體"}]}]},{"name":"4-7 後天免疫與免疫失調","children":[{"name":"淋巴球與抗原呈現","children":[{"name":"抗原與抗原決定位"},{"name":"B 細胞（骨髓成熟）"},{"name":"T 細胞（胸腺成熟）"},{"name":"MHC 與抗原呈現細胞"},{"name":"輔助 T 細胞（指揮中心）"}]},{"name":"體液免疫","children":[{"name":"B 細胞 → 漿細胞 → 抗體"},{"name":"記憶 B 細胞"},{"name":"抗體作用（中和、凝集、活化補體）"},{"name":"抗體構造（重鏈、輕鏈、變異區、恆定區）"}]},{"name":"細胞免疫","children":[{"name":"胞毒 T 細胞"},{"name":"穿孔素與細胞凋亡"},{"name":"對象：被感染細胞、癌細胞、移植器官"}]},{"name":"初次與再次反應","children":[{"name":"初次（潛伏期長，IgM）"},{"name":"再次（快、強，IgG，靠記憶細胞）"}]},{"name":"免疫的獲得","children":[{"name":"主動免疫（感染、疫苗）"},{"name":"被動免疫（母體抗體、抗血清）"}]},{"name":"免疫失調","children":[{"name":"過敏（IgE、組織胺、過敏性休克）"},{"name":"自體免疫（第一型糖尿病、紅斑性狼瘡、類風溼性關節炎、多發性硬化症）"},{"name":"免疫缺失（AIDS：HIV 攻擊輔助 T 細胞）"},{"name":"器官移植排斥（MHC 不相容）"}]}]}]};
+const CARDS_RAW=[{"f":"神經元的構造分為哪三個主要部分？其訊息傳遞方向為何？","b":"分為細胞本體、樹突與軸突。訊息由樹突接收並傳向細胞本體，再經由軸突傳離細胞本體往末梢傳導。"},{"f":"依據功能分類，感覺神經元、中間神經元與運動神經元分別將訊息傳往何處？","b":"感覺神經元由受器傳入中樞；中間神經元在腦與脊髓中樞內部連接；運動神經元由中樞傳出至動器（肌肉或腺體）。"},{"f":"形成神經纖維髓鞘的神經膠細胞有哪些？髓鞘主要成分與功能為何？","b":"周邊神經為許旺細胞，中樞神經為寡突膠細胞。髓鞘主要成分為脂質，具絕緣作用，髓鞘間的缺口稱為蘭氏結。"},{"f":"神經元在未受刺激時的靜止膜電位約為多少？主要是由哪些機制維持的？","b":"約為 −70 mV。主要靠鈉鉀幫浦（消耗 ATP 送出 3 個 Na⁺、送入 2 個 K⁺）維持濃度差，以及靜止時 K⁺ 漏通道開放使 K⁺ 流出膜外所致。"},{"f":"神經元去極化與再極化階段，分別是哪種離子通道打開？離子往哪個方向移動？","b":"去極化：電位控制型 Na⁺ 通道打開，Na⁺ 大量流入細胞；再極化：電位控制型 K⁺ 通道打開，K⁺ 大量流出細胞。"},{"f":"什麼是神經衝動的「全有全無律」？神經系統如何編碼較強的刺激？","b":"刺激達閾值（約 −55 mV）即產生動作電位，其峰值（約 +30 mV）大小固定不隨刺激增強而變大。較強的刺激會提高動作電位發生的「頻率」並動員更多神經元。"},{"f":"動作電位發生後的「不反應期」在生理機能上有何重要意義？","b":"因 Na⁺ 通道暫時失活，確保神經衝動在軸突上只能單向向前傳導而不回傳，並限制了動作電位產生的最高頻率。"},{"f":"有髓鞘神經纖維的傳導方式為何？與無髓鞘纖維相比有何優勢？","b":"稱為「跳躍傳導」，動作電位僅在蘭氏結重新產生。優勢為傳導速率極快（可達 100～120 m/s）且較省能量。"},{"f":"【計算題】在蛙坐骨神經上距肌肉 12 cm 與 2 cm 處給予刺激，肌肉分別於 3.0 ms 與 1.0 ms 後開始收縮，求衝動傳導速率。","b":"距離差為 $12 \\text{ cm} - 2 \\text{ cm} = 10 \\text{ cm} = 0.10 \\text{ m}$，時間差為 $3.0 \\text{ ms} - 1.0 \\text{ ms} = 2.0 \\text{ ms} = 0.002 \\text{ s}$。傳導速率為 $0.10 \\div 0.002 = 50 \\text{ m/s}$。"},{"f":"【迷思辨正】給予神經元更強烈的刺激，產生的動作電位振幅會不會變大？","b":"不會。動作電位遵循全有全無律，只要達到閾值，產生的動作電位大小皆相同；刺激越強只會增加動作電位的產生頻率。"},{"f":"化學突觸包含哪三個主要區域？","b":"突觸前膜（軸突末梢膜）、突觸間隙（約 20～40 nm 的縫隙）與突觸後膜（下一個細胞的膜，上有特異性受體）。"},{"f":"請依序說出化學突觸傳遞訊息的關鍵五步驟。","b":"1. 動作電位傳至軸突末梢 → 2. 電位控制型 Ca²⁺ 通道打開，Ca²⁺ 流入 → 3. 胞吐作用釋放神經傳遞物質 → 4. 傳遞物質擴散與突觸後膜受體結合 → 5. 打開受體通道引發電位變化。"},{"f":"為什麼神經衝動在突觸間只能單向傳遞？","b":"因為只有突觸前膜的軸突末梢含有儲存神經傳遞物質的突觸小泡，而相應的特異性受體只存在於突觸後膜上。"},{"f":"興奮性突觸與抑制性突觸引起的突觸後膜離子移動及膜電位變化有何不同？","b":"興奮性突觸：Na⁺ 流入引起去極化，靠近閾值；抑制性突觸：Cl⁻ 流入或 K⁺ 流出引起過極化，遠離閾值。"},{"f":"肉毒桿菌毒素與箭毒分別透過何種機制干擾突觸傳遞，導致肌肉麻痺？","b":"肉毒桿菌毒素：阻止軸突末梢釋放乙醯膽鹼（ACh）；箭毒：與乙醯膽鹼受體競爭性結合但不開啟通道，阻斷訊號。"},{"f":"有機磷殺蟲劑或沙林毒氣中毒時，突觸處會發生什麼變化？","b":"有機磷會抑制乙醯膽鹼酯酶，導致乙醯膽鹼在突觸間隙無法被分解而持續刺激受體，引起肌肉持續收縮與痙攣。"},{"f":"河豚毒素（Tetrodotoxin）的作用機制及其對神經衝動的影響為何？","b":"河豚毒素能專一性阻斷電位控制型 Na⁺ 通道，使神經元無法產生去極化與動作電位，導致神經傳導中斷與全身麻痺。"},{"f":"大腦中主要的抑制性神經傳遞物質為何？其作用機制是什麼？","b":"為 GABA（$\\gamma$-胺基丁酸）。它與受體結合後使 Cl⁻ 流入細胞，造成膜電位過極化，降低神經元的興奮性。"},{"f":"【迷思辨正】突觸傳遞物質在發揮作用時，會進入突觸後細胞內部嗎？","b":"不會。傳遞物質僅與突觸後膜表面受體結合以開啟離子通道，本身不進入細胞內，隨後即被酶分解或由突觸前膜回收。"},{"f":"人體中樞神經系統與周邊神經系統分別由哪些器官或神經組成？","b":"中樞神經系統包括腦與脊髓；周邊神經系統包括由腦發出的腦神經（12 對）與由脊髓發出的脊神經（31 對）。"},{"f":"神經系統中的「灰質」與「白質」在構造組成上有何差異？在大腦與脊髓的分布位置為何？","b":"灰質由神經元細胞本體集中組成，白質由具髓鞘的軸突組成。大腦皮質灰質在外、白質在內；脊髓則是灰質在內、白質在外。"},{"f":"請分別說明下視丘、小腦與延腦的主要生理功能。","b":"下視丘：體溫、口渴、恆定調節及控制內分泌；小腦：協調骨骼肌活動與維持身體平衡；延腦：呼吸、心跳、血壓調節中樞及咳嗽反射。"},{"f":"「腦幹」包含哪些部位？為什麼腦幹受損容易致命？","b":"腦幹包含中腦、橋腦與延腦。因為延腦等部位主管呼吸、心跳與血壓等維持生命的根本反射中樞。"},{"f":"脊神經的背根與腹根在功能與包含的神經纖維種類上有何差別？","b":"背根包含感覺神經纖維（訊息傳入脊髓），背根上有背根神經節；腹根包含運動神經纖維（訊息傳出脊髓前往動器）。"},{"f":"比較交感神經與副交感神經對心跳、瞳孔與消化道蠕動的拮抗作用。","b":"交感神經（戰鬥或逃跑）：心跳加快、瞳孔放大、抑制消化道蠕動；副交感神經（休息與消化）：心跳減慢、瞳孔縮小、促進消化道蠕動。"},{"f":"請依序說明反射弧（Reflex arc）包含的五個核心基本構造。","b":"受器 → 感覺神經元 → 反射中樞（可能包含中間神經元） → 運動神經元 → 動器（肌肉或腺體）。"},{"f":"【計算題】進行尺落實驗，直尺落下的距離為 19.6 cm，求受測者的反應時間。（重力加速度 $g = 9.8 \\text{ m/s}^2$）","b":"利用公式 $t = \\sqrt{\\frac{2d}{g}}$ 計算：$t = \\sqrt{\\frac{2 \\times 0.196}{9.8}} = \\sqrt{0.04} = 0.20 \\text{ s}$。"},{"f":"【迷思辨正】交感神經興奮時，會使身體所有器官的活動都增強嗎？","b":"不會。交感神經主要在應付緊急狀況，雖然會使心跳加快、呼吸擴張，但會「抑制」消化道蠕動與消化液分泌。"},{"f":"內分泌腺與外分泌腺在構造與分泌物傳遞途徑上有何主要差異？","b":"外分泌腺有導管，分泌物經導管輸送到體表或消化道；內分泌腺無導管，分泌的激素直接進入血液隨循環運送到標的細胞。"},{"f":"腦垂腺後葉釋放的抗利尿激素（ADH）與催產素是在何處製造的？","b":"由下視丘的神經分泌細胞製造，沿軸突運送到腦垂腺後葉儲存，當收到訊號時再由腦垂腺後葉釋放到血液中。"},{"f":"水溶性激素（如胰島素、腎上腺素）的作用機制與受體位置為何？","b":"水溶性激素無法穿過細胞膜，其受體位在「細胞膜上」。結合後活化第二傳訊者（如 cAMP），引發一連串酶的級聯反應，作用速度較快。"},{"f":"脂溶性激素（如類固醇、甲狀腺素）的作用機制與受體位置為何？","b":"脂溶性激素可直接穿過細胞膜，受體位於「細胞質或細胞核內」。激素與受體結合後進入細胞核調控基因轉錄與蛋白質合成，作用較慢但持久。"},{"f":"胰島細胞中的 $\\alpha$ 細胞與 $\\beta$ 細胞分別分泌何種激素？對血糖有何作用？","b":"$\\alpha$ 細胞分泌升糖素，促進肝糖分解以升高血糖；$\\beta$ 細胞分泌胰島素，促進細胞吸收葡萄糖與合成肝糖以降低血糖。"},{"f":"副甲狀腺素（PTH）與降鈣素如何拮抗調節血鈣濃度？","b":"血鈣偏低時，PTH 分泌增加，促進骨骼釋出鈣與腎臟再吸收鈣（升高血鈣）；血鈣偏高時，降鈣素分泌增加，促進鈣沉積於骨骼（降低血鈣）。"},{"f":"腎上腺皮質與腎上腺髓質分別受何種機制控制？分泌何種主要激素？","b":"皮質受腦垂腺前葉 ACTH 調控，分泌皮質醇與醛固酮；髓質受交感神經直接控制，分泌腎上腺素與正腎上腺素。"},{"f":"【迷思辨正】為什麼糖尿病患者需要注射胰島素，而不能直接口服胰島素藥品？","b":"因為胰島素為蛋白質（肽類）激素，若口服會在人體胃腸道中被蛋白酶消化分解為胺基酸，進而失去激素活性。"},{"f":"何謂「負回饋調節」與「正回饋調節」？兩者在維護身體機能上的目的有何差別？","b":"負回饋：結果會反過來抑制原初變化，使環境數值回到正常恆定範圍；正回饋：結果會加強原初變化使過程快速完成（如分娩催產素）。"},{"f":"說明「下視丘－腦垂腺前葉－甲狀腺」內分泌軸的負回饋控制流程。","b":"下視丘分泌 TRH 刺激腦垂腺前葉分泌 TSH，TSH 刺激甲狀腺分泌甲狀腺素。當甲狀腺素濃度過高時，會反過來抑制下視丘分泌 TRH 及腦垂腺分泌 TSH。"},{"f":"飲食缺碘會導致「缺碘性甲狀腺腫」，請用激素回饋機制解釋其病因及血中 TSH 的濃度變化。","b":"缺碘致使甲狀腺素無法合成 → 負回饋作用減弱 → 腦垂腺持續大量分泌 TSH → TSH 長期過度刺激甲狀腺組織使其增生腫大。因此血中 TSH 偏高。"},{"f":"第一型糖尿病與第二型糖尿病在病因與治療上有何主要差異？","b":"第一型：自體免疫破壞胰島 $\\beta$ 細胞造成胰島素缺乏，需補充注射胰島素；第二型：標的細胞對胰島素具阻抗性，多靠飲食控制、運動及口服藥物治療。"},{"f":"當血糖濃度超過多少「腎糖閾」數值時，尿液中會開始出現葡萄糖？其多尿原因為何？","b":"超過腎糖閾（約 180 mg/dL）。多尿是因為濾液中高濃度的葡萄糖提高滲透壓，阻礙腎小管對水分的再吸收所致。"},{"f":"面對緊急威脅（快速反應）與長期壓力（長期反應），人體主要分別靠何種激素調控應對？","b":"快速反應：交感神經刺激腎上腺髓質分泌「腎上腺素」；長期壓力：下視丘-腦垂腺刺激腎上腺皮質分泌「皮質醇」（糖皮質素）。"},{"f":"比較神經調節與激素調節在「傳遞路徑」、「反應速度」與「作用持續時間」上的異同。","b":"神經調節：經由神經元與突觸，傳遞速度極快（毫秒級），作用短暫且局部；激素調節：經由血液循環，反應速度較慢，作用時間較持久且範圍廣泛。"},{"f":"【迷思辨正】脖子腫大（甲狀腺腫）一定是因為體內甲狀腺素分泌過多嗎？","b":"不一定。缺碘時甲狀腺素分泌過少，會因負回饋減弱導致 TSH 大量分泌而引起甲狀腺腫大；甲狀腺亢進時也會腫大，兩者甲狀腺素濃度相反。"},{"f":"人體防禦機制的三道防線中，哪些屬於先天免疫（非專一性防禦）？","b":"第一道防線（物理屏障如皮膚黏膜、化學分泌物）與第二道防線（吞噬作用、發炎反應、發燒、NK 細胞、干擾素、補體）均屬於先天免疫。"},{"f":"發炎反應發生時，肥大細胞釋放的何種化學物質會引發微血管變化？會造成哪些紅腫熱痛症狀？","b":"釋放組織胺。使微血管擴張（局部變紅、發熱）及通透性增加（血漿滲出組織造成腫脹，壓迫神經引發疼痛）。"},{"f":"傷口感染後產生的「膿」主要是由哪些成分構成的？","b":"主要是由最先抵達感染處的嗜中性球在吞噬細菌後死亡的殘骸、死亡的細菌以及壞死組織碎片共同混合組成的。"},{"f":"人體發燒的生理機制為何？適度發燒對防禦有何正面好處？","b":"吞噬細胞釋放化學物質作用於下視丘，上調體溫調定點。適度發燒可抑制部分病原體的生長繁殖，並加速白血球與免疫反應的運作效率。"},{"f":"自然殺手細胞（NK 細胞）與干擾素分別在第二道防線中扮演何種防護功能？","b":"NK 細胞可非專一性地辨識並殺死受病毒感染的細胞或癌細胞；干擾素由受病毒感染細胞分泌，可誘導鄰近細胞產生抗病毒蛋白以阻斷病毒複製。"},{"f":"【迷思辨正】身體組織出現「發炎反應」就一定代表發生了細菌感染嗎？","b":"不一定。發炎是身體受損後的通用防禦反應，物理性創傷、扭傷或燙傷等非感染因素同樣會誘發組織發炎。"},{"f":"B 細胞與 T 細胞分別在哪裡成熟？分別負責後天免疫中的哪一種免疫類型？","b":"B 細胞在骨髓成熟，負責體液免疫（產生抗體）；T 細胞移至胸腺成熟，負責細胞免疫（如胞毒 T 細胞）。"},{"f":"什麼是「抗原呈現」？為何輔助 T 細胞被稱為後天免疫的指揮中心？","b":"吞噬細胞將病原體抗原片段結合 MHC 分子呈現在細胞表面。輔助 T 細胞辨識此抗原後被活化，分泌細胞激素去活化 B 細胞與胞毒 T 細胞。"},{"f":"體液免疫中，B 細胞受到活化後會分化成哪兩種主要細胞？抗體如何清除病原體？","b":"分化為漿細胞（大量分泌抗體）與記憶 B 細胞。抗體透過中和作用、凝集作用、活化補體及促進吞噬等方式清除體液中的病原體。"},{"f":"胞毒 T 細胞在細胞免疫中如何消滅被病毒感染的目標細胞？","b":"胞毒 T 細胞專一性辨識呈現異常抗原的目標細胞後與之接觸，釋放穿孔素等物質使目標細胞溶解凋亡，迫使藏匿其中的病原體暴露。"},{"f":"比較初次免疫反應與再次免疫反應在「潛伏期」、「抗體產生量」與「主要抗體種類」上的差異。","b":"初次反應：潛伏期長（7～10 天才上升）、抗體量少且消退快，以 IgM 為主；再次反應：潛伏期短（1～3 天）、抗體量大（可達 10 倍以上）且持久，以 IgG 為主。"},{"f":"人工主動免疫（如接種疫苗）與人工被動免疫（如注射抗血清）有何本質差異？","b":"主動免疫：輸入抗原刺激自體免疫系統產生抗體與記憶細胞，需時數週但具長期預防效果；被動免疫：直接給予外部抗體，立即見效但無記憶性，用於緊急治療。"},{"f":"過敏反應發生的免疫機制為何？初次與再次接觸過敏原時有何不同？","b":"初次接觸：B 細胞產生 IgE 抗體附著於肥大細胞上（致敏）；再次接觸：過敏原直接結合肥大細胞上的 IgE，促使其大量釋放組織胺引發過敏症狀。"},{"f":"愛滋病（AIDS）的病原體 HIV 主要攻擊人體的哪種細胞？為何會引發全身性免疫崩潰？","b":"HIV 主要感染並破壞「輔助 T 細胞」。由於輔助 T 細胞是免疫系統的指揮官，數量大幅減少會使體液免疫與細胞免疫皆無法正常啟動。"},{"f":"【迷思辨正】抗體結合到病原體上之後，會直接將病原體殺死破壞嗎？","b":"不會。抗體的主要作用是「標記與中和」（如中和毒素、凝集病原體），最終破壞分解病原體主要是靠補體打洞或吞噬細胞進行吞噬。"},{"f":"【迷思辨正】過敏現象代表身體的免疫能力太弱了嗎？","b":"錯。過敏是免疫系統對環境中無害物質（過敏原）產生的「過度反應」；免疫力不足稱為免疫缺失。"}];
+(function(){
+  const box=$('#mindmap');if(!MINDMAP){box.textContent='（心智圖資料尚未載入）';return;}
+  const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML;};
+  const COLORS=['#ffd84d','#36e0ff','#ff9f43','#3ee08f','#ff7aa8','#b48cff','#5a8cff'];
+  const node=n=>n.children&&n.children.length?`<details open><summary>${esc(n.name)}</summary>${
+      n.children.every(c=>!c.children||!c.children.length)?`<div class="mm-leaf">${n.children.map(c=>`<span>${esc(c.name)}</span>`).join('')}</div>`:n.children.map(node).join('')}</details>`
+    :`<div class="mm-leaf"><span>${esc(n.name)}</span></div>`;
+  box.innerHTML=`<div class="mm-root">${esc(MINDMAP.name)}</div><div class="mm-grid">${(MINDMAP.children||[]).map((b,i)=>
+    `<div class="mm-br" style="--bc:${COLORS[i%COLORS.length]}"><h4>${esc(b.name)}</h4>${(b.children||[]).map(node).join('')}</div>`).join('')}</div>`;
+  $('#mmOpen').onclick=()=>$$('#mindmap details').forEach(d=>d.open=true);
+  $('#mmClose').onclick=()=>$$('#mindmap details').forEach(d=>d.open=false);
+})();
+
+/* NotebookLM 學習卡的化學式與數學式是 LaTeX，這裡轉成 Unicode 文字顯示 */
+function tex2u(s){
+  const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','−':'⁻','-':'⁻','n':'ⁿ','x':'ˣ','m':'ᵐ','t':'ᵗ','a':'ᵃ','b':'ᵇ','k':'ᵏ','h':'ʰ','i':'ⁱ','u':'ᵘ','v':'ᵛ','y':'ʸ'};
+  const SUB={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉','+':'₊','−':'₋','i':'ᵢ','n':'ₙ'};
+  const supOK=t=>t.length<=2||/^[−\-+]?\d+$/.test(t);
+  const sup=t=>[...t].every(c=>SUP[c])&&supOK(t)?[...t].map(c=>SUP[c]).join(''):'^('+t+')';
+  /* 化學下標：數字用 Unicode 下標（H₂O、P₁），中文直接接在後面（P氣），其他字母保留底線（P_A） */
+  const sub=t=>[...t].every(c=>SUB[c])?[...t].map(c=>SUB[c]).join(''):/[一-鿿]/.test(t)?t:'_'+t;
+  const simple=t=>/^[\w.]+$/.test(t);
+  return s.replace(/\$([^$]+)\$/g,(_,m)=>{
+    m=m.replace(/\\(?:text|mathrm)\{([^{}]*)\}/g,'$1').replace(/\^\\circ/g,'°').replace(/\\circ/g,'°')
+     .replace(/\\propto/g,'∝').replace(/\\(?:long)?rightarrow/g,'→').replace(/\\sum/g,'Σ').replace(/\\bar\{([^{}]*)\}/g,'$1̄')
+     .replace(/\\(?:dots|ldots|cdots)/g,'…').replace(/\\sim/g,'～')
+     .replace(/\\left|\\right/g,'').replace(/\\%/g,'%').replace(/\\mathbb\{R\}/g,'ℝ')
+     .replace(/\\neq/g,'≠').replace(/\\le(q)?/g,'≤').replace(/\\ge(q)?/g,'≥').replace(/\\times/g,'×').replace(/\\div/g,'÷')
+     .replace(/\\cdot/g,'·').replace(/\\implies/g,'⇒').replace(/\\Rightarrow/g,'⇒').replace(/\\to/g,'→').replace(/\\infty/g,'∞')
+     .replace(/\\approx/g,'≈').replace(/\\pm/g,'±').replace(/\\,|\\;|\\ /g,' ').replace(/-/g,'−')
+     .replace(/\\alpha/g,'α').replace(/\\beta/g,'β').replace(/\\gamma/g,'γ').replace(/\\Delta/g,'Δ').replace(/\\mu/g,'μ');
+    for(let k=0;k<12;k++){const o=m;
+      m=m.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g,(_,a,b)=>(simple(a)?a:'('+a+')')+'/'+(simple(b)?b:'('+b+')'))
+         .replace(/\\sqrt\[([^\]]*)\]\{([^{}]*)\}/g,(_,n,x)=>[...n].map(c=>SUP[c]||c).join('')+'√'+(simple(x)?x:'('+x+')'))
+         .replace(/\\sqrt\{([^{}]*)\}/g,(_,x)=>'√'+(simple(x)?x:'('+x+')'))
+         .replace(/\^\{([^{}]*)\}/g,(_,t)=>sup(t)).replace(/\^([0-9a-z])/g,(_,c)=>SUP[c]||'^'+c)
+         .replace(/_\{([^{}]*)\}/g,(_,t)=>sub(t)).replace(/_([0-9])/g,(_,c)=>SUB[c]);
+      if(m===o)break;}
+    return m.replace(/[{}]/g,'').replace(/\\/g,'').replace(/ {2,}/g,' ');
+  });
+}
+const CARDS=CARDS_RAW.map(c=>({f:tex2u(c.f),b:tex2u(c.b)}));
+(function(){
+  const KEY='bio-e3-ch4-cards';let mark={};try{mark=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){mark={};}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(mark));}catch(e){}};
+  let order=CARDS.map((_,i)=>i),filter='all',pos=0;
+  const fc=$('#fc');
+  const list=()=>filter==='all'?order:order.filter(i=>mark[i]!=='know');
+  function show(){
+    const L=list();
+    if(!CARDS.length){$('#fcFront').textContent='（學習卡資料尚未載入）';$('#fcStat').textContent='';return;}
+    if(!L.length){$('#fcFront').textContent='🎉 全部都會了！按「清除標記」或切回「全部」再練一次。';$('#fcBack').textContent='';fc.classList.remove('flip');statLine();return;}
+    pos=(pos+L.length)%L.length;const i=L[pos],c=CARDS[i];fc.classList.remove('flip');
+    const tag=`第 ${pos+1} / ${L.length} 張`+(mark[i]==='know'?'　✔ 會了':mark[i]==='again'?'　↻ 再複習':'');
+    setTimeout(()=>{$('#fcFront').textContent=c.f;$('#fcBack').textContent=c.b;},fc.classList.contains('flip')?250:0);
+    $('#fcFront').textContent=c.f;$('#fcBack').textContent=c.b;$('#fcTagF').textContent=tag;$('#fcTagB').textContent=tag+'　答案';statLine();
+  }
+  function statLine(){const k=Object.values(mark).filter(v=>v==='know').length,a=Object.values(mark).filter(v=>v==='again').length;
+    $('#fcStat').textContent=`共 ${CARDS.length} 張｜我會了 ${k}｜再複習 ${a}｜未標記 ${CARDS.length-k-a}`;}
+  const flip=()=>fc.classList.toggle('flip');
+  fc.onclick=flip;$('#fcFlip').onclick=flip;
+  $('#fcPrev').onclick=()=>{pos--;show();};$('#fcNext').onclick=()=>{pos++;show();};
+  $('#fcShuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}pos=0;show();};
+  const setMark=v=>{const L=list();if(!L.length)return;mark[L[pos]]=v;save();if(filter==='todo'&&v==='know'){show();}else{pos++;show();}};
+  $('#fcKnow').onclick=()=>setMark('know');$('#fcAgain').onclick=()=>setMark('again');
+  $('#fcReset').onclick=()=>{mark={};save();pos=0;show();};
+  segTabs($('#fcFilter'),b=>{filter=b.dataset.f;pos=0;show();});
+  fc.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){flip();e.preventDefault();}if(e.key==='ArrowRight'){pos++;show();}if(e.key==='ArrowLeft'){pos--;show();}});
+  show();
+})();
+
+/* ================= Tools panel ================= */
+(function(){
+  const tools=$('#tools'),head=$('#toolsHead');
+  /* 收合／展開：收合時只剩左側圖示列，頁面內容自動讓位（body.tools-min） */
+  const MINKEY='lesson-tools-min';
+  function setMin(m){tools.classList.toggle('min',m);document.body.classList.toggle('tools-min',m);
+    const b=$('#toolsMin');b.textContent=m?'»':'«';b.title=m?'展開教學工具':'收合成工具列';
+    try{localStorage.setItem(MINKEY,m?'1':'0');}catch(e){}}
+  let saved=null;try{saved=localStorage.getItem(MINKEY);}catch(e){}
+  setMin(saved!==null?saved==='1':innerWidth<900);
+  $$('.tool-tabs button').forEach(b=>b.onclick=()=>{$$('.tool-tabs button').forEach(x=>x.classList.toggle('on',x===b));$$('.tool-pane').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));if(tools.classList.contains('min'))setMin(false);});
+  $('#toolsMin').onclick=e=>{e.stopPropagation();setMin(!tools.classList.contains('min'));};
+
+  /* big overlay */
+  const big=$('#bigShow');let bigMode=null;
+  big.onclick=()=>{big.classList.remove('on','alarm');bigMode=null;};
+  function showBig(text,sub,mode){$('#bigNum').textContent=text;$('#bigSub').textContent=sub;big.classList.add('on');bigMode=mode;}
+
+  /* audio */
+  let ac=null;function beep(times=3){if(!$('#tSound').checked)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+    for(let i=0;i<times;i++){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=880;o.connect(g);g.connect(ac.destination);
+      const t0=ac.currentTime+i*0.45;g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.4,t0+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.35);o.start(t0);o.stop(t0+0.4);}}catch(e){}}
+
+  /* lottery */
+  let drawn=[],rolling=false;
+  function pool(){const a=+$('#lotFrom').value,b=+$('#lotTo').value,lo=Math.min(a,b),hi=Math.max(a,b);const arr=[];for(let i=lo;i<=hi;i++)if(!$('#lotNoRep').checked||!drawn.includes(i))arr.push(i);return arr;}
+  function hist(){$('#lotHist').innerHTML=drawn.map(n=>`<span>${n}</span>`).join('');$('#lotInfo').textContent=`已抽 ${drawn.length} 位，剩 ${pool().length} 位可抽`;}
+  $('#lotGo').onclick=()=>{if(rolling)return;const p=pool();if(!p.length){$('#lotNum').textContent='抽完';return;}
+    rolling=true;const num=$('#lotNum');const t0=performance.now();
+    const tick=()=>{num.textContent=p[Math.floor(Math.random()*p.length)];if(performance.now()-t0<1300){setTimeout(tick,60+(performance.now()-t0)/12);}
+      else{const pick=p[Math.floor(Math.random()*p.length)];num.textContent=pick;drawn.push(pick);hist();rolling=false;beep(1);
+        if($('#lotBig').checked)showBig(pick,'抽中座號 · 點任意處關閉','lot');}};
+    tick();};
+  $('#lotReset').onclick=()=>{drawn=[];$('#lotNum').textContent='?';hist();};
+  ['lotFrom','lotTo','lotNoRep'].forEach(id=>$('#'+id).onchange=hist);hist();
+
+  /* timer */
+  let total=180,remain=180000,endAt=0,running=false,iv=null;
+  const disp=$('#tDisp'),startBtn=$('#tStart');
+  const fmt=ms=>{const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+  function render(){disp.textContent=fmt(remain);if(bigMode==='timer')$('#bigNum').textContent=fmt(remain);}
+  function stop(){running=false;clearInterval(iv);startBtn.textContent=remain>0?'▶ 繼續':'▶ 開始';startBtn.classList.remove('stop');}
+  function set(sec){stop();total=Math.max(0,sec);remain=total*1000;disp.classList.remove('alarm');big.classList.remove('alarm');startBtn.textContent='▶ 開始';render();}
+  startBtn.onclick=()=>{if(running){remain=Math.max(0,endAt-Date.now());stop();render();return;}
+    if(remain<=0)remain=total*1000;if(remain<=0)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume();}catch(e){}
+    disp.classList.remove('alarm');big.classList.remove('alarm');
+    running=true;endAt=Date.now()+remain;startBtn.textContent='⏸ 暫停';startBtn.classList.add('stop');
+    iv=setInterval(()=>{remain=Math.max(0,endAt-Date.now());render();if(remain<=0){stop();disp.classList.add('alarm');if(bigMode==='timer'){big.classList.add('alarm');$('#bigSub').textContent='時間到！點任意處關閉';}beep(4);}},200);};
+  $('#tReset').onclick=()=>set(total);
+  $$('[data-s]').forEach(b=>b.onclick=()=>set(+b.dataset.s));
+  $$('[data-d]').forEach(b=>b.onclick=()=>{const cur=running?Math.max(0,endAt-Date.now()):remain;const nv=Math.max(0,cur+(+b.dataset.d)*1000);
+    if(running){endAt=Date.now()+nv;remain=nv;}else{remain=nv;total=Math.ceil(nv/1000);}disp.classList.remove('alarm');render();});
+  $('#tBig').onclick=()=>showBig(fmt(remain),running?'計時中 · 點任意處關閉':'點任意處關閉','timer');
+
+  /* pen */
+  const cv=$('#ink'),ctx=cv.getContext('2d');let strokes=[],cur=null,active=false,color='#ff5a5a',mode='pen';
+  const COLORS=['#ff5a5a','#ffd84d','#36e0ff','#3ee08f','#ffffff','#000000'];
+  $('#penColors').innerHTML=COLORS.map((c,i)=>`<button class="sw ${i?'':'on'}" style="background:${c}" data-c="${c}" aria-label="顏色"></button>`).join('');
+  $$('#penColors .sw').forEach(b=>b.onclick=()=>{color=b.dataset.c;$$('#penColors .sw').forEach(x=>x.classList.toggle('on',x===b));if(mode==='er')setMode('pen');});
+  function setMode(m){mode=m;$$('#penModes button').forEach(x=>x.classList.toggle('on',x.dataset.m===m));}
+  $$('#penModes button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+  function size(){const d=devicePixelRatio||1;cv.width=innerWidth*d;cv.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0);redraw();}
+  function redraw(){ctx.clearRect(0,0,innerWidth,innerHeight);const sx=scrollX,sy=scrollY;
+    for(const s of strokes){if(s.pts.length<1)continue;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.globalCompositeOperation=s.mode==='er'?'destination-out':'source-over';ctx.globalAlpha=s.mode==='hl'?0.35:1;
+      ctx.strokeStyle=s.color;ctx.lineWidth=s.mode==='hl'?s.size*3:(s.mode==='er'?s.size*4:s.size);
+      ctx.beginPath();ctx.moveTo(s.pts[0][0]-sx,s.pts[0][1]-sy);for(const p of s.pts)ctx.lineTo(p[0]-sx,p[1]-sy);if(s.pts.length===1)ctx.lineTo(s.pts[0][0]-sx+0.1,s.pts[0][1]-sy);ctx.stroke();ctx.restore();}}
+  let raf=0;const sched=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;redraw();});};
+  addEventListener('resize',size);addEventListener('scroll',()=>{if(strokes.length)sched();},{passive:true});
+  cv.addEventListener('pointerdown',e=>{if(!active)return;cv.setPointerCapture(e.pointerId);cur={mode,color,size:+$('#penSize').value,pts:[[e.clientX+scrollX,e.clientY+scrollY]]};strokes.push(cur);sched();});
+  cv.addEventListener('pointermove',e=>{if(!cur)return;cur.pts.push([e.clientX+scrollX,e.clientY+scrollY]);sched();});
+  const end=()=>{cur=null;};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  cv.addEventListener('wheel',e=>{scrollBy(0,e.deltaY);},{passive:true});
+  function setActive(on){active=on;cv.classList.toggle('active',on);document.body.classList.toggle('inking',on);
+    const b=$('#penToggle');b.textContent=on?'⏹ 結束畫筆':'✏️ 開始畫筆';b.classList.toggle('stop',on);}
+  $('#penToggle').onclick=()=>setActive(!active);
+  $('#penUndo').onclick=()=>{strokes.pop();redraw();};
+  $('#penClear').onclick=()=>{strokes=[];redraw();};
+  addEventListener('keydown',e=>{if(e.key==='Escape'){if(active)setActive(false);lb.classList.remove('on');big.classList.remove('on','alarm');bigMode=null;}
+    if((e.ctrlKey||e.metaKey)&&e.key==='z'&&active){strokes.pop();redraw();e.preventDefault();}});
+  size();
+})();
+
+/* ================= Superscript exponents =================
+   把文字裡的 a^(m/n)、2^√2、2^1.41 自動改成真正的上標（HTML 用 <sup>，SVG 用縮小上移的 tspan）。
+   互動圖形每次重畫的文字也會被 MutationObserver 自動轉換。 */
+(function(){
+  const RE=/\^(\((?:[^()]|\([^()]*\))*\)|√?[0-9A-Za-z.]+)/g;
+  const SVGNS='http://www.w3.org/2000/svg';
+  function fix(t){
+    const s=t.nodeValue,p=t.parentNode;if(!s||s.indexOf('^')<0||!p)return;
+    if(p.closest&&p.closest('script,style,textarea,title'))return;
+    const svg=p instanceof SVGElement;const frag=document.createDocumentFragment();let last=0,m;RE.lastIndex=0;
+    const plain=x=>{if(!x)return;if(svg){const ts=document.createElementNS(SVGNS,'tspan');ts.textContent=x;frag.appendChild(ts);}else frag.appendChild(document.createTextNode(x));};
+    while((m=RE.exec(s))){
+      plain(s.slice(last,m.index));
+      let e=m[1];if(e[0]==='('&&e[e.length-1]===')')e=e.slice(1,-1);
+      if(svg){const ts=document.createElementNS(SVGNS,'tspan');ts.setAttribute('baseline-shift','super');ts.setAttribute('font-size','72%');ts.textContent=e;frag.appendChild(ts);}
+      else{const su=document.createElement('sup');su.className='ex';su.textContent=e;frag.appendChild(su);}
+      last=RE.lastIndex;}
+    if(!last)return;plain(s.slice(last));p.replaceChild(frag,t);
+  }
+  function scan(root){
+    if(root.nodeType===3){fix(root);return;}
+    if(root.nodeType!==1)return;
+    const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.indexOf('^')>=0?1:3});
+    const list=[];while(w.nextNode())list.push(w.currentNode);list.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver(ms=>ms.forEach(mu=>{if(mu.type==='characterData')fix(mu.target);else mu.addedNodes.forEach(scan);}))
+    .observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+
+/* nav highlight */
+(function(){const links=$$('nav.top a');const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id));});},{rootMargin:'-40% 0px -55% 0px'});
+  $$('.unit').forEach(s=>io.observe(s));})();
+</script>
+</body>
+</html>
